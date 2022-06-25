@@ -16,7 +16,7 @@ func main() {
 
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
-	client, err := mongo.Connect(ctx, options.Client().ApplyURI("mongodb://docker:mongopw@localhost:55001"))
+	client, err := mongo.Connect(ctx, options.Client().ApplyURI("mongodb://docker:mongopw@localhost:55002"))
 	defer func() {
 		if err := client.Disconnect(ctx); err != nil {
 			panic(err)
@@ -33,7 +33,12 @@ func main() {
 	usr.TelegramID = 1111
 	usr.UserID = "1"
 	usr.Username = "debic"
-	_, err = collection.InsertOne(context.TODO(), bson.D{{"name", "id"}, {"test", 2}})
+	newdata, err := bson.Marshal(usr)
+	if err != nil {
+		panic(err)
+	}
+
+	_, err = collection.InsertOne(context.TODO(), newdata)
 	if err != nil {
 		fmt.Println(err.Error())
 	}

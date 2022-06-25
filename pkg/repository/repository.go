@@ -10,10 +10,10 @@ type Repository interface {
 
 //User from telegram
 type Users interface {
-	CreateUser(TelegramID int64) error
+	CreateUser(TelegramID int64, username string) error
 	UpdateUser(NewData User) error
 	GetUser(TelegramID int64) ([]User, error)
-	DeleteUser(TeelgramID int64) error
+	DeleteUser(TelegramID int64) error
 }
 
 //News from users
