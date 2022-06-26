@@ -13,7 +13,9 @@ type Users interface {
 	CreateUser(TelegramID int64, username string) error
 	UpdateUser(NewData User) error
 	GetUser(TelegramID int64) ([]User, error)
+	GetUsers() ([]User, error)
 	DeleteUser(TelegramID int64) error
+	DeleteAll() error
 }
 
 //News from users
