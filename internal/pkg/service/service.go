@@ -13,6 +13,7 @@ func NewTelegramUpdater() *TelegramUpdater {
 	return &TelegramUpdater{
 		command.NewTelegramCommandService(),
 	}
+
 }
 
 func (t *TelegramUpdater) CallbackQueryService(Query *types.TelegramCallbackQuery) ([]byte, error) {
