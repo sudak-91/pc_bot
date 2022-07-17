@@ -71,10 +71,12 @@ func (m *Usermongo) GetUsers() ([]pubrep.User, error) {
 	return us, nil
 
 }
+
 func (m *Usermongo) DeleteUser(TelegramID int64) error {
 	m.col.DeleteOne(context.TODO(), bson.D{{"_id", TelegramID}})
 	return nil
 }
+
 func (m *Usermongo) DeleteAll() error {
 	_, err := m.col.DeleteMany(context.TODO(), bson.D{})
 	if err != nil {

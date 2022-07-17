@@ -1,6 +1,10 @@
 package repository
 
-import "time"
+import (
+	"time"
+
+	"go.mongodb.org/mongo-driver/x/mongo/driver/uuid"
+)
 
 type Repository interface {
 	Users
@@ -39,4 +43,5 @@ type Questions interface {
 	GetQuestionFromConsumer(ConsumerID int64) ([]Question, error)
 	UpdateQuestion(NewQuestion Question) error
 	DeleteQuestion(QuestionID string) error
+	MarkAsAnswer(QuestionID uuid.UUID) error
 }
