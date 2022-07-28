@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"log"
 	"os"
 	"time"
 
@@ -19,10 +20,14 @@ import (
 )
 
 func main() {
+
+	fmt.Println("Engcore bot started")
+	fmt.Println("Engcore bot load config file")
 	err := initConf()
 	if err != nil {
 		panic(err.Error())
 	}
+	fmt.Println("Init complite")
 	if viper.GetBool("dev") {
 		err = godotenv.Load()
 		if err != nil {
@@ -38,6 +43,7 @@ func main() {
 	//updater - роутинг для обновлений
 	updater := update.NewTelegramService(telegramupdate)
 	telegramupdate.AddNewCommand("/start", &intcom.StartCommand{repo.Users})
+	fmt.Println(os.Getenv("BOT_KEY"))
 	BotServer := server.NewServer(viper.GetString("server.port"), os.Getenv("BOT_KEY"), updater)
 	BotServer.Run()
 }
@@ -55,6 +61,7 @@ func createMongoClientAndPing() *mongo.Database {
 	if err != nil {
 		panic(err.Error())
 	}
+	log.Println("connect complete")
 	ctx, _ = context.WithTimeout(context.Background(), 2*time.Second)
 	//defer cancel()
 	err = client.Ping(ctx, readpref.Primary())
