@@ -16,53 +16,53 @@ func NewTelegramUpdater() *TelegramUpdater {
 
 }
 
-func (t *TelegramUpdater) CallbackQueryService(Query *types.TelegramCallbackQuery) ([]byte, error) {
+func (t *TelegramUpdater) CallbackQueryService(Query types.TelegramCallbackQuery) ([]byte, error) {
 	return t.Execute(Query.Data, Query)
 }
 
-func (t *TelegramUpdater) ChannelPostService(Post *types.TelegramMessage) ([]byte, error) {
+func (t *TelegramUpdater) ChannelPostService(Post types.TelegramMessage) ([]byte, error) {
 	return nil, nil
 }
 
-func (t *TelegramUpdater) ChatJoinRequsetService(JoinRequest *types.TelegramChatJoinRequest) ([]byte, error) {
+func (t *TelegramUpdater) ChatJoinRequsetService(JoinRequest types.TelegramChatJoinRequest) ([]byte, error) {
 	return nil, nil
 }
-func (t *TelegramUpdater) ChatMemberService(MemberService *types.TelegramChatMemberUpdated) ([]byte, error) {
+func (t *TelegramUpdater) ChatMemberService(MemberService types.TelegramChatMemberUpdated) ([]byte, error) {
 	return nil, nil
 
 }
-func (t *TelegramUpdater) ChosenInlineResultService(*types.TelegramChosenInlineResult) ([]byte, error) {
+func (t *TelegramUpdater) ChosenInlineResultService(types.TelegramChosenInlineResult) ([]byte, error) {
 	return nil, nil
 }
-func (t *TelegramUpdater) EditedChannelPostService(*types.TelegramMessage) ([]byte, error) {
+func (t *TelegramUpdater) EditedChannelPostService(types.TelegramMessage) ([]byte, error) {
 	return nil, nil
 }
-func (t *TelegramUpdater) EditedMessageService(*types.TelegramMessage) ([]byte, error) {
+func (t *TelegramUpdater) EditedMessageService(types.TelegramMessage) ([]byte, error) {
 	return nil, nil
 }
-func (t *TelegramUpdater) InlineQueryService(*types.TelegramInlineQuery) ([]byte, error) {
+func (t *TelegramUpdater) InlineQueryService(types.TelegramInlineQuery) ([]byte, error) {
 	return nil, nil
 }
-func (t *TelegramUpdater) MessageService(Message *types.TelegramMessage) ([]byte, error) {
+func (t *TelegramUpdater) MessageService(Message types.TelegramMessage) ([]byte, error) {
 	//TODO: Rewrite Message Service
 	return t.Execute(Message.Text, Message)
 }
-func (t *TelegramUpdater) MyChatMemberService(MyChatMember *types.TelegramChatMemberUpdated) ([]byte, error) {
+func (t *TelegramUpdater) MyChatMemberService(MyChatMember types.TelegramChatMemberUpdated) ([]byte, error) {
 	return nil, nil
 }
-func (t *TelegramUpdater) PollService(Poll *types.TelegramPoll) ([]byte, error) {
+func (t *TelegramUpdater) PollService(Poll types.TelegramPoll) ([]byte, error) {
 	return nil, nil
 }
-func (t *TelegramUpdater) PollAnswerService(PollAnswer *types.TelegramPollAnwer) ([]byte, error) {
+func (t *TelegramUpdater) PollAnswerService(PollAnswer types.TelegramPollAnwer) ([]byte, error) {
 	return nil, nil
 }
-func (t *TelegramUpdater) PreCheckoutPollService(CheckoutPoll *types.TelegramPreCheckoutQuery) ([]byte, error) {
+func (t *TelegramUpdater) PreCheckoutPollService(CheckoutPoll types.TelegramPreCheckoutQuery) ([]byte, error) {
 	return nil, nil
 }
-func (t *TelegramUpdater) ShippingService(Shipping *types.TelegramShippingQuery) ([]byte, error) {
+func (t *TelegramUpdater) ShippingService(Shipping types.TelegramShippingQuery) ([]byte, error) {
 	return nil, nil
 }
-func (t *TelegramUpdater) ChatUserUpdateService(UserUpdate *types.TelegramUpdate) ([]byte, error) {
+func (t *TelegramUpdater) ChatUserUpdateService(UserUpdate types.TelegramUpdate) ([]byte, error) {
 	return nil, nil
 }
 func (t *TelegramUpdater) Default(Update types.TelegramUpdate) ([]byte, error) {
