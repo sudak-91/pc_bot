@@ -21,9 +21,15 @@ import (
 func main() {
 	err := initConf()
 	if err != nil {
-		panic(err)
+		panic(err.Error())
 	}
-	err = godotenv.Load()
+	if viper.GetBool("dev") {
+		err = godotenv.Load()
+		if err != nil {
+			panic(err.Error())
+		}
+	}
+
 	db := createMongoClientAndPing()
 	repo := intrep.NewMongoRepository(db)
 	//Создание стандартного обработчика обновления
@@ -47,7 +53,7 @@ func createMongoClientAndPing() *mongo.Database {
 	// 	}
 	// }()
 	if err != nil {
-		panic(err)
+		panic(err.Error())
 	}
 	ctx, _ = context.WithTimeout(context.Background(), 2*time.Second)
 	//defer cancel()

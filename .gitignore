@@ -3,3 +3,4 @@ config
 Dockerfile
 .vscode/
 docker-compose.yml
+Makefile
