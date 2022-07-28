@@ -4,10 +4,12 @@ import (
 	"encoding/json"
 	"fmt"
 
+	pubrep "github.com/sudak-91/pc_bot/pkg/repository"
 	types "github.com/sudak-91/telegrambotgo/TelegramAPI/Types"
 )
 
 type StartCommand struct {
+	pubrep.Users
 }
 
 func (s *StartCommand) Handl(data interface{}) ([]byte, error) {

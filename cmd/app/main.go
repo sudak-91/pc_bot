@@ -2,11 +2,13 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"os"
 	"time"
 
 	"github.com/joho/godotenv"
 	"github.com/spf13/viper"
+	intcom "github.com/sudak-91/pc_bot/internal/pkg/command"
 	intrep "github.com/sudak-91/pc_bot/internal/pkg/repository"
 	"github.com/sudak-91/pc_bot/internal/pkg/server"
 	intserv "github.com/sudak-91/pc_bot/internal/pkg/service"
@@ -29,7 +31,7 @@ func main() {
 	telegramupdate := intserv.NewTelegramUpdater()
 	//updater - роутинг для обновлений
 	updater := update.NewTelegramService(telegramupdate)
-
+	telegramupdate.AddNewCommand("/start", &intcom.StartCommand{repo.Users})
 	BotServer := server.NewServer(viper.GetString("server.port"), os.Getenv("BOT_KEY"), updater)
 	BotServer.Run()
 }
@@ -37,7 +39,8 @@ func main() {
 func createMongoClientAndPing() *mongo.Database {
 	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
 	//defer cancel()
-	client, err := mongo.Connect(ctx, options.Client().ApplyURI("mongodb://docker:mongopw@localhost:55001"))
+	connectString := fmt.Sprintf("mongodb://%s:%s@mongodb:27017", os.Getenv("DB_USERNAME"), os.Getenv("DB_PASSWORD"))
+	client, err := mongo.Connect(ctx, options.Client().ApplyURI(connectString))
 	// defer func() {
 	// 	if err := client.Disconnect(ctx); err != nil {
 	// 		panic(err)
@@ -57,12 +60,12 @@ func createMongoClientAndPing() *mongo.Database {
 }
 
 func initConf() error {
-	viper.SetConfigFile("config")
+	viper.SetConfigName("config")
 	viper.SetConfigType("yaml")
 	viper.AddConfigPath("./config")
 	err := viper.ReadInConfig()
 	if err != nil {
 		return err
 	}
-
+	return nil
 }
