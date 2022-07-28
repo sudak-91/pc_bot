@@ -25,11 +25,13 @@ func NewServer(Port string, key string, Upd update.Updater) *Server {
 func (s *Server) Run() {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/"+s.key, s.Handl)
+	log.Println("Server start")
 	log.Fatal(http.ListenAndServe(":"+s.port, mux))
 }
 
 func (s *Server) Handl(w http.ResponseWriter, r *http.Request) {
 	var b []byte
+	log.Println("New request")
 	buffer := bytes.NewBuffer(b)
 	buffer.ReadFrom(r.Body)
 	k, err := s.updater.Update(buffer.Bytes())
