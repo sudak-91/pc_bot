@@ -13,6 +13,7 @@ import (
 	intrep "github.com/sudak-91/pc_bot/internal/pkg/repository"
 	"github.com/sudak-91/pc_bot/internal/pkg/server"
 	intserv "github.com/sudak-91/pc_bot/internal/pkg/service"
+	keyboardmaker "github.com/sudak-91/telegrambotgo/Keyboardmaker"
 	update "github.com/sudak-91/telegrambotgo/Service"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -42,8 +43,10 @@ func main() {
 	telegramupdate := intserv.NewTelegramUpdater()
 	//updater - роутинг для обновлений
 	updater := update.NewTelegramService(telegramupdate)
-	telegramupdate.AddNewCommand("/start", &intcom.StartCommand{repo.Users})
-	fmt.Println(os.Getenv("BOT_KEY"))
+	//Сбор бизнес логики
+	mkeyboard := createMainInlineKeyboard()
+
+	telegramupdate.AddNewCommand("/start", &intcom.StartCommand{User: repo.Users, Keyboard: mkeyboard.GetKeyboard()})
 	BotServer := server.NewServer(viper.GetString("server.port"), os.Getenv("BOT_KEY"), updater)
 	BotServer.Run()
 }
@@ -81,4 +84,12 @@ func initConf() error {
 		return err
 	}
 	return nil
+}
+
+func createMainInlineKeyboard() keyboardmaker.InlineCommandKeyboard {
+	var mainkeyboard keyboardmaker.InlineCommandKeyboard
+	mainkeyboard.MakeGrid(1, 2)
+	mainkeyboard.AddButton("Задать вопрос", "/addquestion", 0, 0)
+	mainkeyboard.AddButton("Предложить новость", "/addnews", 0, 1)
+	return mainkeyboard
 }
