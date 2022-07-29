@@ -20,6 +20,13 @@ func (s *StartCommand) Handl(data interface{}) ([]byte, error) {
 	var Answer types.TelegramSendMessage
 	Answer.ChatID = msg.Chat.ID
 	Answer.Method = "sendMessage"
-	Answer.Text = "Thx for you Request"
+	var Linktochannel types.TelegramMessageEntity
+	Linktochannel.Language = "ru"
+	Linktochannel.Length = 24
+	Linktochannel.Type = "url"
+	Linktochannel.Url = "https://t.me/wtfcontrolsengineer"
+	Linktochannel.Offset = 41
+	Answer.Entities = append(Answer.Entities, Linktochannel)
+	Answer.Text = "Добро пожаловать. Бот создан для канала \"Я вам че-Автоматизатор\""
 	return json.Marshal(Answer)
 }
