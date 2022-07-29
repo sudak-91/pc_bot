@@ -22,7 +22,7 @@ func (s *StartCommand) Handl(data interface{}) ([]byte, error) {
 	Answer.Method = "sendMessage"
 	var Linktochannel types.TelegramMessageEntity
 	Linktochannel.Length = 24
-	Linktochannel.Type = "url"
+	Linktochannel.Type = "text_link"
 	Linktochannel.Url = "https://t.me/wtfcontrolsengineer"
 	Linktochannel.Offset = 41
 	Answer.Entities = append(Answer.Entities, Linktochannel)
