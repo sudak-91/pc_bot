@@ -21,7 +21,6 @@ func (s *StartCommand) Handl(data interface{}) ([]byte, error) {
 	Answer.ChatID = msg.Chat.ID
 	Answer.Method = "sendMessage"
 	var Linktochannel types.TelegramMessageEntity
-	Linktochannel.Language = "ru"
 	Linktochannel.Length = 24
 	Linktochannel.Type = "url"
 	Linktochannel.Url = "https://t.me/wtfcontrolsengineer"
