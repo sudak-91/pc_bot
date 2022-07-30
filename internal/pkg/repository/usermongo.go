@@ -25,6 +25,7 @@ func (m *Usermongo) CreateUser(TelegramID int64, username string) error {
 	var usr pubrep.User
 	usr.TelegramID = TelegramID
 	usr.Username = username
+	usr.Role = 0
 
 	data, err := bson.Marshal(usr)
 	if err != nil {
