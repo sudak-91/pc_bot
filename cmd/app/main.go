@@ -47,6 +47,7 @@ func main() {
 	mkeyboard := createMainInlineKeyboard()
 
 	telegramupdate.AddNewCommand("/start", &intcom.StartCommand{User: repo.Users, Keyboard: mkeyboard.GetKeyboard()})
+	telegramupdate.AddNewCommand("/login", &intcom.Login{Users: repo.Users})
 	BotServer := server.NewServer(viper.GetString("server.port"), os.Getenv("BOT_KEY"), updater)
 	BotServer.Run()
 }
