@@ -27,12 +27,12 @@ func (m *Usermongo) CreateUser(TelegramID int64, username string) error {
 	usr.Username = username
 
 	data, err := bson.Marshal(usr)
-
 	if err != nil {
 		return fmt.Errorf("Bson Marshal err")
 	}
 	_, err = m.col.InsertOne(context.TODO(), data)
-	if err != nil {
+
+	if !mongo.IsDuplicateKeyError(err) {
 		return fmt.Errorf("Insert Error: %s", err.Error())
 	}
 	return nil

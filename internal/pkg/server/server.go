@@ -4,14 +4,18 @@ import (
 	"bytes"
 	"log"
 	"net/http"
+	"sync"
 
 	update "github.com/sudak-91/telegrambotgo/Service"
 )
+
+var Util *Utl
 
 type Server struct {
 	port    string
 	key     string
 	updater update.Updater
+	once    sync.Once
 }
 
 func NewServer(Port string, key string, Upd update.Updater) *Server {
@@ -22,7 +26,14 @@ func NewServer(Port string, key string, Upd update.Updater) *Server {
 	}
 }
 
+type Utl struct {
+	Stage map[int64]int
+}
+
 func (s *Server) Run() {
+	s.once.Do(func() {
+		Util = &Utl{Stage: make(map[int64]int)}
+	})
 	mux := http.NewServeMux()
 	mux.HandleFunc("/"+s.key, s.Handl)
 	log.Println("Server start")

@@ -31,7 +31,7 @@ func (s *StartCommand) Handl(data interface{}) ([]byte, error) {
 	Linktochannel.Url = "https://t.me/wtfcontrolsengineer"
 	Linktochannel.Offset = 40
 	Answer.Entities = append(Answer.Entities, Linktochannel)
-	Answer.Text = `Добро пожаловать. Бот создан для канала \"Я вам че-Автоматизатор\"`
+	Answer.Text = `Добро пожаловать. Бот создан для канала "Я вам че-Автоматизатор"`
 	Answer.ReplyMarkup = &s.Keyboard
 	return json.Marshal(Answer)
 }
