@@ -109,7 +109,7 @@ func (n *NewsMongo) GetNewsFromConsumer(ConsumerID int64) ([]pubrep.News, error)
 
 func (n *NewsMongo) UpdateNews(NewNews pubrep.News) error {
 	filter := bson.D{{"_id", NewNews.NewsID}}
-	upd := bson.D{{"$set", bson.D{{"asread", NewNews.AsRead}{"text", NewNews.Text}}}}
+	upd := bson.D{{"$set", bson.D{{"asread", NewNews.AsRead}, {"text", NewNews.Text}}}}
 	_, err := n.col.UpdateOne(context.TODO(), filter, upd)
 	if err != nil {
 		return fmt.Errorf("Update user has error: %s", err.Error())
@@ -117,5 +117,5 @@ func (n *NewsMongo) UpdateNews(NewNews pubrep.News) error {
 	return nil
 }
 func (n *NewsMongo) DeleteNews(NewsID uuid.UUID) error {
-
+	return nil
 }

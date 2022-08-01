@@ -13,6 +13,8 @@ type MongoRepository struct {
 
 func NewMongoRepository(db *mongo.Database) *MongoRepository {
 	return &MongoRepository{
-		Users: NewUsermongo(db),
+		Users:     NewUsermongo(db),
+		Newser:    NewNewsMongo(db),
+		Questions: NewQuestionmongo(db),
 	}
 }

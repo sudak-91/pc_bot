@@ -40,7 +40,7 @@ func (m *Usermongo) CreateUser(TelegramID int64, username string) error {
 }
 func (m *Usermongo) UpdateUser(NewData pubrep.User) error {
 	filter := bson.D{{"_id", NewData.TelegramID}}
-	upd := bson.D{{"$set", bson.D{{"Username", NewData.Username}{"Role", NewData.Role}}}}
+	upd := bson.D{{"$set", bson.D{{"Username", NewData.Username}, {"Role", NewData.Role}}}}
 	_, err := m.col.UpdateOne(context.TODO(), filter, upd)
 	if err != nil {
 		return fmt.Errorf("Update user has error: %s", err.Error())

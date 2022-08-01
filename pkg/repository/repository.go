@@ -42,6 +42,6 @@ type Questions interface {
 	GetAsAnswerQuestion() ([]Question, error)
 	GetQuestionFromConsumer(ConsumerID int64) ([]Question, error)
 	UpdateQuestion(NewQuestion Question) error
-	DeleteQuestion(QuestionID string) error
+	DeleteQuestion(QuestionID uuid.UUID) error
 	MarkAsAnswer(QuestionID uuid.UUID) error
 }
