@@ -51,7 +51,13 @@ func main() {
 	telegramupdate.AddNewCommand("/news", &intcom.News{})
 	telegramupdate.AddNewCommand("/addnews", &intcom.AddNews{})
 	BotServer := server.NewServer(viper.GetString("server.port"), os.Getenv("BOT_KEY"), updater)
-	BotServer.Run()
+	AdminUsr, err := repo.Users.GetAdmin()
+	AdminID := AdminUsr[0].TelegramID
+	if err != nil {
+		log.Println("No admin")
+		AdminID = 0
+	}
+	BotServer.Run(AdminID)
 }
 
 func createMongoClientAndPing() *mongo.Database {

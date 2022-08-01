@@ -58,6 +58,17 @@ func (m *Usermongo) GetUser(TelegramID int64) ([]pubrep.User, error) {
 	}
 	return Users, nil
 }
+
+func (m *Usermongo) GetAdmin() ([]pubrep.User, error) {
+	filter := bson.D{{"Role", 9}}
+	rtslt := m.col.FindOne(context.TODO(), filter)
+	Users := make([]pubrep.User, 1)
+	err := rtslt.Decode(&Users[0])
+	if err != nil {
+		return nil, fmt.Errorf("GetUser has error: %s", err.Error())
+	}
+	return Users, nil
+}
 func (m *Usermongo) GetUsers() ([]pubrep.User, error) {
 	rslt, err := m.col.Find(context.TODO(), bson.D{})
 	if err != nil {

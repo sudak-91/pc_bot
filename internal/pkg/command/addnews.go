@@ -4,8 +4,11 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"os"
 
+	"github.com/sudak-91/pc_bot/internal/pkg/server"
 	pubrep "github.com/sudak-91/pc_bot/pkg/repository"
+	methods "github.com/sudak-91/telegrambotgo/TelegramAPI/Methods"
 	types "github.com/sudak-91/telegrambotgo/TelegramAPI/Types"
 )
 
@@ -26,5 +29,6 @@ func (a *AddNews) Handl(data interface{}) ([]byte, error) {
 		log.Println(err.Error())
 		return json.Marshal(Answer)
 	}
+	methods.SendMessageMethod(os.Getenv("BOT_KEY"), server.Util.AdminID, "Добавлена новая новость")
 	return json.Marshal(Answer)
 }

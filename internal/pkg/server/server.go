@@ -12,10 +12,12 @@ import (
 var Util *Utl
 
 type Server struct {
-	port    string
-	key     string
-	updater update.Updater
-	once    sync.Once
+	port                 string
+	key                  string
+	updater              update.Updater
+	updateNewsSignal     chan bool
+	updateQuestionSignal chan bool
+	once                 sync.Once
 }
 
 func NewServer(Port string, key string, Upd update.Updater) *Server {
@@ -27,12 +29,14 @@ func NewServer(Port string, key string, Upd update.Updater) *Server {
 }
 
 type Utl struct {
-	Stage map[int64]int
+	Stage   map[int64]int
+	AdminID int64
 }
 
-func (s *Server) Run() {
+func (s *Server) Run(AdminID int64) {
 	s.once.Do(func() {
-		Util = &Utl{Stage: make(map[int64]int)}
+		Util = &Utl{Stage: make(map[int64]int), AdminID: AdminID}
+
 	})
 	mux := http.NewServeMux()
 	mux.HandleFunc("/"+s.key, s.Handl)

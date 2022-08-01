@@ -6,6 +6,7 @@ import (
 	"os"
 	"strings"
 
+	"github.com/sudak-91/pc_bot/internal/pkg/server"
 	pubrep "github.com/sudak-91/pc_bot/pkg/repository"
 	types "github.com/sudak-91/telegrambotgo/TelegramAPI/Types"
 )
@@ -41,5 +42,6 @@ func (l *Login) Handl(data interface{}) ([]byte, error) {
 		return nil, err
 	}
 	Answer.Text = "Вы получили права администратора"
+	server.Util.AdminID = msg.Chat.ID
 	return json.Marshal(Answer)
 }
