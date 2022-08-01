@@ -1,6 +1,8 @@
 package service
 
 import (
+	"log"
+
 	command "github.com/sudak-91/telegrambotgo/Command"
 	types "github.com/sudak-91/telegrambotgo/TelegramAPI/Types"
 )
@@ -31,16 +33,18 @@ func (t *TelegramUpdater) ChatMemberService(MemberService types.TelegramChatMemb
 	return nil, nil
 
 }
-func (t *TelegramUpdater) ChosenInlineResultService(types.TelegramChosenInlineResult) ([]byte, error) {
+func (t *TelegramUpdater) ChosenInlineResultService(TelegramChosenInlien types.TelegramChosenInlineResult) ([]byte, error) {
 	return nil, nil
 }
-func (t *TelegramUpdater) EditedChannelPostService(types.TelegramMessage) ([]byte, error) {
+func (t *TelegramUpdater) EditedChannelPostService(Message types.TelegramMessage) ([]byte, error) {
 	return nil, nil
 }
-func (t *TelegramUpdater) EditedMessageService(types.TelegramMessage) ([]byte, error) {
+func (t *TelegramUpdater) EditedMessageService(Message types.TelegramMessage) ([]byte, error) {
+	log.Println("Edited log service")
+	log.Println(Message)
 	return nil, nil
 }
-func (t *TelegramUpdater) InlineQueryService(types.TelegramInlineQuery) ([]byte, error) {
+func (t *TelegramUpdater) InlineQueryService(InlineQuery types.TelegramInlineQuery) ([]byte, error) {
 	return nil, nil
 }
 func (t *TelegramUpdater) MessageService(Message types.TelegramMessage) ([]byte, error) {
