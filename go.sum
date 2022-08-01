@@ -178,6 +178,8 @@ github.com/subosito/gotenv v1.4.0 h1:yAzM1+SmVcz5R4tXGsNMu1jUl2aOJXoiWUCEwwnGrvs
 github.com/subosito/gotenv v1.4.0/go.mod h1:mZd6rFysKEcUhUHXJk0C/08wAgyDBFuwEYL7vWWGaGo=
 github.com/sudak-91/telegrambotgo v0.0.2 h1:S1eV0sSNV40+H7JFLftIigVDZ1NTl02ULRASGiBbVhA=
 github.com/sudak-91/telegrambotgo v0.0.2/go.mod h1:PxvWyzPBtzWJL1sbSVxN2gy81obcva+d8XT2Tf7mRg4=
+github.com/sudak-91/telegrambotgo v0.0.3-0.20220801134733-8ae033b91c87 h1:Kf4pReyKCFJbaBL1BCHG50/sAEkbNe02F+b396a0pGs=
+github.com/sudak-91/telegrambotgo v0.0.3-0.20220801134733-8ae033b91c87/go.mod h1:PxvWyzPBtzWJL1sbSVxN2gy81obcva+d8XT2Tf7mRg4=
 github.com/tidwall/pretty v1.0.0 h1:HsD+QiTn7sK6flMKIvNmpqz1qrpP3Ps6jOKIKMooyg4=
 github.com/tidwall/pretty v1.0.0/go.mod h1:XNkn88O1ChpSDQmQeStsy+sBenx6DDtFZJxhVysOjyk=
 github.com/xdg-go/pbkdf2 v1.0.0 h1:Su7DPu48wXMwC3bs7MCNG+z4FhcyEuz5dlvchbq0B0c=
