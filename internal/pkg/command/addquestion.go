@@ -33,5 +33,6 @@ func (q *AddQuestion) Handl(data interface{}) ([]byte, error) {
 	if err != nil {
 		log.Println("Send message has error: %s", err)
 	}
+	delete(server.Util.Stage, msg.Chat.ID)
 	return json.Marshal(Answer)
 }

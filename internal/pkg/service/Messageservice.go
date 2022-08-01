@@ -8,15 +8,13 @@ import (
 //TODO: Обработка ошибок
 func (t *TelegramUpdater) messageService(Message types.TelegramMessage) ([]byte, error) {
 	switch server.Util.Stage[Message.From.ID] {
-	case 0:
-		//Старт обработки обычной текстовой команды
-		return t.Routing(Message)
+
 	case 10:
 		return t.Execute("/addnews", Message)
 	case 20:
 		return t.Execute("/addquestion", Message)
 	default:
-		return t.DefaultAnswer(&Message)
+		return t.Routing(Message)
 
 	}
 }
