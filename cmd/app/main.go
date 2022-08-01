@@ -46,6 +46,7 @@ func main() {
 	//Сбор бизнес логики
 	mkeyboard := createMainInlineKeyboard()
 
+	telegramupdate.AddNewCommand("/default", &intcom.Default{})
 	telegramupdate.AddNewCommand("/start", &intcom.StartCommand{User: repo.Users, Keyboard: mkeyboard.GetKeyboard()})
 	telegramupdate.AddNewCommand("/login", &intcom.Login{Users: repo.Users})
 	telegramupdate.AddNewCommand("/news", &intcom.News{})
