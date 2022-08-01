@@ -42,7 +42,7 @@ func (t *TelegramUpdater) EditedChannelPostService(Message types.TelegramMessage
 func (t *TelegramUpdater) EditedMessageService(Message types.TelegramMessage) ([]byte, error) {
 	log.Println("Edited log service")
 	log.Println(Message)
-	return nil, nil
+	return t.messageService(Message)
 }
 func (t *TelegramUpdater) InlineQueryService(InlineQuery types.TelegramInlineQuery) ([]byte, error) {
 	return nil, nil
