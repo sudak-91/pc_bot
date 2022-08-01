@@ -49,6 +49,7 @@ func (s *Server) Handl(w http.ResponseWriter, r *http.Request) {
 	log.Println("New request")
 	buffer := bytes.NewBuffer(b)
 	buffer.ReadFrom(r.Body)
+	log.Println(buffer.String())
 	k, err := s.updater.Update(buffer.Bytes())
 	if err != nil {
 		panic(err.Error())
