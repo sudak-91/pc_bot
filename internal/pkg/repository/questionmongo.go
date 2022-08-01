@@ -19,7 +19,7 @@ func NewQuestionmongo(db *mongo.Database) *Questionmongo {
 	return &q
 }
 
-func (q *Questionmongo) CreateQuestion(Text string, ContributerID int64) error {
+func (q *Questionmongo) CreateQuestion(Text string, ContributerID int64, MessageID int64) error {
 	var ques pubrep.Question
 	var err error
 	ques.QuestionID, err = uuid.New()
@@ -28,6 +28,7 @@ func (q *Questionmongo) CreateQuestion(Text string, ContributerID int64) error {
 	}
 	ques.Text = Text
 	ques.ContributerID = ContributerID
+	ques.MessageID = MessageID
 	data, err := bson.Marshal(ques)
 	if err != nil {
 		return err

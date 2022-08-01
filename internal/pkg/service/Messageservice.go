@@ -5,6 +5,7 @@ import (
 	types "github.com/sudak-91/telegrambotgo/TelegramAPI/Types"
 )
 
+//TODO: Обработка ошибок
 func (t *TelegramUpdater) messageService(Message types.TelegramMessage) ([]byte, error) {
 	switch server.Util.Stage[Message.From.ID] {
 	case 0:
@@ -12,7 +13,8 @@ func (t *TelegramUpdater) messageService(Message types.TelegramMessage) ([]byte,
 		return t.Routing(Message)
 	case 10:
 		return t.Execute("/addnews", Message)
-
+	case 20:
+		return t.Execute("/addquestion", Message)
 	default:
 		return t.DefaultAnswer(&Message)
 

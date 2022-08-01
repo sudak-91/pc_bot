@@ -12,4 +12,5 @@ type Question struct {
 	Date          time.Time `bson:"date"`
 	AsAnswer      bool      `bson:"asanswer"`
 	ContributerID int64     `bson:"contributerid"`
+	MessageID     int64     `bson:"messageid"`
 }

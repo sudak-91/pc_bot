@@ -37,7 +37,7 @@ type Newser interface {
 
 //Question from Telgram bot
 type Questions interface {
-	CreateQuestion(Text string, ContributerID int64) error
+	CreateQuestion(Text string, ContributerID int64, MesasgeID int64) error
 	GetAllQuestions() ([]Question, error)
 	GetNotAnswerQuestion() ([]Question, error)
 	GetAsAnswerQuestion() ([]Question, error)

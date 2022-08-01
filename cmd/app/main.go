@@ -49,7 +49,10 @@ func main() {
 	telegramupdate.AddNewCommand("/start", &intcom.StartCommand{User: repo.Users, Keyboard: mkeyboard.GetKeyboard()})
 	telegramupdate.AddNewCommand("/login", &intcom.Login{Users: repo.Users})
 	telegramupdate.AddNewCommand("/news", &intcom.News{})
-	telegramupdate.AddNewCommand("/addnews", &intcom.AddNews{})
+	telegramupdate.AddNewCommand("/addnews", &intcom.AddNews{News: repo.Newser})
+	telegramupdate.AddNewCommand("/question", &intcom.Questions{})
+	telegramupdate.AddNewCommand("/addquestion", &intcom.AddQuestion{Question: repo.Questions})
+
 	BotServer := server.NewServer(viper.GetString("server.port"), os.Getenv("BOT_KEY"), updater)
 	AdminUsr, err := repo.Users.GetAdmin()
 	AdminID := AdminUsr[0].TelegramID
