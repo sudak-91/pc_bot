@@ -48,6 +48,8 @@ func main() {
 
 	telegramupdate.AddNewCommand("/start", &intcom.StartCommand{User: repo.Users, Keyboard: mkeyboard.GetKeyboard()})
 	telegramupdate.AddNewCommand("/login", &intcom.Login{Users: repo.Users})
+	telegramupdate.AddNewCommand("/news", &intcom.News{})
+	telegramupdate.AddNewCommand("/addnews", &intcom.AddNews{})
 	BotServer := server.NewServer(viper.GetString("server.port"), os.Getenv("BOT_KEY"), updater)
 	BotServer.Run()
 }
@@ -90,7 +92,7 @@ func initConf() error {
 func createMainInlineKeyboard() keyboardmaker.InlineCommandKeyboard {
 	var mainkeyboard keyboardmaker.InlineCommandKeyboard
 	mainkeyboard.MakeGrid(1, 2)
-	mainkeyboard.AddButton("Задать вопрос", "/addquestion", 0, 0)
-	mainkeyboard.AddButton("Предложить новость", "/addnews", 0, 1)
+	mainkeyboard.AddButton("Задать вопрос", "/question", 0, 0)
+	mainkeyboard.AddButton("Предложить новость", "/news", 0, 1)
 	return mainkeyboard
 }

@@ -1,9 +1,13 @@
 package repository
 
-import "time"
+import (
+	"time"
+
+	"go.mongodb.org/mongo-driver/x/mongo/driver/uuid"
+)
 
 type News struct {
-	NewsID     string    `bson:"newsid"`
+	NewsID     uuid.UUID `bson:"_id"`
 	Text       string    `bson:"text"`
 	AsRead     bool      `bson:"asread"`
 	Time       time.Time `bson:"time"`

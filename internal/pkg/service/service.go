@@ -1,7 +1,6 @@
 package service
 
 import (
-	"github.com/sudak-91/pc_bot/internal/pkg/server"
 	command "github.com/sudak-91/telegrambotgo/Command"
 	types "github.com/sudak-91/telegrambotgo/TelegramAPI/Types"
 )
@@ -45,14 +44,8 @@ func (t *TelegramUpdater) InlineQueryService(types.TelegramInlineQuery) ([]byte,
 	return nil, nil
 }
 func (t *TelegramUpdater) MessageService(Message types.TelegramMessage) ([]byte, error) {
-	//TODO: Rewrite Message Service
-	switch server.Util.Stage[Message.From.ID] {
-	case 0:
-		return t.Execute(Message.Text, Message)
-	default:
-		return t.DefaultAnswer(&Message)
+	return t.messageService(Message)
 
-	}
 }
 func (t *TelegramUpdater) MyChatMemberService(MyChatMember types.TelegramChatMemberUpdated) ([]byte, error) {
 	return nil, nil

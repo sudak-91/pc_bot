@@ -31,7 +31,7 @@ type Newser interface {
 	GetNewsWithDate(time time.Time) ([]News, error)
 	GetNewsFromConsumer(ConsumerID int64) ([]News, error)
 	UpdateNews(NewNews News) error
-	DeleteNews(NewsID string) error
+	DeleteNews(NewsID uuid.UUID) error
 }
 
 //Question from Telgram bot
