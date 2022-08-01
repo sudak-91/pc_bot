@@ -55,7 +55,10 @@ func main() {
 
 	BotServer := server.NewServer(viper.GetString("server.port"), os.Getenv("BOT_KEY"), updater)
 	AdminUsr, err := repo.Users.GetAdmin()
-	AdminID := AdminUsr[0].TelegramID
+	var AdminID int64
+	if len(AdminUsr) != 0 {
+		AdminID = AdminUsr[0].TelegramID
+	}
 	if err != nil {
 		log.Println("No admin")
 		AdminID = 0
