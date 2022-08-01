@@ -9,6 +9,10 @@ import (
 
 //TODO: Обработка ошибок
 func (t *TelegramUpdater) messageService(Message types.TelegramMessage) ([]byte, error) {
+	_, ok := server.Util.Stage[Message.From.ID]
+	if !ok {
+		return t.Routing(Message)
+	}
 	switch server.Util.Stage[Message.From.ID] {
 	case 10:
 		return t.Execute("/addnews", Message)
