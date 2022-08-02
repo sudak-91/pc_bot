@@ -2,6 +2,7 @@ package repository
 
 import (
 	"context"
+	"encoding/base64"
 	"fmt"
 	"log"
 	"time"
@@ -98,11 +99,14 @@ func (n *NewsMongo) GetNewsWithDate(time time.Time) ([]pubrep.News, error) {
 func (n *NewsMongo) GetNews(UUID string) ([]pubrep.News, error) {
 	//FIXME: разобратся с выдаче UUID
 	log.Printf("GetNews has UUID: %s\n", UUID)
-
-	filter := bson.D{{"_id", fmt.Sprintf("%s", UUID)}}
+	ID, err := base64.RawStdEncoding.DecodeString(UUID)
+	if err != nil {
+		return nil, fmt.Errorf("GetNews gas error: %s", err.Error())
+	}
+	filter := bson.D{{"_id", ID}}
 	rtslt := n.col.FindOne(context.TODO(), filter)
 	News := make([]pubrep.News, 1)
-	err := rtslt.Decode(&News[0])
+	err = rtslt.Decode(&News[0])
 	if err != nil {
 		return nil, fmt.Errorf("GetNews has error: %s", err.Error())
 	}
