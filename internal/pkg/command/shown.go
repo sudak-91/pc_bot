@@ -43,9 +43,9 @@ func (s *Shown) Handl(data interface{}) ([]byte, error) {
 			sMessage.Text = v.Text[:140]
 		}
 		var newsKeyboard keyboardmaker.InlineCommandKeyboard
-		newsKeyboard.MakeGrid(1, 3)
-		newsKeyboard.AddButton("Прочесть полностью", fmt.Sprintf("/readmore %v", v.NewsID), 0, 0)
-		newsKeyboard.AddButton("Отметить как прочитанное", fmt.Sprintf("/markasread %v", v.NewsID), 0, 1)
+		newsKeyboard.MakeGrid(1, 2)
+		newsKeyboard.AddButton("Прочесть полностью", fmt.Sprintf("/readmore %s", v.NewsID), 0, 0)
+		newsKeyboard.AddButton("Отметить как прочитанное", fmt.Sprintf("/markasread %s", v.NewsID), 0, 1)
 		kboard := newsKeyboard.GetKeyboard()
 		sMessage.ReplayMarkup = &kboard
 		if err := methods.SendMessageMethod(os.Getenv("BOT_KEY"), sMessage); err != nil {
