@@ -48,7 +48,7 @@ func (s *Shown) Handl(data interface{}) ([]byte, error) {
 		//FIXME: Исправить выдачу кнопок
 		log.Println("@@@@@@@@@@@@@@@@@@@@@@@@@@")
 		log.Println(v.NewsID)
-		q := fmt.Sprintf("/readmore %x", hex.EncodeToString(v.NewsID[:]))
+		q := fmt.Sprintf("/readmore %s", hex.EncodeToString(v.NewsID[:]))
 		log.Println(q)
 		newsKeyboard.AddButton("Прочесть полностью", q, 0, 0)
 		newsKeyboard.AddButton("Отметить как прочитанное", fmt.Sprintf("/markasread %x", v.NewsID), 0, 1)
