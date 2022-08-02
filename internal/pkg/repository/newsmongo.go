@@ -99,7 +99,7 @@ func (n *NewsMongo) GetNews(UUID string) ([]pubrep.News, error) {
 	//FIXME: разобратся с выдаче UUID
 	log.Printf("GetNews has UUID: %x\n", UUID)
 
-	filter := bson.D{{"_id", UUID}}
+	filter := bson.D{{"_id", fmt.Sprintf("%x", UUID)}}
 	rtslt := n.col.FindOne(context.TODO(), filter)
 	News := make([]pubrep.News, 1)
 	err := rtslt.Decode(&News[0])
