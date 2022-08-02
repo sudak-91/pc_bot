@@ -50,7 +50,7 @@ func (s *Shown) Handl(data interface{}) ([]byte, error) {
 		q := fmt.Sprintf("/readmore %x", v.NewsID)
 		log.Println(q)
 		newsKeyboard.AddButton("Прочесть полностью", q, 0, 0)
-		newsKeyboard.AddButton("Отметить как прочитанное", fmt.Sprintf("/markasread %s", v.NewsID[:]), 0, 1)
+		newsKeyboard.AddButton("Отметить как прочитанное", fmt.Sprintf("/markasread %x", v.NewsID), 0, 1)
 		kboard := newsKeyboard.GetKeyboard()
 		sMessage.ReplayMarkup = &kboard
 		if err := methods.SendMessageMethod(os.Getenv("BOT_KEY"), sMessage); err != nil {
