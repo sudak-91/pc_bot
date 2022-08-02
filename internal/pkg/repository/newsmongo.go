@@ -3,6 +3,7 @@ package repository
 import (
 	"context"
 	"fmt"
+	"strings"
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson"
@@ -95,10 +96,18 @@ func (n *NewsMongo) GetNewsWithDate(time time.Time) ([]pubrep.News, error) {
 }
 
 func (n *NewsMongo) GetNews(UUID string) ([]pubrep.News, error) {
-	filter := bson.D{{"_id", UUID}}
+	var uuid uuid.UUID
+	l, err := strings.NewReader(UUID).Read(uuid[:])
+	if err != nil {
+		return nil, fmt.Errorf("GetNews method has error: %s", err.Error())
+	}
+	if l != 16 {
+		return nil, fmt.Errorf("THE UUID on the input parametr dont hav length")
+	}
+	filter := bson.D{{"_id", uuid}}
 	rtslt := n.col.FindOne(context.TODO(), filter)
 	News := make([]pubrep.News, 1)
-	err := rtslt.Decode(&News[0])
+	err = rtslt.Decode(&News[0])
 	if err != nil {
 		return nil, fmt.Errorf("GetNews has error: %s", err.Error())
 	}

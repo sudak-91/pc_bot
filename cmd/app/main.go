@@ -56,6 +56,7 @@ func main() {
 	telegramupdate.AddNewCommand("/shown", &intcom.Shown{News: repo.Newser})
 	telegramupdate.AddNewCommand("/readmore", &intcom.ReadMore{News: repo.Newser})
 	telegramupdate.AddNewCommand("/markasread", &intcom.MarkAsRead{News: repo.Newser})
+	telegramupdate.AddNewCommand("/showq", &intcom.ShowQ{})
 
 	BotServer := server.NewServer(viper.GetString("server.port"), os.Getenv("BOT_KEY"), updater)
 	AdminUsr, err := repo.Users.GetAdmin()
