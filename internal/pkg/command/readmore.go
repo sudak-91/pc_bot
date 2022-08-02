@@ -21,7 +21,7 @@ func (r *ReadMore) Handl(data interface{}) ([]byte, error) {
 		return nil, fmt.Errorf("The Readmore handl dont have Callbackquery type on a input parametr\n")
 
 	}
-	Args := strings.Split(msg.Message.Text, " ")
+	Args := strings.Split(msg.Data, " ")
 	var Answer types.TelegramSendMessage
 	Answer.Method = "sendMessage"
 	Answer.ChatID = msg.From.ID

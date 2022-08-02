@@ -23,7 +23,7 @@ func (m *MarkAsRead) Handl(data interface{}) ([]byte, error) {
 	log.Printf("Message text is: %s\n", msg.Message.Text)
 	Answer.Method = "sendMessage"
 	Answer.ChatID = msg.From.ID
-	Args := strings.Split(msg.Message.Text, " ")
+	Args := strings.Split(msg.Data, " ")
 	if len(Args) != 2 {
 		Answer.Text = "Произошла внутренняя ошибка"
 		log.Println("Arguments count more then 2")
