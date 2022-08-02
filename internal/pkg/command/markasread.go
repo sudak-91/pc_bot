@@ -20,6 +20,7 @@ func (m *MarkAsRead) Handl(data interface{}) ([]byte, error) {
 		return nil, fmt.Errorf("The MarkAsRead handle dont have Callback Query data type on the input parameter")
 	}
 	var Answer types.TelegramSendMessage
+	log.Printf("Message text is: %s\n", msg.Message.Text)
 	Answer.Method = "sendMessage"
 	Answer.ChatID = msg.From.ID
 	Args := strings.Split(msg.Message.Text, " ")

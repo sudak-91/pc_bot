@@ -3,6 +3,7 @@ package repository
 import (
 	"context"
 	"fmt"
+	"log"
 	"strings"
 	"time"
 
@@ -96,11 +97,14 @@ func (n *NewsMongo) GetNewsWithDate(time time.Time) ([]pubrep.News, error) {
 }
 
 func (n *NewsMongo) GetNews(UUID string) ([]pubrep.News, error) {
-	var uuid uuid.UUID
-	l, err := strings.NewReader(UUID).Read(uuid[:])
+	uuid := make([]byte, 16)
+	log.Printf("GetNews has UUID: %s\n", UUID)
+	UUIDReader := strings.NewReader(UUID)
+	l, err := UUIDReader.Read(uuid)
 	if err != nil {
 		return nil, fmt.Errorf("GetNews method has error: %s", err.Error())
 	}
+	log.Printf("UUID to bytes is; %v\n", uuid)
 	if l != 16 {
 		return nil, fmt.Errorf("THE UUID on the input parametr dont hav length")
 	}
