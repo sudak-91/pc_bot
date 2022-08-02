@@ -96,7 +96,7 @@ func (n *NewsMongo) GetNewsWithDate(time time.Time) ([]pubrep.News, error) {
 }
 
 func (n *NewsMongo) GetNews(UUID string) ([]pubrep.News, error) {
-
+	//FIXME: разобратся с выдаче UUID
 	log.Printf("GetNews has UUID: %s\n", UUID)
 
 	filter := bson.D{{"_id", UUID}}
