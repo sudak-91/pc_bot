@@ -27,6 +27,7 @@ type Users interface {
 type Newser interface {
 	CreateNews(Text string, ContributerID int64) error
 	GetAllNews() ([]News, error)
+	GetNews(uuid.UUID) ([]News, error)
 	GetNotAsReadNews() ([]News, error)
 	GetAsReadNews() ([]News, error)
 	GetNewsWithDate(time time.Time) ([]News, error)

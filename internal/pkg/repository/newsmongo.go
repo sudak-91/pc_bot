@@ -94,6 +94,17 @@ func (n *NewsMongo) GetNewsWithDate(time time.Time) ([]pubrep.News, error) {
 	return qu, nil
 }
 
+func (n *NewsMongo) GetNews(UUID string) ([]pubrep.News, error) {
+	filter := bson.D{{"_id", UUID}}
+	rtslt := n.col.FindOne(context.TODO(), filter)
+	News := make([]pubrep.News, 1)
+	err := rtslt.Decode(&News[0])
+	if err != nil {
+		return nil, fmt.Errorf("GetNews has error: %s", err.Error())
+	}
+	return News, nil
+}
+
 func (n *NewsMongo) GetNewsFromConsumer(ConsumerID int64) ([]pubrep.News, error) {
 	rslt, err := n.col.Find(context.TODO(), bson.D{{"consumerid", ConsumerID}})
 	if err != nil {
