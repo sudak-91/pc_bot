@@ -4,9 +4,11 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"os"
 
 	"github.com/sudak-91/pc_bot/internal/pkg/server"
 	pubrep "github.com/sudak-91/pc_bot/pkg/repository"
+	keyboardmaker "github.com/sudak-91/telegrambotgo/Keyboardmaker"
 	methods "github.com/sudak-91/telegrambotgo/TelegramAPI/Methods"
 	types "github.com/sudak-91/telegrambotgo/TelegramAPI/Types"
 )
@@ -33,10 +35,24 @@ func (s *Shown) Handl(data interface{}) ([]byte, error) {
 		Answer.Text = "Произошла внутреняя ошибка"
 		return json.Marshal(Answer)
 	}
-	for k, v := range News {
+	for _, v := range News {
 		var sMessage methods.SendMessage
 		sMessage.ChatID = msg.From.ID
-		sMessage.Text = v.Text[:100]
-
+		sMessage.Text = v.Text
+		if len(v.Text) > 140 {
+			sMessage.Text = v.Text[:140]
+		}
+		var newsKeyboard keyboardmaker.InlineCommandKeyboard
+		newsKeyboard.MakeGrid(1, 3)
+		newsKeyboard.AddButton("Прочесть полностью", fmt.Sprintf("/readmore %v", v.NewsID), 0, 0)
+		newsKeyboard.AddButton("Отметить как прочитанное", fmt.Sprintf("/markasread %v", v.NewsID), 0, 1)
+		kboard := newsKeyboard.GetKeyboard()
+		sMessage.ReplayMarkup = &kboard
+		if err := methods.SendMessageMethod(os.Getenv("BOT_KEY"), sMessage); err != nil {
+			log.Printf("send message on shown handl has error:%s\n", err.Error())
+			continue
+		}
 	}
+	Answer.Text = "Выдача новостей завершена"
+	return json.Marshal(Answer)
 }
