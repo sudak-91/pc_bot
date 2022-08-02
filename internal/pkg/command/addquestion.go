@@ -29,7 +29,10 @@ func (q *AddQuestion) Handl(data interface{}) ([]byte, error) {
 		Answer.Text = "Произошла внутренняя ошибка"
 		log.Println(err.Error())
 	}
-	err := methods.SendMessageMethod(os.Getenv("BOT_KEY"), server.Util.AdminID, "добавлен новый вопрос")
+	var sMessage methods.SendMessage
+	sMessage.ChatID = server.Util.AdminID
+	sMessage.Text = "Добавлен новый вопрос"
+	err := methods.SendMessageMethod(os.Getenv("BOT_KEY"), sMessage)
 	if err != nil {
 		log.Println("Send message has error: %s", err)
 	}

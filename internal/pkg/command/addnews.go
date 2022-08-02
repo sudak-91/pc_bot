@@ -29,7 +29,10 @@ func (a *AddNews) Handl(data interface{}) ([]byte, error) {
 		log.Println(err.Error())
 		return json.Marshal(Answer)
 	}
-	methods.SendMessageMethod(os.Getenv("BOT_KEY"), server.Util.AdminID, "Добавлена новая новость")
+	var sMessage methods.SendMessage
+	sMessage.ChatID = server.Util.AdminID
+	sMessage.Text = "Добавлена новая новость"
+	methods.SendMessageMethod(os.Getenv("BOT_KEY"), sMessage)
 	Answer.Text = "Новость принята"
 	delete(server.Util.Stage, msg.Chat.ID)
 	return json.Marshal(Answer)

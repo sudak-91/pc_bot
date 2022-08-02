@@ -12,7 +12,8 @@ import (
 )
 
 type Login struct {
-	Users pubrep.Users
+	Users    pubrep.Users
+	Keyboard types.TelegramInlineKeyboardMarkup
 }
 
 func (l *Login) Handl(data interface{}) ([]byte, error) {
@@ -42,6 +43,7 @@ func (l *Login) Handl(data interface{}) ([]byte, error) {
 		return nil, err
 	}
 	Answer.Text = "Вы получили права администратора"
+	Answer.ReplyMarkup = &l.Keyboard
 	server.Util.AdminID = msg.Chat.ID
 	return json.Marshal(Answer)
 }

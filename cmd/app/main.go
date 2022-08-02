@@ -45,10 +45,10 @@ func main() {
 	updater := update.NewTelegramService(telegramupdate)
 	//Сбор бизнес логики
 	mkeyboard := createMainInlineKeyboard()
-
+	akeyboard := createAdminInlineKeyboard()
 	telegramupdate.AddNewCommand("/default", &intcom.Default{})
 	telegramupdate.AddNewCommand("/start", &intcom.StartCommand{User: repo.Users, Keyboard: mkeyboard.GetKeyboard()})
-	telegramupdate.AddNewCommand("/login", &intcom.Login{Users: repo.Users})
+	telegramupdate.AddNewCommand("/login", &intcom.Login{Users: repo.Users, Keyboard: akeyboard.GetKeyboard()})
 	telegramupdate.AddNewCommand("/news", &intcom.News{})
 	telegramupdate.AddNewCommand("/addnews", &intcom.AddNews{News: repo.Newser})
 	telegramupdate.AddNewCommand("/question", &intcom.Questions{})
@@ -108,4 +108,12 @@ func createMainInlineKeyboard() keyboardmaker.InlineCommandKeyboard {
 	mainkeyboard.AddButton("Задать вопрос", "/question", 0, 0)
 	mainkeyboard.AddButton("Предложить новость", "/news", 0, 1)
 	return mainkeyboard
+}
+
+func createAdminInlineKeyboard() keyboardmaker.InlineCommandKeyboard {
+	var adminkeyboard keyboardmaker.InlineCommandKeyboard
+	adminkeyboard.MakeGrid(1, 2)
+	adminkeyboard.AddButton("Показать все вопросы", "/showq", 0, 0)
+	adminkeyboard.AddButton("Show all news", "/shown", 0, 1)
+	return adminkeyboard
 }

@@ -5,7 +5,7 @@ go 1.18
 require (
 	github.com/joho/godotenv v1.4.0
 	github.com/spf13/viper v1.12.0
-	github.com/sudak-91/telegrambotgo v0.0.3-0.20220801134733-8ae033b91c87
+	github.com/sudak-91/telegrambotgo v0.0.3-0.20220802083037-60fbeb2d86f7
 	go.mongodb.org/mongo-driver v1.9.1
 )
 
