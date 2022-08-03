@@ -20,6 +20,12 @@ type Server struct {
 	once                 sync.Once
 }
 
+type SendAnswer struct {
+	QuestionID    int32
+	MessageID     int32
+	ContributerID int64
+}
+
 func NewServer(Port string, key string, Upd update.Updater) *Server {
 	return &Server{
 		port:    Port,
@@ -29,13 +35,14 @@ func NewServer(Port string, key string, Upd update.Updater) *Server {
 }
 
 type Utl struct {
-	Stage   map[int64]int
-	AdminID int64
+	Stage     map[int64]int
+	AnswerCtx map[int64]SendAnswer
+	AdminID   int64
 }
 
 func (s *Server) Run(AdminID int64) {
 	s.once.Do(func() {
-		Util = &Utl{Stage: make(map[int64]int), AdminID: AdminID}
+		Util = &Utl{Stage: make(map[int64]int), AdminID: AdminID, AnswerCtx: make(map[int64]SendAnswer)}
 
 	})
 	mux := http.NewServeMux()

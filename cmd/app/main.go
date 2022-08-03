@@ -43,9 +43,10 @@ func main() {
 	telegramupdate := intserv.NewTelegramUpdater()
 	//updater - роутинг для обновлений
 	updater := update.NewTelegramService(telegramupdate)
-	//Сбор бизнес логики
+	//Make keyboard
 	mkeyboard := createMainInlineKeyboard()
 	akeyboard := createAdminInlineKeyboard()
+	//Сбор бизнес логики
 	telegramupdate.AddNewCommand("/default", &intcom.Default{})
 	telegramupdate.AddNewCommand("/start", &intcom.StartCommand{User: repo.Users, Keyboard: mkeyboard.GetKeyboard()})
 	telegramupdate.AddNewCommand("/login", &intcom.Login{Users: repo.Users, Keyboard: akeyboard.GetKeyboard()})
@@ -57,6 +58,7 @@ func main() {
 	telegramupdate.AddNewCommand("/readmore", &intcom.ReadMore{News: repo.Newser})
 	telegramupdate.AddNewCommand("/markasread", &intcom.MarkAsRead{News: repo.Newser})
 	telegramupdate.AddNewCommand("/showq", &intcom.ShowQ{})
+	telegramupdate.AddNewCommand("/sendanswer", &intcom.SendAnswer{})
 
 	BotServer := server.NewServer(viper.GetString("server.port"), os.Getenv("BOT_KEY"), updater)
 	AdminUsr, err := repo.Users.GetAdmin()
