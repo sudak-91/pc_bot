@@ -58,7 +58,7 @@ func (s *SendAnswer) Handl(data interface{}) ([]byte, error) {
 	var Ctx server.SendAnswer
 	Ctx.ContributerID = ContributerID
 	Ctx.MessageID = int32(MessageID)
-	Ctx.QuestionID = int32(QuestionID)
+	Ctx.QuestionID = Args[1]
 	server.Util.AnswerCtx[msg.From.ID] = Ctx
 	server.Util.Stage[msg.From.ID] = 30
 

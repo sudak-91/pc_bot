@@ -21,7 +21,7 @@ type Server struct {
 }
 
 type SendAnswer struct {
-	QuestionID    int32
+	QuestionID    string
 	MessageID     int32
 	ContributerID int64
 }
