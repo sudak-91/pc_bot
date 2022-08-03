@@ -36,12 +36,7 @@ func (s *SendAnswer) Handl(data interface{}) ([]byte, error) {
 		Answer.Text = "Внутренняя ошибка"
 		return json.Marshal(Answer)
 	}
-	QuestionID, err := strconv.Atoi(Args[1])
-	if err != nil {
-		log.Println("Convert error: %s", err.Error())
-		Answer.Text = "Внутреняя ошибка"
-		return json.Marshal(Answer)
-	}
+
 	MessageID, err := strconv.Atoi(Args[2])
 	if err != nil {
 		log.Println("Convert error: %s", err.Error())

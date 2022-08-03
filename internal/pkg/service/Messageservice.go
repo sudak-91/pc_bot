@@ -19,6 +19,7 @@ func (t *TelegramUpdater) messageService(Message types.TelegramMessage) ([]byte,
 	case 20:
 		return t.Execute("/addquestion", Message)
 	case 30: //Ответ на вопрос
+		return t.Execute("/sendanswerto", Message)
 	default:
 		log.Println("default message")
 		return t.Routing(Message)
