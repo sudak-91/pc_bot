@@ -48,6 +48,7 @@ func (s *ShowQ) Handl(data interface{}) ([]byte, error) {
 		qkeyboar.AddButton("Отметить как прочитаное", mkaa, 0, 1)
 		kb := qkeyboar.GetKeyboard()
 		sMessage.ReplayMarkup = &kb
+		sMessage.ChatID = msg.From.ID
 		err := methods.SendMessageMethod(os.Getenv("BOT_KEY"), sMessage)
 		if err != nil {
 			log.Printf("ShowQ Handl has send message error: %s", err.Error())
