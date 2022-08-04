@@ -2,7 +2,6 @@ package command
 
 //TODO:SendAnswerTo отправлят ответ конкретному контрибутеру
 import (
-	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -12,7 +11,6 @@ import (
 	"github.com/sudak-91/pc_bot/pkg/repository"
 	methods "github.com/sudak-91/telegrambotgo/TelegramAPI/Methods"
 	types "github.com/sudak-91/telegrambotgo/TelegramAPI/Types"
-	"go.mongodb.org/mongo-driver/x/mongo/driver/uuid"
 )
 
 type SendAnswerTo struct {
@@ -41,19 +39,7 @@ func (s *SendAnswerTo) Handl(data interface{}) ([]byte, error) {
 		return json.Marshal(Answer)
 	}
 
-	id, err := base64.RawStdEncoding.DecodeString(server.Util.AnswerCtx[msg.From.ID].QuestionID)
-	if err != nil {
-		Answer.Text = "Внутреняя ошибка"
-		delete(server.Util.AnswerCtx, msg.From.ID)
-		delete(server.Util.Stage, msg.From.ID)
-		return json.Marshal(Answer)
-	}
-	//FIXME: Переделать  систему с UUID
-	var uid uuid.UUID
-	for k, v := range id {
-		uid[k] = v
-	}
-	err = s.Question.MarkAsAnswer(uid)
+	err = s.Question.MarkAsAnswer(server.Util.AnswerCtx[msg.From.ID].QuestionID)
 	if err != nil {
 		Answer.Text = "Внутреняя ошибка"
 		log.Printf("SendAnswerTo has SendMessageMethod error: %s", err.Error())
