@@ -98,7 +98,7 @@ func (n *NewsMongo) GetNewsWithDate(time time.Time) ([]pubrep.News, error) {
 
 func (n *NewsMongo) GetNews(UUID string) ([]pubrep.News, error) {
 
-	ID, err := base64.RawStdEncoding.DecodeString(UUID)
+	ID, err := base64.RawURLEncoding.DecodeString(UUID)
 	if err != nil {
 		return nil, fmt.Errorf("GetNews gas error: %s", err.Error())
 	}

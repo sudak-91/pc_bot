@@ -28,11 +28,13 @@ func (r *ReadMore) Handl(data interface{}) ([]byte, error) {
 	if len(Args) != 2 {
 		log.Println("Internal Error")
 		Answer.Text = "Произошла внутреняя ошибка"
-		json.Marshal(Answer)
+		return json.Marshal(Answer)
 	}
 	News, err := r.News.GetNews(Args[1])
 	if err != nil {
 		log.Printf("ReadMore Handl has error:%s/n", err.Error())
+		Answer.Text = "Внутреняя ошибка"
+		return json.Marshal(Answer)
 	}
 	Answer.Text = News[0].Text
 	var newsKeyboard keyboardmaker.InlineCommandKeyboard
