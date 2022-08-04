@@ -1,6 +1,7 @@
 package command
 
 import (
+	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -10,6 +11,7 @@ import (
 	"github.com/sudak-91/pc_bot/internal/pkg/server"
 	"github.com/sudak-91/pc_bot/pkg/repository"
 	types "github.com/sudak-91/telegrambotgo/TelegramAPI/Types"
+	"go.mongodb.org/mongo-driver/x/mongo/driver/uuid"
 )
 
 type SendAnswer struct {
@@ -53,7 +55,17 @@ func (s *SendAnswer) Handl(data interface{}) ([]byte, error) {
 	var Ctx server.SendAnswer
 	Ctx.ContributerID = ContributerID
 	Ctx.MessageID = int32(MessageID)
-	Ctx.QuestionID = Args[1]
+	id, err := base64.RawURLEncoding.DecodeString(Args[1])
+	if err != nil {
+		log.Println("SendAnser Convert error: %s", err.Error())
+		Answer.Text = "Внутреняя ошибка"
+		return json.Marshal(Answer)
+	}
+	var uid uuid.UUID
+	for k, v := range id {
+		uid[k] = v
+	}
+	Ctx.QuestionID = uid
 	server.Util.AnswerCtx[msg.From.ID] = Ctx
 	server.Util.Stage[msg.From.ID] = 30
 

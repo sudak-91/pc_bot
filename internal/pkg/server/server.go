@@ -7,6 +7,7 @@ import (
 	"sync"
 
 	update "github.com/sudak-91/telegrambotgo/Service"
+	"go.mongodb.org/mongo-driver/x/mongo/driver/uuid"
 )
 
 var Util *Utl
@@ -21,7 +22,7 @@ type Server struct {
 }
 
 type SendAnswer struct {
-	QuestionID    string
+	QuestionID    uuid.UUID
 	MessageID     int32
 	ContributerID int64
 }
