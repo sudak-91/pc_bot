@@ -60,7 +60,7 @@ func main() {
 	telegramupdate.AddNewCommand("/showq", &intcom.ShowQ{Question: repo.Questions})
 	telegramupdate.AddNewCommand("/sendanswer", &intcom.SendAnswer{Questions: repo.Questions})
 	telegramupdate.AddNewCommand("/sendanswerto", &intcom.SendAnswerTo{Question: repo.Questions})
-	telegramupdate.AddNewCommand("/markasanser", &intcom.MarkAsAnswer{Question: repo.Questions})
+	telegramupdate.AddNewCommand("/markasanswer", &intcom.MarkAsAnswer{Question: repo.Questions})
 
 	BotServer := server.NewServer(viper.GetString("server.port"), os.Getenv("BOT_KEY"), updater)
 	AdminUsr, err := repo.Users.GetAdmin()
