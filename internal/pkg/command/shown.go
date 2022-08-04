@@ -18,6 +18,7 @@ type Shown struct {
 	News pubrep.Newser
 }
 
+//FIXME: Ошибка в NewsID uuid
 func (s *Shown) Handl(data interface{}) ([]byte, error) {
 	msg, ok := data.(types.TelegramCallbackQuery)
 	if !ok {

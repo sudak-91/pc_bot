@@ -97,13 +97,17 @@ func (n *NewsMongo) GetNewsWithDate(time time.Time) ([]pubrep.News, error) {
 }
 
 func (n *NewsMongo) GetNews(UUID string) ([]pubrep.News, error) {
-	//FIXME: разобратся с выдаче UUID
+
 	ID, err := base64.RawStdEncoding.DecodeString(UUID)
 	if err != nil {
 		return nil, fmt.Errorf("GetNews gas error: %s", err.Error())
 	}
 	log.Printf("GetNews has UUID: %s\n", UUID)
-	filter := bson.D{{"_id", ID}}
+	var uid uuid.UUID
+	for k, v := range ID {
+		uid[k] = v
+	}
+	filter := bson.D{{"_id", uid}}
 	rtslt := n.col.FindOne(context.TODO(), filter)
 	News := make([]pubrep.News, 1)
 	err = rtslt.Decode(&News[0])
