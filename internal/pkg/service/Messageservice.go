@@ -37,6 +37,9 @@ func (t *TelegramUpdater) Routing(Message types.TelegramMessage) ([]byte, error)
 			continue
 		}
 	}
+	if Message.Document != nil {
+		log.Println("Has document")
+	}
 	log.Println("no entity")
 	return nil, nil
 }
