@@ -120,8 +120,9 @@ func createMainInlineKeyboard() keyboardmaker.InlineCommandKeyboard {
 
 func createAdminInlineKeyboard() keyboardmaker.InlineCommandKeyboard {
 	var adminkeyboard keyboardmaker.InlineCommandKeyboard
-	adminkeyboard.MakeGrid(1, 2)
+	adminkeyboard.MakeGrid(2, 2)
 	adminkeyboard.AddButton("Показать все вопросы", "/showq", 0, 0)
 	adminkeyboard.AddButton("Show all news", "/shown", 0, 1)
+	adminkeyboard.AddButton("Добавить мануал", "/addmanual", 1, 0)
 	return adminkeyboard
 }

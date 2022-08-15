@@ -10,6 +10,7 @@ type Repository interface {
 	Users
 	News
 	Questions
+	Firms
 }
 
 //User from telegram
@@ -46,4 +47,25 @@ type Questions interface {
 	UpdateQuestion(NewQuestion Question) error
 	DeleteQuestion(QuestionID uuid.UUID) error
 	MarkAsAnswer(QuestionID uuid.UUID) error
+}
+
+type Firms interface {
+	CreateFirm(FirmName string) error
+	UpdateFirm(NewFirm Firm) error
+	GetFirm(Name string) ([]Firm, error)
+	DeleteFirm(ID string) error
+}
+
+type Models interface {
+	CreateModel(FirmID string, ModelName string) error
+	UpdateModel(NewModel Model) error
+	GetModel(Name string) ([]Model, error)
+	DeleteModel(ID string) error
+}
+
+type Manuals interface {
+	CreateManual(FirmID string, ModelID string, FileUniqID string, Version string) error
+	UpdateManual(NewManual Manual) error
+	GetManual(Name string) ([]Manual, error)
+	DeleteModel(ID string) error
 }
