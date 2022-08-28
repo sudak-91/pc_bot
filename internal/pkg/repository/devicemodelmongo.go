@@ -20,9 +20,9 @@ func NewDeviceModelMongo(db *mongo.Database) *DeviceModelMongo {
 }
 
 func (f *DeviceModelMongo) CreateModel(DeviceName string) error {
-	var NewFirm pubrep.Firm
-	NewFirm.Firm = DeviceName
-	data, err := bson.Marshal(NewFirm)
+	var NewDeviceModel pubrep.DeviceModel
+	NewDeviceModel.Model = DeviceName
+	data, err := bson.Marshal(NewDeviceModel)
 	if err != nil {
 		return fmt.Errorf("CreateFirm has error: %s", err.Error())
 	}

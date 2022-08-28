@@ -1,0 +1,73 @@
+package repository
+
+import (
+	"context"
+	"fmt"
+
+	pubrep "github.com/sudak-91/pc_bot/pkg/repository"
+	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo"
+)
+
+type ManualMongo struct {
+	col *mongo.Collection
+}
+
+func NewManualMong(db *mongo.Database) *ManualMongo {
+	var m ManualMongo
+	m.col = db.Collection("Manuals")
+	return &m
+}
+
+func (m *ManualMongo) CreateManual(FirmName string, DeviceModel string, FileUniqID string, Version string) error {
+	var manual pubrep.Manual
+	manual.FileUniqID = FileUniqID
+	manual.FirmName = FirmName
+	manual.DeviceModel = DeviceModel
+	manual.Version = Version
+	data, err := bson.Marshal(manual)
+	if err != nil {
+		return fmt.Errorf("CreateManual has error: %s", err.Error())
+	}
+	_, err = m.col.InsertOne(context.TODO(), data)
+	if !mongo.IsDuplicateKeyError(err) {
+		return fmt.Errorf("CreateFirm has error: %s", err.Error())
+	}
+	return nil
+}
+
+func (m *ManualMongo) UpdateManual(NewManual pubrep.Manual) error {
+	filter := bson.D{{"_id", NewManual.FileUniqID}}
+	updData, err := bson.Marshal(NewManual)
+	if err != nil {
+		return fmt.Errorf("UpdateManual has error: %s", err.Error())
+	}
+
+	upd := bson.D{{"$set", updData}}
+	_, err = m.col.UpdateOne(context.TODO(), filter, upd)
+	if err != nil {
+		return fmt.Errorf("UpdateModel has error: %s", err.Error())
+	}
+	return nil
+
+}
+func (m *ManualMongo) GetManual(Name string) ([]pubrep.Manual, error) {
+	filter := bson.D{{"_id", fmt.Sprintf("/%s/", Name)}}
+
+	cursor, err := m.col.Find(context.TODO(), filter)
+	if err != nil {
+		return nil, fmt.Errorf("GetModel has error: %s", err.Error())
+	}
+	var Result []pubrep.Manual
+	err = cursor.All(context.TODO(), &Result)
+	if err != nil {
+		return nil, fmt.Errorf("GetModel has error: %s", err.Error())
+
+	}
+	return Result, nil
+}
+
+func (m *ManualMongo) DeleteModel(ID string) error {
+	//TODO: Add Delete Model Logic
+	return nil
+}
