@@ -56,10 +56,10 @@ type Firms interface {
 	DeleteFirm(ID string) error
 }
 
-type Models interface {
+type DeviceModels interface {
 	CreateModel(FirmID string, ModelName string) error
-	UpdateModel(NewModel Model) error
-	GetModel(Name string) ([]Model, error)
+	UpdateModel(NewModel DeviceModel) error
+	GetModel(Name string) ([]DeviceModel, error)
 	DeleteModel(ID string) error
 }
 

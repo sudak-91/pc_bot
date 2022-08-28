@@ -1,6 +1,6 @@
 package repository
 
-type Firm struct {
-	Firm     string `bson:"_id"`
+type DeviceModel struct {
+	Model    string `bson:"_id"`
 	Approved bool   `bson:"approved,omitempty"`
 }

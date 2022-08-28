@@ -6,8 +6,8 @@ import (
 
 type Manual struct {
 	ID         primitive.ObjectID `bson:"_id"`
-	FirmID     primitive.ObjectID `bson:"firmid"`
-	ModelID    primitive.ObjectID `bson:"modelid"`
+	FirmID     string             `bson:"firmid"`
+	ModelID    string             `bson:"modelid"`
 	FileUniqID string             `bson:"file_uniq_id"`
 	Version    string             `bson:"version"`
 	Approved   bool               `bson:"approved"`
