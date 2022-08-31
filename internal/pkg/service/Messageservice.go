@@ -14,12 +14,14 @@ func (t *TelegramUpdater) messageService(Message types.TelegramMessage) ([]byte,
 		return t.Routing(Message)
 	}
 	switch server.Util.Stage[Message.From.ID] {
-	case 10:
+	case int(addnews):
 		return t.Execute("/addnews", Message)
-	case 20:
+	case int(addquestion):
 		return t.Execute("/addquestion", Message)
-	case 30: //Ответ на вопрос
+	case int(sendanswerto): //Ответ на вопрос
 		return t.Execute("/sendanswerto", Message)
+	case int(addmanual):
+		return t.Execute("/addmanual", Message)
 	default:
 		log.Println("default message")
 		return t.Routing(Message)
@@ -28,6 +30,7 @@ func (t *TelegramUpdater) messageService(Message types.TelegramMessage) ([]byte,
 }
 
 func (t *TelegramUpdater) Routing(Message types.TelegramMessage) ([]byte, error) {
+	//Определяем есть ли в сообщении сущность команды
 	for _, ent := range Message.Entities {
 		switch ent.Type {
 		case "bot_command":
@@ -37,6 +40,7 @@ func (t *TelegramUpdater) Routing(Message types.TelegramMessage) ([]byte, error)
 			continue
 		}
 	}
+	//
 	if Message.Document != nil {
 		log.Println("Has document")
 	}
