@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"sync"
 
+	pubrep "github.com/sudak-91/pc_bot/pkg/repository"
 	update "github.com/sudak-91/telegrambotgo/Service"
 	"go.mongodb.org/mongo-driver/x/mongo/driver/uuid"
 )
@@ -39,12 +40,16 @@ func NewServer(Port string, key string, Upd update.Updater) *Server {
 type Utl struct {
 	Stage     map[int64]int
 	AnswerCtx map[int64]SendAnswer
+	Manual    map[int64]pubrep.Manual
 	AdminID   int64
 }
 
 func (s *Server) Run(AdminID int64) {
 	s.once.Do(func() {
-		Util = &Utl{Stage: make(map[int64]int), AdminID: AdminID, AnswerCtx: make(map[int64]SendAnswer)}
+		Util = &Utl{Stage: make(map[int64]int),
+			AdminID:   AdminID,
+			AnswerCtx: make(map[int64]SendAnswer),
+			Manual:    make(map[int64]pubrep.Manual)}
 
 	})
 	mux := http.NewServeMux()
