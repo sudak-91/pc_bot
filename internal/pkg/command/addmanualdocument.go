@@ -10,12 +10,12 @@ import (
 	types "github.com/sudak-91/telegrambotgo/TelegramAPI/Types"
 )
 
-type AddManual struct {
+type AddManualDocument struct {
 	Manual pubrep.Manuals
 }
 
 //TODO: Изменить метод. Требуется для начала выводить всю информацию и разрешить ее редактирование
-func (m *AddManual) Handl(data interface{}) ([]byte, error) {
+func (m *AddManualDocument) Handl(data interface{}) ([]byte, error) {
 	msg, ok := data.(types.TelegramMessage)
 	if !ok {
 		return nil, fmt.Errorf("Handl AddManula has error")

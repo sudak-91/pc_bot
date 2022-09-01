@@ -57,7 +57,7 @@ type Firms interface {
 }
 
 type DeviceModels interface {
-	CreateModel(FirmID string, ModelName string) error
+	CreateModel(DeviceName string) error
 	UpdateModel(NewModel DeviceModel) error
 	GetModel(Name string) ([]DeviceModel, error)
 	DeleteModel(ID string) error
