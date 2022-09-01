@@ -19,13 +19,8 @@ func NewManualMong(db *mongo.Database) *ManualMongo {
 	return &m
 }
 
-func (m *ManualMongo) CreateManual(FirmName string, DeviceModel string, FileUniqID string, Version string) error {
-	var manual pubrep.Manual
-	manual.FileUniqID = FileUniqID
-	manual.FirmName = FirmName
-	manual.DeviceModel = DeviceModel
-	manual.Version = Version
-	data, err := bson.Marshal(manual)
+func (m *ManualMongo) CreateManual(NewManual pubrep.Manual) error {
+	data, err := bson.Marshal(NewManual)
 	if err != nil {
 		return fmt.Errorf("CreateManual has error: %s", err.Error())
 	}

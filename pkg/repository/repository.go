@@ -64,7 +64,7 @@ type DeviceModels interface {
 }
 
 type Manuals interface {
-	CreateManual(FirmName string, DeviceModel string, FileUniqID string, Version string) error
+	CreateManual(NewManual Manual) error
 	UpdateManual(NewManual Manual) error
 	GetManual(Name string) ([]Manual, error)
 	DeleteModel(ID string) error
