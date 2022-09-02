@@ -14,6 +14,16 @@ import (
 
 var Util *Utl
 
+type FMSStage int
+
+const (
+	Addnews FMSStage = iota
+	Addquestion
+	Sendanswerto
+	Addmanualinfo
+	Addmanual
+)
+
 type Server struct {
 	port                 string
 	key                  string
@@ -38,7 +48,7 @@ func NewServer(Port string, key string, Upd update.Updater) *Server {
 }
 
 type Utl struct {
-	Stage     map[int64]int
+	Stage     map[int64]FMSStage
 	AnswerCtx map[int64]SendAnswer
 	Manual    map[int64]pubrep.Manual
 	AdminID   int64
@@ -46,7 +56,7 @@ type Utl struct {
 
 func (s *Server) Run(AdminID int64) {
 	s.once.Do(func() {
-		Util = &Utl{Stage: make(map[int64]int),
+		Util = &Utl{Stage: make(map[int64]FMSStage),
 			AdminID:   AdminID,
 			AnswerCtx: make(map[int64]SendAnswer),
 			Manual:    make(map[int64]pubrep.Manual)}

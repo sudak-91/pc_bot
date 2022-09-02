@@ -6,7 +6,6 @@ import (
 	"log"
 
 	"github.com/sudak-91/pc_bot/internal/pkg/server"
-	"github.com/sudak-91/pc_bot/internal/pkg/service"
 	types "github.com/sudak-91/telegrambotgo/TelegramAPI/Types"
 )
 
@@ -22,6 +21,6 @@ func (this *AddNewManual) Handl(data interface{}) ([]byte, error) {
 	var Answer types.TelegramSendMessage
 	Answer.Method = "sendMessage"
 	Answer.Text = "Введите название фирмы и модель к которой будет загружен мануал"
-	server.Util.Stage[msg.From.ID] = service.Addmanualinfo
+	server.Util.Stage[msg.From.ID] = server.Addmanualinfo
 	return json.Marshal(Answer)
 }

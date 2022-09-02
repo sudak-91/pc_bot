@@ -7,15 +7,6 @@ import (
 	types "github.com/sudak-91/telegrambotgo/TelegramAPI/Types"
 )
 
-type FMSStage int
-
-const (
-	addnews FMSStage = iota
-	addquestion
-	sendanswerto
-	addmanual
-)
-
 type TelegramUpdater struct {
 	command.ICommandService
 }
