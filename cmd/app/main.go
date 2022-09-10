@@ -46,7 +46,23 @@ func main() {
 	//Make keyboard
 	mkeyboard := createMainInlineKeyboard()
 	akeyboard := createAdminInlineKeyboard()
-	//Сбор бизнес логики
+	addBotCommand(telegramupdate, repo, mkeyboard, akeyboard)
+
+	BotServer := server.NewServer(viper.GetString("server.port"), os.Getenv("BOT_KEY"), updater)
+	AdminUsr, err := repo.Users.GetAdmin()
+	var AdminID int64
+	if len(AdminUsr) != 0 {
+		AdminID = AdminUsr[0].TelegramID
+	}
+	if err != nil {
+		log.Println("No admin")
+		AdminID = 0
+	}
+	BotServer.Run(AdminID)
+}
+
+//addBotCommand -  adding command handler
+func addBotCommand(telegramupdate *intserv.TelegramUpdater, repo *intrep.MongoRepository, mkeyboard keyboardmaker.InlineCommandKeyboard, akeyboard keyboardmaker.InlineCommandKeyboard) {
 	telegramupdate.AddNewCommand("/default", &intcom.Default{})
 	telegramupdate.AddNewCommand("/start", &intcom.StartCommand{User: repo.Users, Keyboard: mkeyboard.GetKeyboard()})
 	telegramupdate.AddNewCommand("/login", &intcom.Login{Users: repo.Users, Keyboard: akeyboard.GetKeyboard()})
@@ -64,18 +80,6 @@ func main() {
 	telegramupdate.AddNewCommand("/addmanual", &intcom.AddNewManual{})
 	telegramupdate.AddNewCommand("/addmanualinfo", &intcom.AddManualInfo{Firm: repo.Firm, DeviceModel: repo.DeviceModel})
 	telegramupdate.AddNewCommand("/addmanualdocument", &intcom.AddManualDocument{Manual: repo.Manual})
-
-	BotServer := server.NewServer(viper.GetString("server.port"), os.Getenv("BOT_KEY"), updater)
-	AdminUsr, err := repo.Users.GetAdmin()
-	var AdminID int64
-	if len(AdminUsr) != 0 {
-		AdminID = AdminUsr[0].TelegramID
-	}
-	if err != nil {
-		log.Println("No admin")
-		AdminID = 0
-	}
-	BotServer.Run(AdminID)
 }
 
 func createMongoClientAndPing() *mongo.Database {
