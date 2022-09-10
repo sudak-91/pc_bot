@@ -6,6 +6,7 @@ import (
 	"log"
 
 	"github.com/sudak-91/pc_bot/internal/pkg/server"
+	"github.com/sudak-91/pc_bot/internal/pkg/util"
 	pubrep "github.com/sudak-91/pc_bot/pkg/repository"
 	types "github.com/sudak-91/telegrambotgo/TelegramAPI/Types"
 )
@@ -14,7 +15,6 @@ type AddManualDocument struct {
 	Manual pubrep.Manuals
 }
 
-//TODO: Изменить метод. Требуется для начала выводить всю информацию и разрешить ее редактирование
 func (m *AddManualDocument) Handl(data interface{}) ([]byte, error) {
 	msg, ok := data.(types.TelegramMessage)
 	if !ok {
@@ -41,12 +41,13 @@ func (m *AddManualDocument) Handl(data interface{}) ([]byte, error) {
 	if err := m.Manual.CreateManual(v); err != nil {
 		Answer.Text = "Внутренняя ошибка. Попробуйте снова"
 
-		log.Print("Empty document")
 		delete(server.Util.Stage, msg.From.ID)
 		delete(server.Util.Manual, msg.From.ID)
-		return json.Marshal(Answer)
+		return util.CommandErrorHandler(&Answer, err)
 	}
-	Answer.Text = "Руководство добавлено"
+	Answer.Text = "Руководство добавлено в очередь на модерацию"
+	delete(server.Util.Stage, msg.From.ID)
+	delete(server.Util.Manual, msg.From.ID)
 	return json.Marshal(Answer)
 
 }

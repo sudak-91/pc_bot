@@ -61,6 +61,8 @@ func main() {
 	telegramupdate.AddNewCommand("/sendanswer", &intcom.SendAnswer{Questions: repo.Questions})
 	telegramupdate.AddNewCommand("/sendanswerto", &intcom.SendAnswerTo{Question: repo.Questions})
 	telegramupdate.AddNewCommand("/markasanswer", &intcom.MarkAsAnswer{Question: repo.Questions})
+	telegramupdate.AddNewCommand("/addmanual", &intcom.AddNewManual{})
+	telegramupdate.AddNewCommand("/addmanualinfo", &intcom.AddManualInfo{Firm: repo.Firm, DeviceModel: repo.DeviceModel})
 	telegramupdate.AddNewCommand("/addmanualdocument", &intcom.AddManualDocument{Manual: repo.Manual})
 
 	BotServer := server.NewServer(viper.GetString("server.port"), os.Getenv("BOT_KEY"), updater)

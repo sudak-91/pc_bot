@@ -18,10 +18,11 @@ type FMSStage int
 
 const (
 	Addnews FMSStage = iota
-	Addquestion
-	Sendanswerto
-	Addmanualinfo
-	Addmanual
+	AddQuestion
+	SendAnswerTo
+	AddManualInfo
+	AddManual
+	AddManualDocument
 )
 
 type Server struct {

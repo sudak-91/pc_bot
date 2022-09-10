@@ -12,6 +12,7 @@ import (
 type AddNewManual struct {
 }
 
+//AddNewManual handl is a entry point to machine state of adding manual to db
 func (this *AddNewManual) Handl(data interface{}) ([]byte, error) {
 	msg, ok := data.(types.TelegramCallbackQuery)
 	if !ok {
@@ -21,6 +22,6 @@ func (this *AddNewManual) Handl(data interface{}) ([]byte, error) {
 	var Answer types.TelegramSendMessage
 	Answer.Method = "sendMessage"
 	Answer.Text = "Введите название фирмы и модель к которой будет загружен мануал"
-	server.Util.Stage[msg.From.ID] = server.Addmanualinfo
+	server.Util.Stage[msg.From.ID] = server.AddManualInfo
 	return json.Marshal(Answer)
 }

@@ -16,12 +16,16 @@ func (t *TelegramUpdater) messageService(Message types.TelegramMessage) ([]byte,
 	switch server.Util.Stage[Message.From.ID] {
 	case server.Addnews:
 		return t.Execute("/addnews", Message)
-	case server.Addquestion:
+	case server.AddQuestion:
 		return t.Execute("/addquestion", Message)
-	case server.Sendanswerto: //Ответ на вопрос
+	case server.SendAnswerTo: //Ответ на вопрос
 		return t.Execute("/sendanswerto", Message)
-	case server.Addmanual:
+	case server.AddManual:
 		return t.Execute("/addmanual", Message)
+	case server.AddManualInfo:
+		return t.Execute("/addmanualinfo", Message)
+	case server.AddManualDocument:
+		return t.Execute("/addmanualdocument", Message)
 	default:
 		log.Println("default message")
 		return t.Routing(Message)
