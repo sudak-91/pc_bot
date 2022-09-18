@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"strings"
 
 	pubrep "github.com/sudak-91/pc_bot/pkg/repository"
 	"go.mongodb.org/mongo-driver/bson"
@@ -22,8 +23,9 @@ func NewDeviceModelMongo(db *mongo.Database) *DeviceModelMongo {
 }
 
 func (f *DeviceModelMongo) CreateModel(DeviceName string) (primitive.ObjectID, error) {
+	upperDeviceName := strings.ToUpper(DeviceName)
 	var NewDeviceModel pubrep.DeviceModel
-	NewDeviceModel.Model = DeviceName
+	NewDeviceModel.Model = upperDeviceName
 	data, err := bson.Marshal(NewDeviceModel)
 	if err != nil {
 		return primitive.NilObjectID, fmt.Errorf("CreateFirm has error: %s", err.Error())
@@ -51,7 +53,8 @@ func (f *DeviceModelMongo) UpdateModel(NewModel pubrep.DeviceModel) error {
 }
 
 func (f *DeviceModelMongo) GetModel(Name string) ([]pubrep.DeviceModel, error) {
-	filter := bson.D{{"_id", fmt.Sprintf("/%s/", Name)}}
+	upperDeviceName := strings.ToUpper(Name)
+	filter := bson.D{{"model", upperDeviceName}}
 
 	cursor, err := f.col.Find(context.TODO(), filter)
 	if err != nil {

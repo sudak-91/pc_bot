@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"strings"
 
 	pubrep "github.com/sudak-91/pc_bot/pkg/repository"
 	"go.mongodb.org/mongo-driver/bson"
@@ -22,8 +23,9 @@ func NewFirmsMongo(db *mongo.Database) *FirmsMongo {
 }
 
 func (f *FirmsMongo) CreateFirm(FirmName string) (primitive.ObjectID, error) {
+	TitleFirmName := strings.ToTitle(FirmName)
 	var NewFirm pubrep.Firm
-	NewFirm.Firm = FirmName
+	NewFirm.Firm = TitleFirmName
 	data, err := bson.Marshal(NewFirm)
 	if err != nil {
 		return primitive.NilObjectID, fmt.Errorf("CreateFirm has error: %s", err.Error())
@@ -52,7 +54,8 @@ func (f *FirmsMongo) UpdateFirm(NewFirm pubrep.Firm) error {
 }
 
 func (f *FirmsMongo) GetFirm(Name string) ([]pubrep.Firm, error) {
-	filter := bson.D{{"firm", fmt.Sprintf("/%s/", Name)}}
+	TitleFirmName := strings.ToTitle(Name)
+	filter := bson.D{{"firm", TitleFirmName}}
 
 	cursor, err := f.col.Find(context.TODO(), filter)
 	if err != nil {

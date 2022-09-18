@@ -25,7 +25,7 @@ func (m *ManualMongo) CreateManual(NewManual pubrep.Manual) error {
 		return fmt.Errorf("CreateManual has error: %s", err.Error())
 	}
 	_, err = m.col.InsertOne(context.TODO(), data)
-	if !mongo.IsDuplicateKeyError(err) {
+	if err != nil {
 		return fmt.Errorf("CreateFirm has error: %s", err.Error())
 	}
 	return nil
@@ -47,6 +47,7 @@ func (m *ManualMongo) UpdateManual(NewManual pubrep.Manual) error {
 
 }
 func (m *ManualMongo) GetManual(Name string) ([]pubrep.Manual, error) {
+
 	filter := bson.D{{"_id", fmt.Sprintf("/%s/", Name)}}
 
 	cursor, err := m.col.Find(context.TODO(), filter)
