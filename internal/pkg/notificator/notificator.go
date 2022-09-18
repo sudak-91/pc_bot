@@ -40,6 +40,7 @@ func (n *Notification) Run() {
 
 func sendManualNotification(manual pubrep.Manual) {
 	var message methods.SendMessage
+	//FIXME: требуется вытащить значения фирмы и девайса из документов ибо сейчас там только ID
 	message.Text = fmt.Sprintf("Получен новый мануал\n Фирма: %s\n Модель:%s\n", manual.FirmName, manual.DeviceModel)
 	message.ChatID = server.Util.AdminID
 	err := methods.SendMessageMethod(os.Getenv("BOT_KEY"), message)
@@ -57,12 +58,27 @@ func sendManualNotification(manual pubrep.Manual) {
 	}
 }
 
-//TODO:
+//TODO: Добаивть клавиатуру с возможностью редактирования или подтверждения
 func sendAddFirmNotification(firm pubrep.Firm) {
-
+	var message methods.SendMessage
+	message.Text = fmt.Sprintf("Добавлена новая фирма: %s\n", firm.Firm)
+	message.ChatID = server.Util.AdminID
+	err := methods.SendMessageMethod(os.Getenv("BOT_KEY"), message)
+	if err != nil {
+		_, file, line, _ := runtime.Caller(1)
+		log.Printf("%s:%d has error %s", file, line, err.Error())
+	}
 }
 
 //TODO:
 func addDeviceNotofocation(device pubrep.DeviceModel) {
 
+	var message methods.SendMessage
+	message.Text = fmt.Sprintf("Добавлен новый девайс: %s\n", device.Model)
+	message.ChatID = server.Util.AdminID
+	err := methods.SendMessageMethod(os.Getenv("BOT_KEY"), message)
+	if err != nil {
+		_, file, line, _ := runtime.Caller(1)
+		log.Printf("%s:%d has error %s", file, line, err.Error())
+	}
 }

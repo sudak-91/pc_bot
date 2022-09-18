@@ -13,8 +13,10 @@ import (
 )
 
 type AddManualInfo struct {
-	Firm        pubrep.Firms
-	DeviceModel pubrep.DeviceModels
+	Firm            pubrep.Firms
+	DeviceModel     pubrep.DeviceModels
+	FirmChan        chan pubrep.Firm
+	DeviceMdoelChan chan pubrep.DeviceModel
 }
 
 //AddManualInfo Handl added Device firm and Device model
@@ -50,6 +52,10 @@ func (this *AddManualInfo) Handl(data interface{}) ([]byte, error) {
 			Answer.Text = "Произошла внутреняя ошибка"
 			return util.CommandErrorHandler(&Answer, err)
 		}
+		var NewFirm pubrep.Firm
+		NewFirm.ID = FirmId
+		NewFirm.Firm = ManualFirm
+		this.FirmChan <- NewFirm
 		Manual.FirmName = FirmId
 	}
 	Manual.FirmName = rslt[0].ID
@@ -66,6 +72,10 @@ func (this *AddManualInfo) Handl(data interface{}) ([]byte, error) {
 			Answer.Text = "Произошла внутреняя ошибка"
 			return util.CommandErrorHandler(&Answer, err)
 		}
+		var NewDevice pubrep.DeviceModel
+		NewDevice.Model = ManualDevice
+		NewDevice.ID = DeviceID
+		this.DeviceMdoelChan <- NewDevice
 		Manual.DeviceModel = DeviceID
 	}
 	Manual.DeviceModel = modelrslr[0].ID

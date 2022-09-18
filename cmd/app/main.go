@@ -10,9 +10,11 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/spf13/viper"
 	intcom "github.com/sudak-91/pc_bot/internal/pkg/command"
+	"github.com/sudak-91/pc_bot/internal/pkg/notificator"
 	intrep "github.com/sudak-91/pc_bot/internal/pkg/repository"
 	"github.com/sudak-91/pc_bot/internal/pkg/server"
 	intserv "github.com/sudak-91/pc_bot/internal/pkg/service"
+	pubrep "github.com/sudak-91/pc_bot/pkg/repository"
 	keyboardmaker "github.com/sudak-91/telegrambotgo/Keyboardmaker"
 	update "github.com/sudak-91/telegrambotgo/Service"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -46,7 +48,14 @@ func main() {
 	//Make keyboard
 	mkeyboard := createMainInlineKeyboard()
 	akeyboard := createAdminInlineKeyboard()
-	addBotCommand(telegramupdate, repo, mkeyboard, akeyboard)
+	FirmChan := make(chan pubrep.Firm, 3)
+	DeviceModelChan := make(chan pubrep.DeviceModel, 3)
+	ManualChan := make(chan pubrep.Manual, 3)
+
+	NotificationService := notificator.NewNotification(ManualChan, FirmChan, DeviceModelChan)
+	go NotificationService.Run()
+
+	addBotCommand(telegramupdate, repo, mkeyboard, akeyboard, FirmChan, DeviceModelChan, ManualChan)
 
 	BotServer := server.NewServer(viper.GetString("server.port"), os.Getenv("BOT_KEY"), updater)
 	AdminUsr, err := repo.Users.GetAdmin()
@@ -62,7 +71,8 @@ func main() {
 }
 
 //addBotCommand -  adding command handler
-func addBotCommand(telegramupdate *intserv.TelegramUpdater, repo *intrep.MongoRepository, mkeyboard keyboardmaker.InlineCommandKeyboard, akeyboard keyboardmaker.InlineCommandKeyboard) {
+func addBotCommand(telegramupdate *intserv.TelegramUpdater, repo *intrep.MongoRepository, mkeyboard keyboardmaker.InlineCommandKeyboard, akeyboard keyboardmaker.InlineCommandKeyboard,
+	FirmChan chan pubrep.Firm, DeviceModelChan chan pubrep.DeviceModel, ManualChan chan pubrep.Manual) {
 	telegramupdate.AddNewCommand("/default", &intcom.Default{})
 	telegramupdate.AddNewCommand("/start", &intcom.StartCommand{User: repo.Users, Keyboard: mkeyboard.GetKeyboard()})
 	telegramupdate.AddNewCommand("/login", &intcom.Login{Users: repo.Users, Keyboard: akeyboard.GetKeyboard()})
@@ -78,7 +88,7 @@ func addBotCommand(telegramupdate *intserv.TelegramUpdater, repo *intrep.MongoRe
 	telegramupdate.AddNewCommand("/sendanswerto", &intcom.SendAnswerTo{Question: repo.Questions})
 	telegramupdate.AddNewCommand("/markasanswer", &intcom.MarkAsAnswer{Question: repo.Questions})
 	telegramupdate.AddNewCommand("/addmanual", &intcom.AddNewManual{})
-	telegramupdate.AddNewCommand("/addmanualinfo", &intcom.AddManualInfo{Firm: repo.Firm, DeviceModel: repo.DeviceModel})
+	telegramupdate.AddNewCommand("/addmanualinfo", &intcom.AddManualInfo{Firm: repo.Firm, DeviceModel: repo.DeviceModel, FirmChan: FirmChan, DeviceMdoelChan: DeviceModelChan})
 	telegramupdate.AddNewCommand("/addmanualdocument", &intcom.AddManualDocument{Manual: repo.Manual})
 }
 

@@ -46,9 +46,11 @@ func (m *ManualMongo) UpdateManual(NewManual pubrep.Manual) error {
 	return nil
 
 }
-func (m *ManualMongo) GetManual(Name string) ([]pubrep.Manual, error) {
 
-	filter := bson.D{{"_id", fmt.Sprintf("/%s/", Name)}}
+//db.Manuals.aggregate({$lookup: {from: "Firms", localField: "firmid", foreignField: "_id", as: "firmname" }  } )
+func (m *ManualMongo) GetManual(FileUniqID string) ([]pubrep.Manual, error) {
+
+	filter := bson.D{{"_id", fmt.Sprintf("/%s/", FileUniqID)}}
 
 	cursor, err := m.col.Find(context.TODO(), filter)
 	if err != nil {
