@@ -15,6 +15,7 @@ type AddManualDocument struct {
 	Manual pubrep.Manuals
 }
 
+//TODO: Добавить отправку нотификации при добавлении нового мануала
 func (m *AddManualDocument) Handl(data interface{}) ([]byte, error) {
 	msg, ok := data.(types.TelegramMessage)
 	if !ok {
