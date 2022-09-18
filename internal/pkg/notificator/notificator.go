@@ -47,13 +47,22 @@ func sendManualNotification(manual pubrep.Manual) {
 		_, file, line, _ := runtime.Caller(1)
 		log.Printf("%s : %d has error %s", file, line, err.Error())
 	}
-
+	var doc methods.SendDocument
+	doc.Document = manual.FileUniqID
+	doc.ChatId = server.Util.AdminID
+	err = methods.SendDocumentMethod(os.Getenv("BOT_KEY"), doc)
+	if err != nil {
+		_, file, line, _ := runtime.Caller(1)
+		log.Printf("%s : %d has error %s", file, line, err.Error())
+	}
 }
 
+//TODO:
 func sendAddFirmNotification(firm pubrep.Firm) {
 
 }
 
+//TODO:
 func addDeviceNotofocation(device pubrep.DeviceModel) {
 
 }

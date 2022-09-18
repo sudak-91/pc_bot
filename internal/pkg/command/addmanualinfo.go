@@ -44,13 +44,13 @@ func (this *AddManualInfo) Handl(data interface{}) ([]byte, error) {
 		return util.CommandErrorHandler(&Answer, err)
 	}
 	if len(rslt) == 0 {
-		err := this.Firm.CreateFirm(ManualFirm)
+		FirmId, err := this.Firm.CreateFirm(ManualFirm)
 		if err != nil {
 			delete(server.Util.Stage, msg.From.ID)
 			Answer.Text = "Произошла внутреняя ошибка"
 			return util.CommandErrorHandler(&Answer, err)
 		}
-		Manual.FirmName = ManualFirm
+		Manual.FirmName = FirmId
 	}
 	modelrslr, err := this.DeviceModel.GetModel(ManualDevice)
 	if err != nil {
@@ -59,13 +59,13 @@ func (this *AddManualInfo) Handl(data interface{}) ([]byte, error) {
 		return util.CommandErrorHandler(&Answer, err)
 	}
 	if len(modelrslr) == 0 {
-		err := this.DeviceModel.CreateModel(ManualDevice)
+		DeviceID, err := this.DeviceModel.CreateModel(ManualDevice)
 		if err != nil {
 			delete(server.Util.Stage, msg.From.ID)
 			Answer.Text = "Произошла внутреняя ошибка"
 			return util.CommandErrorHandler(&Answer, err)
 		}
-		Manual.DeviceModel = ManualDevice
+		Manual.DeviceModel = DeviceID
 	}
 	server.Util.Manual[msg.From.ID] = Manual
 	server.Util.Stage[msg.From.ID] = server.AddManualDocument

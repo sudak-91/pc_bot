@@ -6,6 +6,7 @@ import (
 
 	pubrep "github.com/sudak-91/pc_bot/pkg/repository"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
@@ -19,18 +20,22 @@ func NewDeviceModelMongo(db *mongo.Database) *DeviceModelMongo {
 	return &d
 }
 
-func (f *DeviceModelMongo) CreateModel(DeviceName string) error {
+func (f *DeviceModelMongo) CreateModel(DeviceName string) (primitive.ObjectID, error) {
 	var NewDeviceModel pubrep.DeviceModel
 	NewDeviceModel.Model = DeviceName
 	data, err := bson.Marshal(NewDeviceModel)
 	if err != nil {
-		return fmt.Errorf("CreateFirm has error: %s", err.Error())
+		return primitive.NilObjectID, fmt.Errorf("CreateFirm has error: %s", err.Error())
 	}
-	_, err = f.col.InsertOne(context.TODO(), data)
+	rslt, err := f.col.InsertOne(context.TODO(), data)
 	if !mongo.IsDuplicateKeyError(err) {
-		return fmt.Errorf("CreateFirm has error: %s", err.Error())
+		return primitive.NilObjectID, fmt.Errorf("CreateFirm has error: %s", err.Error())
 	}
-	return nil
+	retrslt, ok := rslt.InsertedID.(primitive.ObjectID)
+	if !ok {
+		return primitive.NilObjectID, fmt.Errorf("CreateFirm has error: %s", "Not object id")
+	}
+	return retrslt, nil
 }
 
 func (f *DeviceModelMongo) UpdateModel(NewModel pubrep.DeviceModel) error {

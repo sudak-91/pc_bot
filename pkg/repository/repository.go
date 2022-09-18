@@ -3,6 +3,7 @@ package repository
 import (
 	"time"
 
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/x/mongo/driver/uuid"
 )
 
@@ -50,14 +51,14 @@ type Questions interface {
 }
 
 type Firms interface {
-	CreateFirm(FirmName string) error
+	CreateFirm(FirmName string) (primitive.ObjectID, error)
 	UpdateFirm(NewFirm Firm) error
 	GetFirm(Name string) ([]Firm, error)
 	DeleteFirm(ID string) error
 }
 
 type DeviceModels interface {
-	CreateModel(DeviceName string) error
+	CreateModel(DeviceName string) (primitive.ObjectID, error)
 	UpdateModel(NewModel DeviceModel) error
 	GetModel(Name string) ([]DeviceModel, error)
 	DeleteModel(ID string) error

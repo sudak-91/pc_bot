@@ -1,6 +1,9 @@
 package repository
 
+import "go.mongodb.org/mongo-driver/bson/primitive"
+
 type DeviceModel struct {
-	Model    string `bson:"_id"`
-	Approved bool   `bson:"approved,omitempty"`
+	ID       primitive.ObjectID `bson:"_id,omitempty"`
+	Model    string             `bson:"model"`
+	Approved bool               `bson:"approved,omitempty"`
 }
