@@ -21,9 +21,22 @@ func NewTelegramUpdater() *TelegramUpdater {
 }
 
 func (t *TelegramUpdater) CallbackQueryService(Query types.TelegramCallbackQuery) ([]byte, error) {
+	var answerCallback methods.AnswerCallBackQuery
+	answerCallback.CallbackQueryId = Query.ID
 	data, err := t.Execute(Query.Data, Query)
 	if err != nil {
-		return methods.AnswerCallBackQueryMethod(os.Getenv("BOT_KEY"), Query.ID, "Internal error", "")
+		answerCallback.Text = "Внутренняя ошибка"
+		answerCallback.ShowAlert = true
+		err := methods.AnswerCallBackQueryMethod(os.Getenv("BOT_KEY"), answerCallback)
+		if err != nil {
+			log.Println("_________CakkbackSendError__________")
+		}
+		return data, err
+	}
+	answerCallback.Text = "OK"
+	err = methods.AnswerCallBackQueryMethod(os.Getenv("BOT_KEY"), answerCallback)
+	if err != nil {
+		log.Println("_________CakkbackSendError__________")
 	}
 	return data, nil
 }
