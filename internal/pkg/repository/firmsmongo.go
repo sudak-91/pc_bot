@@ -3,6 +3,7 @@ package repository
 import (
 	"context"
 	"fmt"
+	"log"
 
 	pubrep "github.com/sudak-91/pc_bot/pkg/repository"
 	"go.mongodb.org/mongo-driver/bson"
@@ -29,7 +30,8 @@ func (f *FirmsMongo) CreateFirm(FirmName string) (primitive.ObjectID, error) {
 	}
 	rslt, err := f.col.InsertOne(context.TODO(), data)
 
-	if !mongo.IsDuplicateKeyError(err) {
+	if err != nil {
+		log.Println(err.Error())
 		return primitive.NilObjectID, fmt.Errorf("CreateFirm has error: %s", err.Error())
 	}
 	retrslt, ok := rslt.InsertedID.(primitive.ObjectID)

@@ -78,7 +78,7 @@ func (s *Server) Handl(w http.ResponseWriter, r *http.Request) {
 
 	k, err := s.updater.Update(buffer.Bytes())
 	if err != nil {
-		panic(err.Error())
+		log.Printf("!!!!_____ HAS ERROR: %s", err.Error())
 	}
 
 	w.Header().Set(http.CanonicalHeaderKey("Content-Type"), "application/json")

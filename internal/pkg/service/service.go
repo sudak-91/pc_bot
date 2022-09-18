@@ -2,8 +2,10 @@ package service
 
 import (
 	"log"
+	"os"
 
 	command "github.com/sudak-91/telegrambotgo/Command"
+	methods "github.com/sudak-91/telegrambotgo/TelegramAPI/Methods"
 	types "github.com/sudak-91/telegrambotgo/TelegramAPI/Types"
 )
 
@@ -19,7 +21,11 @@ func NewTelegramUpdater() *TelegramUpdater {
 }
 
 func (t *TelegramUpdater) CallbackQueryService(Query types.TelegramCallbackQuery) ([]byte, error) {
-	return t.Execute(Query.Data, Query)
+	data, err := t.Execute(Query.Data, Query)
+	if err != nil {
+		return methods.AnswerCallBackQueryMethod(os.Getenv("BOT_KEY"), Query.ID, "Internal error", "")
+	}
+	return data, nil
 }
 
 func (t *TelegramUpdater) ChannelPostService(Post types.TelegramMessage) ([]byte, error) {
