@@ -52,6 +52,7 @@ func (this *AddManualInfo) Handl(data interface{}) ([]byte, error) {
 		}
 		Manual.FirmName = FirmId
 	}
+	Manual.FirmName = rslt[0].ID
 	modelrslr, err := this.DeviceModel.GetModel(ManualDevice)
 	if err != nil {
 		Answer.Text = "Произошла внутреняя ошибка. Попробуйте начать сначала или обратитесь к администратору"
@@ -67,6 +68,7 @@ func (this *AddManualInfo) Handl(data interface{}) ([]byte, error) {
 		}
 		Manual.DeviceModel = DeviceID
 	}
+	Manual.DeviceModel = modelrslr[0].ID
 	server.Util.Manual[msg.From.ID] = Manual
 	server.Util.Stage[msg.From.ID] = server.AddManualDocument
 	Answer.Text = "Отправьте в этот чат файл с мануалом"
