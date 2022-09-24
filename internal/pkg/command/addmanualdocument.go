@@ -9,6 +9,7 @@ import (
 	"github.com/sudak-91/pc_bot/internal/pkg/util"
 	pubrep "github.com/sudak-91/pc_bot/pkg/repository"
 	types "github.com/sudak-91/telegrambotgo/TelegramAPI/Types"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 type AddManualDocument struct {
@@ -40,6 +41,7 @@ func (m *AddManualDocument) Handl(data interface{}) ([]byte, error) {
 	}
 	v.FileUniqID = msg.Document.FileUniqueID
 	v.Contributer = msg.From.ID
+	v.ManualID = primitive.NewObjectID()
 	if err := m.Manual.CreateManual(v); err != nil {
 		Answer.Text = "Внутренняя ошибка. Попробуйте снова"
 

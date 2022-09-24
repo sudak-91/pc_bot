@@ -17,7 +17,6 @@ type AddManualInfo struct {
 	FirmChan chan pubrep.Firm
 }
 
-//AddManualInfo Handl added Device firm and Device model
 func (this *AddManualInfo) Handl(data interface{}) ([]byte, error) {
 	msg, ok := data.(types.TelegramMessage)
 	if !ok {
