@@ -60,6 +60,6 @@ type Firms interface {
 type Manuals interface {
 	CreateManual(NewManual Manual) error
 	UpdateManual(NewManual Manual) error
-	GetManual(Name string) ([]Manual, error)
+	GetManual(Firm string, DeviceName string) ([]Manual, error)
 	DeleteModel(ID string) error
 }

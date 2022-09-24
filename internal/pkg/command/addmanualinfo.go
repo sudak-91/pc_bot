@@ -13,10 +13,8 @@ import (
 )
 
 type AddManualInfo struct {
-	Firm            pubrep.Firms
-	DeviceModel     pubrep.DeviceModels
-	FirmChan        chan pubrep.Firm
-	DeviceMdoelChan chan pubrep.DeviceModel
+	Firm     pubrep.Firms
+	FirmChan chan pubrep.Firm
 }
 
 //AddManualInfo Handl added Device firm and Device model
@@ -38,7 +36,7 @@ func (this *AddManualInfo) Handl(data interface{}) ([]byte, error) {
 	}
 	var Manual pubrep.Manual
 	ManualFirm := ManualData[0]
-	ManualDevice := ManualData[1]
+	DeviceModel := ManualData[1]
 	rslt, err := this.Firm.GetFirm(ManualFirm)
 	if err != nil {
 		Answer.Text = "Произошла внутренняя ошибка. Попробуйте начать сначала или обратитесь к администратору"
@@ -56,29 +54,12 @@ func (this *AddManualInfo) Handl(data interface{}) ([]byte, error) {
 		NewFirm.ID = FirmId
 		NewFirm.Firm = ManualFirm
 		this.FirmChan <- NewFirm
-		Manual.FirmName = FirmId
+		Manual.FirmName = ManualFirm
+	} else {
+		Manual.FirmName = rslt[0].Firm
 	}
-	Manual.FirmName = rslt[0].ID
-	modelrslr, err := this.DeviceModel.GetModel(ManualDevice)
-	if err != nil {
-		Answer.Text = "Произошла внутреняя ошибка. Попробуйте начать сначала или обратитесь к администратору"
-		delete(server.Util.Stage, msg.From.ID)
-		return util.CommandErrorHandler(&Answer, err)
-	}
-	if len(modelrslr) == 0 {
-		DeviceID, err := this.DeviceModel.CreateModel(ManualDevice)
-		if err != nil {
-			delete(server.Util.Stage, msg.From.ID)
-			Answer.Text = "Произошла внутреняя ошибка"
-			return util.CommandErrorHandler(&Answer, err)
-		}
-		var NewDevice pubrep.DeviceModel
-		NewDevice.Model = ManualDevice
-		NewDevice.ID = DeviceID
-		this.DeviceMdoelChan <- NewDevice
-		Manual.DeviceModel = DeviceID
-	}
-	Manual.DeviceModel = modelrslr[0].ID
+
+	Manual.DeviceModel = DeviceModel
 	server.Util.Manual[msg.From.ID] = Manual
 	server.Util.Stage[msg.From.ID] = server.AddManualDocument
 	Answer.Text = "Отправьте в этот чат файл с мануалом"

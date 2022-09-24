@@ -48,10 +48,9 @@ func (m *ManualMongo) UpdateManual(NewManual pubrep.Manual) error {
 }
 
 //db.Manuals.aggregate({$lookup: {from: "Firms", localField: "firmid", foreignField: "_id", as: "firmname" }  } )
-func (m *ManualMongo) GetManual(FileUniqID string) ([]pubrep.Manual, error) {
+func (m *ManualMongo) GetManual(Firm string, DeviceName string) ([]pubrep.Manual, error) {
 
-	filter := bson.D{{"_id", fmt.Sprintf("/%s/", FileUniqID)}}
-
+	filter := bson.D{{"firm", Firm}, {"device", DeviceName}}
 	cursor, err := m.col.Find(context.TODO(), filter)
 	if err != nil {
 		return nil, fmt.Errorf("GetModel has error: %s", err.Error())

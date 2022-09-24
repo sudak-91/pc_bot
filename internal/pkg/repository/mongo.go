@@ -6,21 +6,19 @@ import (
 )
 
 type MongoRepository struct {
-	Users       repository.Users
-	Newser      repository.Newser
-	Questions   repository.Questions
-	Firm        repository.Firms
-	DeviceModel repository.DeviceModels
-	Manual      repository.Manuals
+	Users     repository.Users
+	Newser    repository.Newser
+	Questions repository.Questions
+	Firm      repository.Firms
+	Manual    repository.Manuals
 }
 
 func NewMongoRepository(db *mongo.Database) *MongoRepository {
 	return &MongoRepository{
-		Users:       NewUsermongo(db),
-		Newser:      NewNewsMongo(db),
-		Questions:   NewQuestionmongo(db),
-		Firm:        NewFirmsMongo(db),
-		DeviceModel: NewDeviceModelMongo(db),
-		Manual:      NewManualMong(db),
+		Users:     NewUsermongo(db),
+		Newser:    NewNewsMongo(db),
+		Questions: NewQuestionmongo(db),
+		Firm:      NewFirmsMongo(db),
+		Manual:    NewManualMong(db),
 	}
 }

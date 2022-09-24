@@ -14,14 +14,12 @@ import (
 type Notification struct {
 	manual chan pubrep.Manual
 	firm   chan pubrep.Firm
-	device chan pubrep.DeviceModel
 }
 
-func NewNotification(Manual chan pubrep.Manual, Firm chan pubrep.Firm, Device chan pubrep.DeviceModel) *Notification {
+func NewNotification(Manual chan pubrep.Manual, Firm chan pubrep.Firm) *Notification {
 	return &Notification{
 		manual: Manual,
 		firm:   Firm,
-		device: Device,
 	}
 }
 
@@ -32,8 +30,7 @@ func (n *Notification) Run() {
 			go sendManualNotification(manual)
 		case firm := <-n.firm:
 			go sendAddFirmNotification(firm)
-		case device := <-n.device:
-			go addDeviceNotofocation(device)
+
 		}
 	}
 }
@@ -62,19 +59,6 @@ func sendManualNotification(manual pubrep.Manual) {
 func sendAddFirmNotification(firm pubrep.Firm) {
 	var message methods.SendMessage
 	message.Text = fmt.Sprintf("Добавлена новая фирма: %s\n", firm.Firm)
-	message.ChatID = server.Util.AdminID
-	err := methods.SendMessageMethod(os.Getenv("BOT_KEY"), message)
-	if err != nil {
-		_, file, line, _ := runtime.Caller(1)
-		log.Printf("%s:%d has error %s", file, line, err.Error())
-	}
-}
-
-//TODO:
-func addDeviceNotofocation(device pubrep.DeviceModel) {
-
-	var message methods.SendMessage
-	message.Text = fmt.Sprintf("Добавлен новый девайс: %s\n", device.Model)
 	message.ChatID = server.Util.AdminID
 	err := methods.SendMessageMethod(os.Getenv("BOT_KEY"), message)
 	if err != nil {

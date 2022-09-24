@@ -39,6 +39,7 @@ func (m *AddManualDocument) Handl(data interface{}) ([]byte, error) {
 		return json.Marshal(Answer)
 	}
 	v.FileUniqID = msg.Document.FileUniqueID
+	v.Contributer = msg.From.ID
 	if err := m.Manual.CreateManual(v); err != nil {
 		Answer.Text = "Внутренняя ошибка. Попробуйте снова"
 

@@ -6,7 +6,8 @@ type Manual struct {
 	ManualID    primitive.ObjectID `bson:"_id"`
 	FileUniqID  string             `bson:"fileid"`
 	FirmName    string             `bson:"firm"`
-	DeviceModel string             `bson:"model"`
+	DeviceModel string             `bson:"device"`
+	Contributer int64              `bosn:"userid"`
 	Version     string             `bson:"version,omitempty"`
 	Approved    bool               `bson:"approved"`
 }
