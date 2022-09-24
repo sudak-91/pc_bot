@@ -49,13 +49,12 @@ func main() {
 	mkeyboard := createMainInlineKeyboard()
 	akeyboard := createAdminInlineKeyboard()
 	FirmChan := make(chan pubrep.Firm, 3)
-	DeviceModelChan := make(chan pubrep.DeviceModel, 3)
 	ManualChan := make(chan pubrep.Manual, 3)
 
-	NotificationService := notificator.NewNotification(ManualChan, FirmChan, DeviceModelChan)
+	NotificationService := notificator.NewNotification(ManualChan, FirmChan)
 	go NotificationService.Run()
 
-	addBotCommand(telegramupdate, repo, mkeyboard, akeyboard, FirmChan, DeviceModelChan, ManualChan)
+	addBotCommand(telegramupdate, repo, mkeyboard, akeyboard, FirmChan, ManualChan)
 
 	BotServer := server.NewServer(viper.GetString("server.port"), os.Getenv("BOT_KEY"), updater)
 	AdminUsr, err := repo.Users.GetAdmin()
@@ -72,7 +71,7 @@ func main() {
 
 //addBotCommand -  adding command handler
 func addBotCommand(telegramupdate *intserv.TelegramUpdater, repo *intrep.MongoRepository, mkeyboard keyboardmaker.InlineCommandKeyboard, akeyboard keyboardmaker.InlineCommandKeyboard,
-	FirmChan chan pubrep.Firm, DeviceModelChan chan pubrep.DeviceModel, ManualChan chan pubrep.Manual) {
+	FirmChan chan pubrep.Firm, ManualChan chan pubrep.Manual) {
 	telegramupdate.AddNewCommand("/default", &intcom.Default{})
 	telegramupdate.AddNewCommand("/start", &intcom.StartCommand{User: repo.Users, Keyboard: mkeyboard.GetKeyboard()})
 	telegramupdate.AddNewCommand("/login", &intcom.Login{Users: repo.Users, Keyboard: akeyboard.GetKeyboard()})
@@ -88,7 +87,7 @@ func addBotCommand(telegramupdate *intserv.TelegramUpdater, repo *intrep.MongoRe
 	telegramupdate.AddNewCommand("/sendanswerto", &intcom.SendAnswerTo{Question: repo.Questions})
 	telegramupdate.AddNewCommand("/markasanswer", &intcom.MarkAsAnswer{Question: repo.Questions})
 	telegramupdate.AddNewCommand("/addmanual", &intcom.AddNewManual{})
-	telegramupdate.AddNewCommand("/addmanualinfo", &intcom.AddManualInfo{Firm: repo.Firm, DeviceModel: repo.DeviceModel, FirmChan: FirmChan, DeviceMdoelChan: DeviceModelChan})
+	telegramupdate.AddNewCommand("/addmanualinfo", &intcom.AddManualInfo{Firm: repo.Firm, FirmChan: FirmChan})
 	telegramupdate.AddNewCommand("/addmanualdocument", &intcom.AddManualDocument{Manual: repo.Manual})
 }
 
