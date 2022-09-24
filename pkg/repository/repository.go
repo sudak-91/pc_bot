@@ -57,13 +57,6 @@ type Firms interface {
 	DeleteFirm(ID string) error
 }
 
-type DeviceModels interface {
-	CreateModel(DeviceName string) (primitive.ObjectID, error)
-	UpdateModel(NewModel DeviceModel) error
-	GetModel(Name string) ([]DeviceModel, error)
-	DeleteModel(ID string) error
-}
-
 type Manuals interface {
 	CreateManual(NewManual Manual) error
 	UpdateManual(NewManual Manual) error
