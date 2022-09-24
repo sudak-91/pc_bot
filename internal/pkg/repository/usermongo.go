@@ -33,7 +33,7 @@ func (m *Usermongo) CreateUser(TelegramID int64, username string) error {
 	}
 	_, err = m.col.InsertOne(context.TODO(), data)
 
-	if !mongo.IsDuplicateKeyError(err) {
+	if err != nil && !mongo.IsDuplicateKeyError(err) {
 		return fmt.Errorf("Insert Error: %s", err.Error())
 	}
 	return nil
