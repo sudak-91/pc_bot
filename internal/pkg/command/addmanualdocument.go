@@ -39,7 +39,7 @@ func (m *AddManualDocument) Handl(data interface{}) ([]byte, error) {
 		delete(server.Util.Stage, msg.From.ID)
 		return json.Marshal(Answer)
 	}
-	Manual.FileUniqID = msg.Document.FileUniqueID
+	Manual.FileUniqID = msg.Document.FileID
 	Manual.Contributer = msg.From.ID
 	Manual.ManualID = primitive.NewObjectID()
 	if err := m.Manual.CreateManual(Manual); err != nil {
