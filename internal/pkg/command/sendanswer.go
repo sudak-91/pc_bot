@@ -41,13 +41,13 @@ func (s *SendAnswer) Handl(data interface{}) ([]byte, error) {
 
 	MessageID, err := strconv.Atoi(Args[2])
 	if err != nil {
-		log.Println("Convert error: %s", err.Error())
+		log.Printf("Convert error: %s", err.Error())
 		Answer.Text = "Внутреняя ошибка"
 		return json.Marshal(Answer)
 	}
 	ContributerID, err := strconv.ParseInt(Args[3], 10, 64)
 	if err != nil {
-		log.Println("Convert error: %s", err.Error())
+		log.Printf("Convert error: %s", err.Error())
 		Answer.Text = "Внутреняя ошибка"
 		return json.Marshal(Answer)
 	}
@@ -57,7 +57,7 @@ func (s *SendAnswer) Handl(data interface{}) ([]byte, error) {
 	Ctx.MessageID = int32(MessageID)
 	id, err := base64.RawURLEncoding.DecodeString(Args[1])
 	if err != nil {
-		log.Println("SendAnser Convert error: %s", err.Error())
+		log.Printf("SendAnser Convert error: %s", err.Error())
 		Answer.Text = "Внутреняя ошибка"
 		return json.Marshal(Answer)
 	}

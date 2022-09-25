@@ -181,14 +181,10 @@ github.com/stretchr/testify v1.8.0 h1:pSgiaMZlXftHpm5L7V1+rVB+AZJydKsMxsQBIJw4PK
 github.com/stretchr/testify v1.8.0/go.mod h1:yNjHg4UonilssWZ8iaSj1OCr/vHnekPRkoO+kdMU+MU=
 github.com/subosito/gotenv v1.4.1 h1:jyEFiXpy21Wm81FBN71l9VoMMV8H8jG+qIK3GCpY6Qs=
 github.com/subosito/gotenv v1.4.1/go.mod h1:ayKnFf/c6rvx/2iiLrJUk1e6plDbT3edrFNGqEflhK0=
-github.com/sudak-91/telegrambotgo v0.0.3-0.20220802085719-b08503b91b0f h1:xEjs5HACaufkv/wZlwoj6Fe4QuzWeWamWhlFS7e88BQ=
-github.com/sudak-91/telegrambotgo v0.0.3-0.20220802085719-b08503b91b0f/go.mod h1:PxvWyzPBtzWJL1sbSVxN2gy81obcva+d8XT2Tf7mRg4=
-github.com/sudak-91/telegrambotgo v0.0.3 h1:p7wd9eLHCuPaJY8fstKPzGA/T1kT5LCfF9L7EzHYoxE=
-github.com/sudak-91/telegrambotgo v0.0.3/go.mod h1:PxvWyzPBtzWJL1sbSVxN2gy81obcva+d8XT2Tf7mRg4=
-github.com/sudak-91/telegrambotgo v0.0.4 h1:Dq/kslakx0KFwBe7/dcq0girKtvQ/J2Xbcmamfc8iYc=
-github.com/sudak-91/telegrambotgo v0.0.4/go.mod h1:PxvWyzPBtzWJL1sbSVxN2gy81obcva+d8XT2Tf7mRg4=
 github.com/sudak-91/telegrambotgo v0.0.5 h1:h8p18HwMRq4VBwhS7EkvS4yRrdQ1qtGR3U0Bw0BBfYs=
 github.com/sudak-91/telegrambotgo v0.0.5/go.mod h1:PxvWyzPBtzWJL1sbSVxN2gy81obcva+d8XT2Tf7mRg4=
+github.com/sudak-91/telegrambotgo v0.0.6-0.20220925093351-2474a3aadd16 h1:hdO8/VlpuFdIMrZ2v/7oBfk4GDGnPLbtYPwkPtUfpY4=
+github.com/sudak-91/telegrambotgo v0.0.6-0.20220925093351-2474a3aadd16/go.mod h1:PxvWyzPBtzWJL1sbSVxN2gy81obcva+d8XT2Tf7mRg4=
 github.com/tidwall/pretty v1.0.0 h1:HsD+QiTn7sK6flMKIvNmpqz1qrpP3Ps6jOKIKMooyg4=
 github.com/tidwall/pretty v1.0.0/go.mod h1:XNkn88O1ChpSDQmQeStsy+sBenx6DDtFZJxhVysOjyk=
 github.com/xdg-go/pbkdf2 v1.0.0 h1:Su7DPu48wXMwC3bs7MCNG+z4FhcyEuz5dlvchbq0B0c=

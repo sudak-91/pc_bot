@@ -34,7 +34,7 @@ func (q *AddQuestion) Handl(data interface{}) ([]byte, error) {
 	sMessage.Text = "Добавлен новый вопрос"
 	err := methods.SendMessageMethod(os.Getenv("BOT_KEY"), sMessage)
 	if err != nil {
-		log.Println("Send message has error: %s", err)
+		log.Printf("Send message has error: %s", err)
 	}
 	delete(server.Util.Stage, msg.Chat.ID)
 	return json.Marshal(Answer)
