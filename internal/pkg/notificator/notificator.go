@@ -37,7 +37,6 @@ func (n *Notification) Run() {
 
 func sendManualNotification(manual pubrep.Manual) {
 	var message methods.SendMessage
-	//FIXME: требуется вытащить значения фирмы и девайса из документов ибо сейчас там только ID
 	message.Text = fmt.Sprintf("Получен новый мануал\n Фирма: %s\n Модель:%s\n", manual.FirmName, manual.DeviceModel)
 	message.ChatID = server.Util.AdminID
 	err := methods.SendMessageMethod(os.Getenv("BOT_KEY"), message)

@@ -13,7 +13,8 @@ import (
 )
 
 type AddManualDocument struct {
-	Manual pubrep.Manuals
+	Manual            pubrep.Manuals
+	ManualNotificator chan pubrep.Manual
 }
 
 //TODO: Добавить отправку нотификации при добавлении нового мануала
@@ -31,7 +32,7 @@ func (m *AddManualDocument) Handl(data interface{}) ([]byte, error) {
 		Answer.Text = "Нет документа в сообщении"
 		return json.Marshal(Answer)
 	}
-	v, ok := server.Util.Manual[msg.From.ID]
+	Manual, ok := server.Util.Manual[msg.From.ID]
 	if !ok {
 
 		log.Print("Empty document")
@@ -39,10 +40,10 @@ func (m *AddManualDocument) Handl(data interface{}) ([]byte, error) {
 		delete(server.Util.Stage, msg.From.ID)
 		return json.Marshal(Answer)
 	}
-	v.FileUniqID = msg.Document.FileUniqueID
-	v.Contributer = msg.From.ID
-	v.ManualID = primitive.NewObjectID()
-	if err := m.Manual.CreateManual(v); err != nil {
+	Manual.FileUniqID = msg.Document.FileUniqueID
+	Manual.Contributer = msg.From.ID
+	Manual.ManualID = primitive.NewObjectID()
+	if err := m.Manual.CreateManual(Manual); err != nil {
 		Answer.Text = "Внутренняя ошибка. Попробуйте снова"
 
 		delete(server.Util.Stage, msg.From.ID)
@@ -50,6 +51,7 @@ func (m *AddManualDocument) Handl(data interface{}) ([]byte, error) {
 		return util.CommandErrorHandler(&Answer, err)
 	}
 	Answer.Text = "Руководство добавлено в очередь на модерацию"
+	m.ManualNotificator <- Manual
 	delete(server.Util.Stage, msg.From.ID)
 	delete(server.Util.Manual, msg.From.ID)
 	return json.Marshal(Answer)
