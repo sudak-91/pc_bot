@@ -54,6 +54,7 @@ type Firms interface {
 	CreateFirm(FirmName string) (primitive.ObjectID, error)
 	UpdateFirm(NewFirm Firm) error
 	GetFirm(Name string) ([]Firm, error)
+	GetFirmById(ID string) ([]Firm, error)
 	DeleteFirm(ID string) error
 }
 

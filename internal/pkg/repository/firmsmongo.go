@@ -45,7 +45,7 @@ func (f *FirmsMongo) CreateFirm(FirmName string) (primitive.ObjectID, error) {
 
 func (f *FirmsMongo) UpdateFirm(NewFirm pubrep.Firm) error {
 	filter := bson.D{{"_id", NewFirm.ID}}
-	upd := bson.D{{"$set", bson.D{{"approved", NewFirm.Approved}}}}
+	upd := bson.D{{"$set", bson.D{{"approved", NewFirm.Approved}, {"firm", NewFirm.Firm}}}}
 	_, err := f.col.UpdateOne(context.TODO(), filter, upd)
 	if err != nil {
 		return fmt.Errorf("UpdateModel has error: %s", err.Error())
@@ -63,6 +63,18 @@ func (f *FirmsMongo) GetFirm(Name string) ([]pubrep.Firm, error) {
 	}
 	var Result []pubrep.Firm
 	err = cursor.All(context.TODO(), &Result)
+	if err != nil {
+		return nil, fmt.Errorf("GetModel has error: %s", err.Error())
+
+	}
+	return Result, nil
+}
+func (f *FirmsMongo) GetFirmById(ID string) ([]pubrep.Firm, error) {
+	filter := bson.D{{"_id", ID}}
+
+	rslt := f.col.FindOne(context.TODO(), filter)
+	var Result []pubrep.Firm
+	err := rslt.Decode(&Result)
 	if err != nil {
 		return nil, fmt.Errorf("GetModel has error: %s", err.Error())
 

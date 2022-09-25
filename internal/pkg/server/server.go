@@ -23,6 +23,8 @@ const (
 	AddManualInfo
 	AddManual
 	AddManualDocument
+	EditFirm
+	ConfirmFirm
 )
 
 type Server struct {
@@ -52,6 +54,7 @@ type Utl struct {
 	Stage     map[int64]FMSStage
 	AnswerCtx map[int64]SendAnswer
 	Manual    map[int64]pubrep.Manual
+	EditFirm  map[int64]pubrep.Firm
 	AdminID   int64
 }
 
@@ -60,7 +63,8 @@ func (s *Server) Run(AdminID int64) {
 		Util = &Utl{Stage: make(map[int64]FMSStage),
 			AdminID:   AdminID,
 			AnswerCtx: make(map[int64]SendAnswer),
-			Manual:    make(map[int64]pubrep.Manual)}
+			Manual:    make(map[int64]pubrep.Manual),
+			EditFirm:  make(map[int64]pubrep.Firm)}
 
 	})
 	mux := http.NewServeMux()
