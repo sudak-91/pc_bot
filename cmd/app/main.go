@@ -90,6 +90,8 @@ func addBotCommand(telegramupdate *intserv.TelegramUpdater, repo *intrep.MongoRe
 	telegramupdate.AddNewCommand("/addmanualinfo", &intcom.AddManualInfo{Firm: repo.Firm, FirmChan: FirmChan})
 	telegramupdate.AddNewCommand("/addmanualdocument", &intcom.AddManualDocument{Manual: repo.Manual, ManualNotificator: ManualChan})
 	telegramupdate.AddNewCommand("/editfirm", &intcom.EditFirmCommand{Firms: repo.Firm})
+	telegramupdate.AddNewCommand("/confirmeditfirm", &intcom.ConfirmEditFirm{Firms: repo.Firm})
+	telegramupdate.AddNewCommand("/approvedfirm", &intcom.ApprovedFirm{Firms: repo.Firm})
 }
 
 func createMongoClientAndPing() *mongo.Database {

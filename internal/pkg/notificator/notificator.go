@@ -56,7 +56,6 @@ func sendManualNotification(manual pubrep.Manual) {
 	}
 }
 
-//TODO: Добаивть клавиатуру с возможностью редактирования или подтверждения
 func sendAddFirmNotification(firm pubrep.Firm) {
 	var message methods.SendMessage
 	message.Text = fmt.Sprintf("Добавлена новая фирма: %s\n", firm.Firm)
@@ -73,8 +72,8 @@ func sendAddFirmNotification(firm pubrep.Firm) {
 func editFirmNotioficationKeyboard(firm pubrep.Firm) tgtype.TelegramInlineKeyboardMarkup {
 	keyboard := &keyboardmaker.InlineCommandKeyboard{}
 	keyboard.MakeGrid(2, 1)
-	editCommandCallbackString := fmt.Sprintf("/editfirm %s", firm.ID.String())
-	confirmCommandCallbackString := fmt.Sprintf("/confirmfirm %s", firm.ID.String())
+	editCommandCallbackString := fmt.Sprintf("/editfirm %s", firm.ID)
+	confirmCommandCallbackString := fmt.Sprintf("/approvedfirm %s", firm.ID.String())
 	keyboard.AddButton("Редактировать название", editCommandCallbackString, 0, 0)
 	keyboard.AddButton("Утвердить название фирмы", confirmCommandCallbackString, 1, 0)
 	return keyboard.GetKeyboard()
