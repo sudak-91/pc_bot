@@ -1,7 +1,6 @@
 package notificator
 
 import (
-	"encoding/base64"
 	"fmt"
 	"log"
 	"os"
@@ -73,8 +72,8 @@ func sendAddFirmNotification(firm pubrep.Firm) {
 func editFirmNotioficationKeyboard(firm pubrep.Firm) tgtype.TelegramInlineKeyboardMarkup {
 	keyboard := &keyboardmaker.InlineCommandKeyboard{}
 	keyboard.MakeGrid(2, 1)
-	editCommandCallbackString := fmt.Sprintf("/editfirm %s", base64.RawURLEncoding.EncodeToString(firm.ID[:]))
-	confirmCommandCallbackString := fmt.Sprintf("/approvedfirm %s", base64.RawURLEncoding.EncodeToString(firm.ID[:]))
+	editCommandCallbackString := fmt.Sprintf("/editfirm %s", firm.ID.String())
+	confirmCommandCallbackString := fmt.Sprintf("/approvedfirm %s", firm.ID.String())
 	keyboard.AddButton("Редактировать название", editCommandCallbackString, 0, 0)
 	keyboard.AddButton("Утвердить название фирмы", confirmCommandCallbackString, 1, 0)
 	return keyboard.GetKeyboard()
