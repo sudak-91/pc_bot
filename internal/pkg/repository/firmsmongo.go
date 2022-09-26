@@ -79,7 +79,7 @@ func (f *FirmsMongo) GetFirmById(ID string) ([]pubrep.Firm, error) {
 
 	rslt := f.col.FindOne(context.TODO(), filter)
 	var Result []pubrep.Firm
-	err := rslt.Decode(&Result)
+	err = rslt.Decode(&Result)
 	if err != nil {
 		return nil, fmt.Errorf("GetModel has error: %s", err.Error())
 
