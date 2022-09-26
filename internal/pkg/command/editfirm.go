@@ -23,11 +23,12 @@ func (e *EditFirmCommand) Handl(data interface{}) ([]byte, error) {
 	var Answer types.TelegramSendMessage
 	Answer.Method = "sendMessage"
 	Answer.ChatID = query.From.ID
+
 	param := strings.Split(query.Data, " ")
-	if len(param) != 1 {
+	if len(param) > 0 {
 		return util.CommandErrorHandler(&Answer, fmt.Errorf("Ошибка во входных параметрах"))
 	}
-	FirmData, err := e.Firms.GetFirmById(param[0])
+	FirmData, err := e.Firms.GetFirmById(query.Data)
 	if err != nil {
 		return util.CommandErrorHandler(&Answer, err)
 	}
