@@ -49,13 +49,14 @@ func (this *AddManualInfo) Handl(data interface{}) ([]byte, error) {
 			Answer.Text = "Произошла внутреняя ошибка"
 			return util.CommandErrorHandler(&Answer, err)
 		}
+
 		var NewFirm pubrep.Firm
 		NewFirm.ID = FirmId
 		NewFirm.Firm = ManualFirm
 		this.FirmChan <- NewFirm
-		Manual.FirmName = ManualFirm
+		Manual.Firm = &NewFirm
 	} else {
-		Manual.FirmName = rslt[0].Firm
+		Manual.Firm = &rslt[0]
 	}
 
 	Manual.DeviceModel = DeviceModel
