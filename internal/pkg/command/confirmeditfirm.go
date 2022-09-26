@@ -12,7 +12,8 @@ import (
 )
 
 type ConfirmEditFirm struct {
-	Firms pubrep.Firms
+	Firms   pubrep.Firms
+	Manuals pubrep.Manuals
 }
 
 func (c *ConfirmEditFirm) Handl(data interface{}) ([]byte, error) {
@@ -38,6 +39,12 @@ func (c *ConfirmEditFirm) Handl(data interface{}) ([]byte, error) {
 	delete(server.Util.EditFirm, msg.Chat.ID)
 	objFirm.Firm = NewName[0]
 	err := c.Firms.UpdateFirm(objFirm)
+	if err != nil {
+		delete(server.Util.Stage, msg.From.ID)
+		delete(server.Util.EditFirm, msg.Chat.ID)
+		return util.CommandErrorHandler(&Answer, err)
+	}
+	err = c.Manuals.UpdateEmbeddedFirm(objFirm)
 	if err != nil {
 		delete(server.Util.Stage, msg.From.ID)
 		delete(server.Util.EditFirm, msg.Chat.ID)

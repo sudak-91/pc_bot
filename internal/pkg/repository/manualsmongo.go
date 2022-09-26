@@ -53,6 +53,20 @@ func (m *ManualMongo) UpdateManual(NewManual pubrep.Manual) error {
 
 }
 
+func (m *ManualMongo) UpdateEmbeddedFirm(NewFirm pubrep.Firm) error {
+	filter := bson.D{{"firm._id", NewFirm.ID}}
+	updData, err := bson.Marshal(NewFirm)
+	if err != nil {
+		return fmt.Errorf("UpdateEmbeddeFirm has error: %s", err.Error())
+	}
+	upd := bson.D{{"$set", updData}}
+	_, err = m.col.UpdateMany(context.TODO(), filter, upd)
+	if err != nil {
+		return fmt.Errorf("UodateEmbeddedFirm has error: %s", err.Error())
+	}
+	return nil
+}
+
 //db.Manuals.aggregate({$lookup: {from: "Firms", localField: "firmid", foreignField: "_id", as: "firmname" }  } )
 func (m *ManualMongo) GetManuals(Firm string, DeviceName string) ([]pubrep.Manual, error) {
 

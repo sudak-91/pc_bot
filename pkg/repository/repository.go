@@ -63,5 +63,6 @@ type Manuals interface {
 	UpdateManual(NewManual Manual) error
 	GetManuals(Firm string, DeviceName string) ([]Manual, error)
 	GetUnapprovedManuals(Firm string, DeviceName string) ([]Manual, error)
+	UpdateEmbeddedFirm(NewFirm Firm) error
 	DeleteModel(ID string) error
 }
