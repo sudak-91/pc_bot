@@ -54,7 +54,8 @@ func (m *ManualMongo) UpdateManual(NewManual pubrep.Manual) error {
 }
 
 func (m *ManualMongo) UpdateEmbeddedFirm(NewFirm pubrep.Firm) error {
-	filter := bson.D{{"firm._id", NewFirm.ID}}
+	filter := bson.D{{"firm", bson.D{{"_id", NewFirm.ID}}}}
+
 	updData, err := bson.Marshal(NewFirm)
 	if err != nil {
 		return fmt.Errorf("UpdateEmbeddeFirm has error: %s", err.Error())
