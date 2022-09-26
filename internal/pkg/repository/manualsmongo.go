@@ -55,11 +55,10 @@ func (m *ManualMongo) UpdateManual(NewManual pubrep.Manual) error {
 
 func (m *ManualMongo) UpdateEmbeddedFirm(NewFirm pubrep.Firm) error {
 	log.Println(NewFirm)
-	filter := bson.D{{"firm", bson.D{{"_id", NewFirm.ID}}}}
-	upd := bson.D{
-		{"$set",
-			bson.D{
-				{"firm", bson.D{{"firm", NewFirm.Firm}}}}}}
+	filter := bson.D{{"firm._id", NewFirm.ID}}
+	upd := bson.D{{"$set",
+		bson.D{
+			{"firm.firm", NewFirm.Firm}}}}
 
 	rslt, err := m.col.UpdateOne(context.TODO(), filter, upd)
 	if err != nil {
