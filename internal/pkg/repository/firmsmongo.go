@@ -70,7 +70,12 @@ func (f *FirmsMongo) GetFirm(Name string) ([]pubrep.Firm, error) {
 	return Result, nil
 }
 func (f *FirmsMongo) GetFirmById(ID string) ([]pubrep.Firm, error) {
-	filter := bson.D{{"_id", ID}}
+	log.Printf("Input ID is: %s", ID)
+	ObjID, err := primitive.ObjectIDFromHex(ID)
+	if err != nil {
+		return nil, fmt.Errorf("GetFitmById has error:%s\n", err.Error())
+	}
+	filter := bson.D{{"_id", ObjID}}
 
 	rslt := f.col.FindOne(context.TODO(), filter)
 	var Result []pubrep.Firm
