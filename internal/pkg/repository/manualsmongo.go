@@ -60,7 +60,7 @@ func (m *ManualMongo) UpdateEmbeddedFirm(NewFirm pubrep.Firm) error {
 		return fmt.Errorf("UpdateEmbeddeFirm has error: %s", err.Error())
 	}
 	upd := bson.D{{"$set", updData}}
-	_, err = m.col.UpdateMany(context.TODO(), filter, upd)
+	_, err = m.col.UpdateOne(context.TODO(), filter, upd)
 	if err != nil {
 		return fmt.Errorf("UodateEmbeddedFirm has error: %s", err.Error())
 	}
