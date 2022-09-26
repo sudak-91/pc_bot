@@ -27,7 +27,7 @@ func (e *EditFirmCommand) Handl(data interface{}) ([]byte, error) {
 	Answer.ChatID = query.From.ID
 
 	param := strings.Split(query.Data, " ")
-	log.Printf("%v\n", v)
+	log.Printf("%v\n", param)
 	if len(param) > 0 {
 		return util.CommandErrorHandler(&Answer, fmt.Errorf("Input Parametr Error"))
 	}
