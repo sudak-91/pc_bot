@@ -3,6 +3,7 @@ package command
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"strings"
 
 	"github.com/sudak-91/pc_bot/internal/pkg/server"
@@ -20,13 +21,15 @@ func (e *EditFirmCommand) Handl(data interface{}) ([]byte, error) {
 	if !ok {
 		return nil, fmt.Errorf("Input parametr is not TelegramCallnackquery type")
 	}
+	log.Printf("%s\n", query.Data)
 	var Answer types.TelegramSendMessage
 	Answer.Method = "sendMessage"
 	Answer.ChatID = query.From.ID
 
 	param := strings.Split(query.Data, " ")
+	log.Printf("%v\n", v)
 	if len(param) > 0 {
-		return util.CommandErrorHandler(&Answer, fmt.Errorf("Ошибка во входных параметрах"))
+		return util.CommandErrorHandler(&Answer, fmt.Errorf("Input Parametr Error"))
 	}
 	FirmData, err := e.Firms.GetFirmById(query.Data)
 	if err != nil {
