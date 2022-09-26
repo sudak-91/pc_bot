@@ -28,10 +28,10 @@ func (e *EditFirmCommand) Handl(data interface{}) ([]byte, error) {
 
 	param := strings.Split(query.Data, " ")
 	log.Printf("%v\n", param)
-	if len(param) > 0 {
+	if len(param) != 2 {
 		return util.CommandErrorHandler(&Answer, fmt.Errorf("Input Parametr Error"))
 	}
-	FirmData, err := e.Firms.GetFirmById(query.Data)
+	FirmData, err := e.Firms.GetFirmById(param[1])
 	if err != nil {
 		return util.CommandErrorHandler(&Answer, err)
 	}

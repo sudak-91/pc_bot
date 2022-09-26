@@ -23,10 +23,10 @@ func (a *ApprovedFirm) Handl(data interface{}) ([]byte, error) {
 	Answer.Method = "sendMessage"
 	Answer.ChatID = query.From.ID
 	param := strings.Split(query.Data, " ")
-	if len(param) != 1 {
+	if len(param) != 2 {
 		return util.CommandErrorHandler(&Answer, fmt.Errorf("Неверное количество параметров"))
 	}
-	manuals, err := a.Firms.GetFirmById(query.Data)
+	manuals, err := a.Firms.GetFirmById(param[1])
 	if err != nil {
 		return util.CommandErrorHandler(&Answer, err)
 	}
