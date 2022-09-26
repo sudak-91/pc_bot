@@ -78,12 +78,14 @@ func (f *FirmsMongo) GetFirmById(ID string) ([]pubrep.Firm, error) {
 	filter := bson.D{{"_id", ObjID}}
 
 	rslt := f.col.FindOne(context.TODO(), filter)
-	var Result []pubrep.Firm
-	err = rslt.Decode(&Result)
+	var FirmFromID pubrep.Firm
+	err = rslt.Decode(&FirmFromID)
 	if err != nil {
 		return nil, fmt.Errorf("GetModel has error: %s", err.Error())
 
 	}
+	var Result []pubrep.Firm
+	Result = append(Result, FirmFromID)
 	return Result, nil
 }
 func (f *FirmsMongo) DeleteFirm(Name string) error {
