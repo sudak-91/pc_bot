@@ -54,7 +54,7 @@ func (m *ManualMongo) UpdateManual(NewManual pubrep.Manual) error {
 }
 
 func (m *ManualMongo) UpdateEmbeddedFirm(NewFirm pubrep.Firm) error {
-	log.Printf("Input NewFirm: %v", NewFirm)
+	log.Printf("Input NewFirm: %+v\n", NewFirm)
 	filter := bson.D{{"firm", bson.D{{"_id", NewFirm.ID}}}}
 	upd := bson.D{{"$set", bson.D{{"firm", bson.D{{"firm", NewFirm.Firm}}}}}}
 

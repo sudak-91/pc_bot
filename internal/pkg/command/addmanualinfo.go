@@ -54,9 +54,9 @@ func (this *AddManualInfo) Handl(data interface{}) ([]byte, error) {
 		NewFirm.ID = FirmId
 		NewFirm.Firm = ManualFirm
 		this.FirmChan <- NewFirm
-		Manual.Firm = &NewFirm
+		Manual.Firm = NewFirm
 	} else {
-		Manual.Firm = &rslt[0]
+		Manual.Firm = rslt[0]
 	}
 
 	Manual.DeviceModel = DeviceModel
