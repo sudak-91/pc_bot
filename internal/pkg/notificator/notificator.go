@@ -39,7 +39,7 @@ func (n *Notification) Run() {
 
 func sendManualNotification(manual pubrep.Manual) {
 	var message methods.SendMessage
-	message.Text = fmt.Sprintf("Получен новый мануал\n Фирма: %s\n Модель:%s\n", manual.FirmName, manual.DeviceModel)
+	message.Text = fmt.Sprintf("Получен новый мануал\n Фирма: %s\n Модель:%s\n", manual.Firm.Firm, manual.DeviceModel)
 	message.ChatID = server.Util.AdminID
 	err := methods.SendMessageMethod(os.Getenv("BOT_KEY"), message)
 	if err != nil {
