@@ -54,14 +54,18 @@ func (m *ManualMongo) UpdateManual(NewManual pubrep.Manual) error {
 }
 
 func (m *ManualMongo) UpdateEmbeddedFirm(NewFirm pubrep.Firm) error {
-	log.Printf("Input NewFirm: %+v\n", NewFirm)
+	log.Println(NewFirm)
 	filter := bson.D{{"firm", bson.D{{"_id", NewFirm.ID}}}}
-	upd := bson.D{{"$set", bson.D{{"firm", bson.D{{"firm", NewFirm.Firm}}}}}}
+	upd := bson.D{
+		{"$set",
+			bson.D{
+				{"firm", bson.D{{"firm", NewFirm.Firm}}}}}}
 
-	_, err := m.col.UpdateOne(context.TODO(), filter, upd)
+	rslt, err := m.col.UpdateOne(context.TODO(), filter, upd)
 	if err != nil {
 		return fmt.Errorf("UodateEmbeddedFirm has error: %s", err.Error())
 	}
+	log.Println(rslt.MatchedCount, rslt.ModifiedCount)
 	return nil
 }
 
