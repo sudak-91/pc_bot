@@ -62,7 +62,7 @@ type Firms interface {
 type Manuals interface {
 	CreateManual(NewManual Manual) error
 	UpdateManual(NewManual Manual) error
-	GetManuals(Firm string, DeviceName string) ([]Manual, error)
+	GetManuals(Filter string) ([]Manual, error)
 	GetUnapprovedManuals(Firm string, DeviceName string) ([]Manual, error)
 	UpdateEmbeddedFirm(NewFirm Firm) error
 	DeleteModel(ID string) error

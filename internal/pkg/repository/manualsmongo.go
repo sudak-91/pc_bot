@@ -69,10 +69,8 @@ func (m *ManualMongo) UpdateEmbeddedFirm(NewFirm pubrep.Firm) error {
 }
 
 //db.Manuals.aggregate({$lookup: {from: "Firms", localField: "firmid", foreignField: "_id", as: "firmname" }  } )
-func (m *ManualMongo) GetManuals(Firm string, DeviceName string) ([]pubrep.Manual, error) {
-
-	filter := bson.D{{"firm", Firm}, {"device", DeviceName}, {"approved", true}}
-	cursor, err := m.col.Find(context.TODO(), filter)
+func (m *ManualMongo) GetManuals(Filter string) ([]pubrep.Manual, error) {
+	cursor, err := m.col.Find(context.TODO(), Filter)
 	if err != nil {
 		return nil, fmt.Errorf("GetModel has error: %s", err.Error())
 	}
@@ -86,7 +84,7 @@ func (m *ManualMongo) GetManuals(Firm string, DeviceName string) ([]pubrep.Manua
 }
 func (m *ManualMongo) GetUnapprovedManuals(Firm string, DeviceName string) ([]pubrep.Manual, error) {
 
-	filter := bson.D{{"firm", Firm}, {"device", DeviceName}, {"approved", false}}
+	filter := bson.D{{"firm.firm", Firm}, {"device", DeviceName}, {"approved", false}}
 	cursor, err := m.col.Find(context.TODO(), filter)
 	if err != nil {
 		return nil, fmt.Errorf("GetModel has error: %s", err.Error())
