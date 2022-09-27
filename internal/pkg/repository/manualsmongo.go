@@ -82,21 +82,6 @@ func (m *ManualMongo) GetManuals(Filter string) ([]pubrep.Manual, error) {
 	}
 	return Result, nil
 }
-func (m *ManualMongo) GetUnapprovedManuals(Firm string, DeviceName string) ([]pubrep.Manual, error) {
-
-	filter := bson.D{{"firm.firm", Firm}, {"device", DeviceName}, {"approved", false}}
-	cursor, err := m.col.Find(context.TODO(), filter)
-	if err != nil {
-		return nil, fmt.Errorf("GetModel has error: %s", err.Error())
-	}
-	var Result []pubrep.Manual
-	err = cursor.All(context.TODO(), &Result)
-	if err != nil {
-		return nil, fmt.Errorf("GetModel has error: %s", err.Error())
-
-	}
-	return Result, nil
-}
 
 func (m *ManualMongo) DeleteModel(ID string) error {
 	//TODO: Add Delete Model Logic
