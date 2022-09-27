@@ -11,7 +11,8 @@ import (
 )
 
 type ApprovedFirm struct {
-	Firms pubrep.Firms
+	Firms   pubrep.Firms
+	Manuals pubrep.Manuals
 }
 
 func (a *ApprovedFirm) Handl(data interface{}) ([]byte, error) {
@@ -32,6 +33,10 @@ func (a *ApprovedFirm) Handl(data interface{}) ([]byte, error) {
 	}
 	manuals[0].Approved = true
 	err = a.Firms.UpdateFirm(manuals[0])
+	if err != nil {
+		return util.CommandErrorHandler(&Answer, err)
+	}
+	err = a.Manuals.UpdateEmbeddedFirm(manuals[0])
 	if err != nil {
 		return util.CommandErrorHandler(&Answer, err)
 	}
