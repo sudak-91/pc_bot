@@ -69,6 +69,20 @@ func (f *FirmsMongo) GetFirm(Name string) ([]pubrep.Firm, error) {
 	}
 	return Result, nil
 }
+
+func (f *FirmsMongo) GetFirms() ([]pubrep.Firm, error) {
+	filter := bson.D{{"approved", true}}
+	cursore, err := f.col.Find(context.TODO(), filter)
+	if err != nil {
+		return nil, fmt.Errorf("GetFirms has error: %s", err.Error())
+	}
+	var Result []pubrep.Firm
+	err = cursore.All(context.TODO(), &Result)
+	if err != nil {
+		return nil, fmt.Errorf("GetFirms has error: %s", err.Error())
+	}
+	return Result, nil
+}
 func (f *FirmsMongo) GetFirmById(ID string) ([]pubrep.Firm, error) {
 	log.Printf("Input ID is: %s", ID)
 	ObjID, err := primitive.ObjectIDFromHex(ID)

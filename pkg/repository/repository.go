@@ -55,6 +55,7 @@ type Firms interface {
 	UpdateFirm(NewFirm Firm) error
 	GetFirm(Name string) ([]Firm, error)
 	GetFirmById(ID string) ([]Firm, error)
+	GetFirms() ([]Firm, error)
 	DeleteFirm(ID string) error
 }
 
