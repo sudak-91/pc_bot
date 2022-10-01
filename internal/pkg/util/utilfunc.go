@@ -14,3 +14,10 @@ func CommandErrorHandler(Answer *types.TelegramSendMessage, err error) ([]byte, 
 	return json.Marshal(*Answer)
 
 }
+
+func CreateAnswer(ID int64) types.TelegramSendMessage {
+	var Answer types.TelegramSendMessage
+	Answer.ChatID = ID
+	Answer.Method = "sendMessage"
+	return Answer
+}

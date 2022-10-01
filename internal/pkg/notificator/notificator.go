@@ -49,6 +49,8 @@ func sendManualNotification(manual pubrep.Manual) {
 	var doc methods.SendDocument
 	doc.Document = manual.FileUniqID
 	doc.ChatId = server.Util.AdminID
+	keyboard := editManualNotificationKeyboard(manual)
+	doc.ReplyMarkup = &keyboard
 	err = methods.SendDocumentMethod(os.Getenv("BOT_KEY"), doc)
 	if err != nil {
 		_, file, line, _ := runtime.Caller(1)
@@ -76,5 +78,15 @@ func editFirmNotioficationKeyboard(firm pubrep.Firm) tgtype.TelegramInlineKeyboa
 	confirmCommandCallbackString := fmt.Sprintf("/approvedfirm %s", firm.ID.Hex())
 	keyboard.AddButton("Редактировать название", editCommandCallbackString, 0, 0)
 	keyboard.AddButton("Утвердить название фирмы", confirmCommandCallbackString, 1, 0)
+	return keyboard.GetKeyboard()
+}
+
+func editManualNotificationKeyboard(manual pubrep.Manual) tgtype.TelegramInlineKeyboardMarkup {
+	keyboard := &keyboardmaker.InlineCommandKeyboard{}
+	keyboard.MakeGrid(2, 1)
+	editCommandCallbackString := fmt.Sprintf("/editmanual %s", manual.ManualID.Hex())
+	confirmCommandCallbackString := fmt.Sprintf("/approvedmanual %s", manual.ManualID.Hex())
+	keyboard.AddButton("Редактировать имя устройства", editCommandCallbackString, 0, 0)
+	keyboard.AddButton("Утвердить мануал", confirmCommandCallbackString, 1, 0)
 	return keyboard.GetKeyboard()
 }

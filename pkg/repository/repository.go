@@ -55,14 +55,15 @@ type Firms interface {
 	UpdateFirm(NewFirm Firm) error
 	GetFirm(Name string) ([]Firm, error)
 	GetFirmById(ID string) ([]Firm, error)
-	GetFirms(filter string) ([]Firm, error)
+	GetFirms(filter interface{}) ([]Firm, error)
 	DeleteFirm(ID string) error
 }
 
 type Manuals interface {
 	CreateManual(NewManual Manual) error
 	UpdateManual(NewManual Manual) error
-	GetManuals(Filter string) ([]Manual, error)
+	GetManuals(Filter interface{}) ([]Manual, error)
 	UpdateEmbeddedFirm(NewFirm Firm) error
-	DeleteModel(ID string) error
+	DeleteManuals(ID string) error
+	GetManualByID(ID string) (Manual, error)
 }

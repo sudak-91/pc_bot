@@ -25,6 +25,7 @@ const (
 	AddManualDocument
 	EditFirm
 	ConfirmFirm
+	EditManual
 )
 
 type Server struct {
@@ -51,20 +52,27 @@ func NewServer(Port string, key string, Upd update.Updater) *Server {
 }
 
 type Utl struct {
-	Stage     map[int64]FMSStage
-	AnswerCtx map[int64]SendAnswer
-	Manual    map[int64]pubrep.Manual
-	EditFirm  map[int64]pubrep.Firm
-	AdminID   int64
+	StageMutex      *sync.RWMutex
+	Stage           map[int64]FMSStage
+	AnswerCtx       map[int64]SendAnswer
+	Manual          map[int64]pubrep.Manual
+	EditFirm        map[int64]pubrep.Firm
+	EditManualMutex *sync.RWMutex
+	EditManual      map[int64]pubrep.Manual
+	AdminID         int64
 }
 
 func (s *Server) Run(AdminID int64) {
 	s.once.Do(func() {
-		Util = &Utl{Stage: make(map[int64]FMSStage),
-			AdminID:   AdminID,
-			AnswerCtx: make(map[int64]SendAnswer),
-			Manual:    make(map[int64]pubrep.Manual),
-			EditFirm:  make(map[int64]pubrep.Firm)}
+		Util = &Utl{
+			StageMutex:      &sync.RWMutex{},
+			Stage:           make(map[int64]FMSStage),
+			AdminID:         AdminID,
+			AnswerCtx:       make(map[int64]SendAnswer),
+			Manual:          make(map[int64]pubrep.Manual),
+			EditFirm:        make(map[int64]pubrep.Firm),
+			EditManualMutex: &sync.RWMutex{},
+			EditManual:      make(map[int64]pubrep.Manual)}
 
 	})
 	mux := http.NewServeMux()

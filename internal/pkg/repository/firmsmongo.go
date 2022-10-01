@@ -71,7 +71,7 @@ func (f *FirmsMongo) GetFirm(Name string) ([]pubrep.Firm, error) {
 }
 
 //GetFirms return all filtred firms
-func (f *FirmsMongo) GetFirms(filter string) ([]pubrep.Firm, error) {
+func (f *FirmsMongo) GetFirms(filter interface{}) ([]pubrep.Firm, error) {
 	cursore, err := f.col.Find(context.TODO(), filter)
 	if err != nil {
 		return nil, fmt.Errorf("GetFirms has error: %s", err.Error())

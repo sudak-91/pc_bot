@@ -8,6 +8,7 @@ import (
 
 	pubrep "github.com/sudak-91/pc_bot/pkg/repository"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
@@ -69,7 +70,7 @@ func (m *ManualMongo) UpdateEmbeddedFirm(NewFirm pubrep.Firm) error {
 }
 
 //db.Manuals.aggregate({$lookup: {from: "Firms", localField: "firmid", foreignField: "_id", as: "firmname" }  } )
-func (m *ManualMongo) GetManuals(Filter string) ([]pubrep.Manual, error) {
+func (m *ManualMongo) GetManuals(Filter interface{}) ([]pubrep.Manual, error) {
 	cursor, err := m.col.Find(context.TODO(), Filter)
 	if err != nil {
 		return nil, fmt.Errorf("GetModel has error: %s", err.Error())
@@ -83,7 +84,23 @@ func (m *ManualMongo) GetManuals(Filter string) ([]pubrep.Manual, error) {
 	return Result, nil
 }
 
-func (m *ManualMongo) DeleteModel(ID string) error {
+func (m *ManualMongo) GetManualByID(ID string) (pubrep.Manual, error) {
+	ObjID, err := primitive.ObjectIDFromHex(ID)
+	if err != nil {
+		return pubrep.Manual{}, fmt.Errorf("GetManualByID has error: %s", err.Error())
+
+	}
+	filter := bson.D{{"_id", ObjID}}
+	rslt := m.col.FindOne(context.TODO(), filter)
+	var Manual pubrep.Manual
+	err = rslt.Decode(&Manual)
+	if err != nil {
+		return Manual, fmt.Errorf("GetManualByID has error: %s", err.Error())
+	}
+	return Manual, nil
+}
+
+func (m *ManualMongo) DeleteManuals(ID string) error {
 	//TODO: Add Delete Model Logic
 	return nil
 }

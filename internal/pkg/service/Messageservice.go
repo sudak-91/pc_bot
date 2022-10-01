@@ -28,6 +28,8 @@ func (t *TelegramUpdater) messageService(Message types.TelegramMessage) ([]byte,
 		return t.Execute("/addmanualdocument", Message)
 	case server.EditFirm:
 		return t.Execute("/confirmeditfirm", Message)
+	case server.EditManual:
+		return t.Execute("/confirmeditmanual", Message)
 	default:
 		log.Println("default message")
 		return t.Routing(Message)
