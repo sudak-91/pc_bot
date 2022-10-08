@@ -41,7 +41,11 @@ func (a *AllFirmsList) Handl(data interface{}) ([]byte, error) {
 	keyboard := a.createKeyboard(&Lists, offset)
 	var EditMessage methods.EditMessageText
 	EditMessage.ChatID = fmt.Sprintf("%s", query.From.ID)
-	EditMessage.MessageID = int(query.Message.MessageID)
+	inlinemsgid, err := strconv.ParseInt(query.InlineMessageId, 10, 32)
+	if err != nil {
+		return util.CommandErrorHandler(&answer, err)
+	}
+	EditMessage.InlineMessageID = int(inlinemsgid)
 	EditMessage.ReplyMarkup = keyboard
 	EditMessage.Text = "Выберите фирму, чтобы получить список устройств, на которые имеются руководства"
 	err = methods.EditMessageTextMethod(EditMessage, os.Getenv("BOT_KEY"))
