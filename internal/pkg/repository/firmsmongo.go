@@ -10,6 +10,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 type FirmsMongo struct {
@@ -116,6 +117,21 @@ func (f *FirmsMongo) GetApprovedFirms() ([]pubrep.Firm, error) {
 	}
 	return Result, nil
 }
+
+func (f *FirmsMongo) GetApprovedFirmsWithOffsetAndLimit(offset int64, limit int) ([]pubrep.Firm, error) {
+	option := options.Find().SetSort(bson.D{{"firm", 1}}).SetSkip(offset).SetLimit(int64(limit))
+	rslt, err := f.col.Find(context.TODO(), bson.D{}, option)
+	if err != nil {
+		return nil, fmt.Errorf("GetApprovedFirmsWithOffset has error: %w", err)
+	}
+	var Result []pubrep.Firm
+	err = rslt.All(context.TODO(), &Result)
+	if err != nil {
+		return nil, fmt.Errorf("GetApprovedFirmsWithOffset has error: %w", err)
+	}
+	return Result, nil
+}
+
 func (f *FirmsMongo) DeleteFirm(Name string) error {
 	//TODO: Add delete firm logic
 	return nil

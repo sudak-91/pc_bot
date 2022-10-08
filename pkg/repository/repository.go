@@ -57,6 +57,7 @@ type Firms interface {
 	GetFirmById(ID string) ([]Firm, error)
 	GetFirms() ([]Firm, error)
 	GetApprovedFirms() ([]Firm, error)
+	GetApprovedFirmsWithOffsetAndLimit(offset int64, limit int) ([]Firm, error)
 	DeleteFirm(ID string) error
 }
 
