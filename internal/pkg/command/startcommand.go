@@ -41,7 +41,8 @@ func (s *StartCommand) createKeyboard() *types.TelegramInlineKeyboardMarkup {
 	mainkeyboard.MakeGrid(1, 3)
 	mainkeyboard.AddButton("Задать вопрос", "/question", 0, 0)
 	mainkeyboard.AddButton("Предложить новость", "/news", 0, 1)
-	mainkeyboard.AddButton("Архив мануалов", "/manualarchive", 0, 2)
+	//FIXME:
+	//mainkeyboard.AddButton("Архив мануалов", "/manualarchive", 0, 2)
 	rslt := mainkeyboard.GetKeyboard()
 	return &rslt
 }

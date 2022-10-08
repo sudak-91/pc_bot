@@ -61,11 +61,11 @@ func (a *AllFirmsList) createKeyboard(lists *[]pubrep.Firm, offset int64) *tgtyp
 	}
 	if offset != 0 {
 		BackCommand := fmt.Sprintf("/allfirmslist %d", offset-10)
-		keyboard.AddButton("Назад", BackCommand, 0, 10)
+		keyboard.AddButton("Назад", BackCommand, 10, 0)
 	}
 	if len(*lists) == 10 {
 		ForwardCommand := fmt.Sprintf("/allfirmslist %d", offset+10)
-		keyboard.AddButton("Вперед", ForwardCommand, 1, 10)
+		keyboard.AddButton("Вперед", ForwardCommand, 10, 1)
 	}
 	grid := keyboard.GetKeyboard()
 	return &grid
