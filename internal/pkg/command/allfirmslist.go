@@ -39,6 +39,7 @@ func (a *AllFirmsList) Handl(data interface{}) ([]byte, error) {
 	if err != nil {
 		return util.CommandErrorHandler(&answer, err)
 	}
+	answer.Text = "Выберите фирму"
 	keyboard := a.createKeyboard(&Lists, offset)
 	//var EditMessage methods.EditMessageText
 	/*EditMessage.ChatID = fmt.Sprintf("%s", query.From.ID)
