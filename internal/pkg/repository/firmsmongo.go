@@ -110,7 +110,7 @@ func (f *FirmsMongo) GetApprovedFirms() ([]pubrep.Firm, error) {
 		return nil, fmt.Errorf("FirmsMongo GetApprovedFirms method has error:%w", err)
 	}
 	var Result []pubrep.Firm
-	err = rslt.Decode(&Result)
+	err = rslt.All(context.TODO(), &Result)
 	if err != nil {
 		return nil, fmt.Errorf("GetApprovedFirms method has error: %w", err)
 	}

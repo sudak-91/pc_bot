@@ -56,7 +56,7 @@ type Firms interface {
 	GetFirm(Name string) ([]Firm, error)
 	GetFirmById(ID string) ([]Firm, error)
 	GetFirms() ([]Firm, error)
-	GetApprovedFirms() ([]Firms, error)
+	GetApprovedFirms() ([]Firm, error)
 	DeleteFirm(ID string) error
 }
 
