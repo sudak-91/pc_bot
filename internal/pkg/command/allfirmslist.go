@@ -23,10 +23,11 @@ func (a *AllFirmsList) Handl(data interface{}) ([]byte, error) {
 	if !ok {
 		return nil, errors.New("Invalid input parametr")
 	}
-	param := strings.Split(query.Message.Text, " ")
+	param := strings.Split(query.Data, " ")
 	answer := util.CreateAnswer(query.From.ID)
 	if len(param) != 2 {
 		lenerr := errors.New("Invalid data length")
+
 		return util.CommandErrorHandler(&answer, lenerr)
 	}
 	offset, err := strconv.ParseInt(param[1], 10, 32)
