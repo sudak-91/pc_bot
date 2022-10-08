@@ -27,8 +27,8 @@ func (m *ManualArchive) createKeyboard() *types.TelegramInlineKeyboardMarkup {
 	var keyboard keyboardmaker.InlineCommandKeyboard
 	keyboard.MakeGrid(3, 1)
 	keyboard.AddButton("Показать список всех фирм", "/allfirmslist 0", 0, 0) //TODO:Реализовать метод
-	keyboard.AddButton("Алфавитный указатель", "/alphabetlist", 0, 1)        //TODO:
-	keyboard.AddButton("Поиск", "/search", 0, 2)                             //TODO:
+	keyboard.AddButton("Алфавитный указатель", "/alphabetlist", 1, 0)        //TODO:
+	keyboard.AddButton("Поиск", "/search", 2, 0)                             //TODO:
 	rslt := keyboard.GetKeyboard()
 	return &rslt
 
