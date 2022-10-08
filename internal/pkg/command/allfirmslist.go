@@ -44,7 +44,7 @@ func (a *AllFirmsList) Handl(data interface{}) ([]byte, error) {
 	if err != nil {
 		return util.CommandErrorHandler(&answer, err)
 	}
-	EditMessage.InlineMessageID = int(query.Message.MessageID)
+	EditMessage.MessageID = int(query.Message.MessageID)
 	EditMessage.ReplyMarkup = keyboard
 	EditMessage.Text = "Выберите фирму, чтобы получить список устройств, на которые имеются руководства"
 	err = methods.EditMessageTextMethod(EditMessage, os.Getenv("BOT_KEY"))
