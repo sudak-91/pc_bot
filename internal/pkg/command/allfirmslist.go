@@ -1,17 +1,16 @@
 package command
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"log"
-	"os"
 	"strconv"
 	"strings"
 
 	"github.com/sudak-91/pc_bot/internal/pkg/util"
 	pubrep "github.com/sudak-91/pc_bot/pkg/repository"
 	keyboardmaker "github.com/sudak-91/telegrambotgo/Keyboardmaker"
-	methods "github.com/sudak-91/telegrambotgo/TelegramAPI/Methods"
 	tgtypes "github.com/sudak-91/telegrambotgo/TelegramAPI/Types"
 )
 
@@ -41,8 +40,8 @@ func (a *AllFirmsList) Handl(data interface{}) ([]byte, error) {
 		return util.CommandErrorHandler(&answer, err)
 	}
 	keyboard := a.createKeyboard(&Lists, offset)
-	var EditMessage methods.EditMessageText
-	EditMessage.ChatID = fmt.Sprintf("%s", query.From.ID)
+	//var EditMessage methods.EditMessageText
+	/*EditMessage.ChatID = fmt.Sprintf("%s", query.From.ID)
 	if err != nil {
 		return util.CommandErrorHandler(&answer, err)
 	}
@@ -52,8 +51,9 @@ func (a *AllFirmsList) Handl(data interface{}) ([]byte, error) {
 	err = methods.EditMessageTextMethod(EditMessage, os.Getenv("BOT_KEY"))
 	if err != nil {
 		return util.CommandErrorHandler(&answer, err)
-	}
-	return nil, nil
+	}*/
+	answer.ReplyMarkup = keyboard
+	return json.Marshal(answer)
 
 }
 func (a *AllFirmsList) createKeyboard(lists *[]pubrep.Firm, offset int64) *tgtypes.TelegramInlineKeyboardMarkup {
