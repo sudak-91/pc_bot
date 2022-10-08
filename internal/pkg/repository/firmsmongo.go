@@ -70,9 +70,9 @@ func (f *FirmsMongo) GetFirm(Name string) ([]pubrep.Firm, error) {
 	return Result, nil
 }
 
-//GetFirms return all filtred firms
-func (f *FirmsMongo) GetFirms(filter interface{}) ([]pubrep.Firm, error) {
-	cursore, err := f.col.Find(context.TODO(), filter)
+//GetFirms return all firms
+func (f *FirmsMongo) GetFirms() ([]pubrep.Firm, error) {
+	cursore, err := f.col.Find(context.TODO(), bson.D{})
 	if err != nil {
 		return nil, fmt.Errorf("GetFirms has error: %s", err.Error())
 	}
@@ -101,6 +101,19 @@ func (f *FirmsMongo) GetFirmById(ID string) ([]pubrep.Firm, error) {
 	}
 	var Result []pubrep.Firm
 	Result = append(Result, FirmFromID)
+	return Result, nil
+}
+func (f *FirmsMongo) GetApprovedFirms() ([]pubrep.Firm, error) {
+	filter := bson.D{{"approved", true}}
+	rslt, err := f.col.Find(context.TODO(), filter)
+	if err != nil {
+		return nil, fmt.Errorf("FirmsMongo GetApprovedFirms method has error:%w", err)
+	}
+	var Result []pubrep.Firm
+	err = rslt.Decode(&Result)
+	if err != nil {
+		return nil, fmt.Errorf("GetApprovedFirms method has error: %w", err)
+	}
 	return Result, nil
 }
 func (f *FirmsMongo) DeleteFirm(Name string) error {
