@@ -3,6 +3,7 @@ package command
 import (
 	"errors"
 	"fmt"
+	"log"
 	"os"
 	"strconv"
 	"strings"
@@ -20,6 +21,7 @@ type AllFirmsList struct {
 
 func (a *AllFirmsList) Handl(data interface{}) ([]byte, error) {
 	query, ok := data.(tgtypes.TelegramCallbackQuery)
+	log.Printf("%v", query)
 	if !ok {
 		return nil, errors.New("Invalid input parametr")
 	}
