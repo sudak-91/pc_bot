@@ -46,7 +46,7 @@ func main() {
 	//updater - роутинг для обновлений
 	updater := update.NewTelegramService(telegramupdate)
 	//Make keyboard
-	mkeyboard := createMainInlineKeyboard()
+
 	akeyboard := createAdminInlineKeyboard()
 	FirmChan := make(chan pubrep.Firm, 3)
 	ManualChan := make(chan pubrep.Manual, 3)
@@ -54,7 +54,7 @@ func main() {
 	NotificationService := notificator.NewNotification(ManualChan, FirmChan)
 	go NotificationService.Run()
 
-	addBotCommand(telegramupdate, repo, mkeyboard, akeyboard, FirmChan, ManualChan)
+	addBotCommand(telegramupdate, repo, akeyboard, FirmChan, ManualChan)
 
 	BotServer := server.NewServer(viper.GetString("server.port"), os.Getenv("BOT_KEY"), updater)
 	AdminUsr, err := repo.Users.GetAdmin()
@@ -70,10 +70,10 @@ func main() {
 }
 
 //addBotCommand -  adding command handler
-func addBotCommand(telegramupdate *intserv.TelegramUpdater, repo *intrep.MongoRepository, mkeyboard keyboardmaker.InlineCommandKeyboard, akeyboard keyboardmaker.InlineCommandKeyboard,
+func addBotCommand(telegramupdate *intserv.TelegramUpdater, repo *intrep.MongoRepository, akeyboard keyboardmaker.InlineCommandKeyboard,
 	FirmChan chan pubrep.Firm, ManualChan chan pubrep.Manual) {
 	telegramupdate.AddNewCommand("/default", &intcom.Default{})
-	telegramupdate.AddNewCommand("/start", &intcom.StartCommand{User: repo.Users, Keyboard: mkeyboard.GetKeyboard()})
+	telegramupdate.AddNewCommand("/start", &intcom.StartCommand{User: repo.Users})
 	telegramupdate.AddNewCommand("/login", &intcom.Login{Users: repo.Users, Keyboard: akeyboard.GetKeyboard()})
 	telegramupdate.AddNewCommand("/news", &intcom.News{})
 	telegramupdate.AddNewCommand("/addnews", &intcom.AddNews{News: repo.Newser})
@@ -130,14 +130,6 @@ func initConf() error {
 		return err
 	}
 	return nil
-}
-
-func createMainInlineKeyboard() keyboardmaker.InlineCommandKeyboard {
-	var mainkeyboard keyboardmaker.InlineCommandKeyboard
-	mainkeyboard.MakeGrid(1, 2)
-	mainkeyboard.AddButton("Задать вопрос", "/question", 0, 0)
-	mainkeyboard.AddButton("Предложить новость", "/news", 0, 1)
-	return mainkeyboard
 }
 
 func createAdminInlineKeyboard() keyboardmaker.InlineCommandKeyboard {

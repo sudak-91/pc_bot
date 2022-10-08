@@ -5,12 +5,12 @@ import (
 	"fmt"
 
 	pubrep "github.com/sudak-91/pc_bot/pkg/repository"
+	keyboardmaker "github.com/sudak-91/telegrambotgo/Keyboardmaker"
 	types "github.com/sudak-91/telegrambotgo/TelegramAPI/Types"
 )
 
 type StartCommand struct {
-	User     pubrep.Users
-	Keyboard types.TelegramInlineKeyboardMarkup
+	User pubrep.Users
 }
 
 func (s *StartCommand) Handl(data interface{}) ([]byte, error) {
@@ -32,6 +32,16 @@ func (s *StartCommand) Handl(data interface{}) ([]byte, error) {
 	Linktochannel.Offset = 40
 	Answer.Entities = append(Answer.Entities, Linktochannel)
 	Answer.Text = `Добро пожаловать. Бот создан для канала "Я вам че-Автоматизатор"`
-	Answer.ReplyMarkup = &s.Keyboard
+	Answer.ReplyMarkup = s.createKeyboard()
 	return json.Marshal(Answer)
+}
+
+func (s *StartCommand) createKeyboard() *types.TelegramInlineKeyboardMarkup {
+	var mainkeyboard keyboardmaker.InlineCommandKeyboard
+	mainkeyboard.MakeGrid(1, 3)
+	mainkeyboard.AddButton("Задать вопрос", "/question", 0, 0)
+	mainkeyboard.AddButton("Предложить новость", "/news", 0, 1)
+	mainkeyboard.AddButton("Архив мануалов", "/manualarchive", 0, 2)
+	rslt := mainkeyboard.GetKeyboard()
+	return &rslt
 }
