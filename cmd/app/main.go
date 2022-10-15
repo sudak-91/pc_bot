@@ -97,6 +97,7 @@ func addBotCommand(telegramupdate *intserv.TelegramUpdater, repo *intrep.MongoRe
 	telegramupdate.AddNewCommand("/approvedmanual", &intcom.ApprovedManual{Manual: repo.Manual})
 	telegramupdate.AddNewCommand("/manualarchive", &intcom.ManualArchive{})
 	telegramupdate.AddNewCommand("/allfirmslist", &intcom.AllFirmsList{Firms: repo.Firm})
+	telegramupdate.AddNewCommand("/allunapprovedfirmslist", &intcom.AllUnapprovedFirmsList{Firms: repo.Firm})
 }
 
 func createMongoClientAndPing() *mongo.Database {
@@ -136,10 +137,11 @@ func initConf() error {
 
 func createAdminInlineKeyboard() keyboardmaker.InlineCommandKeyboard {
 	var adminkeyboard keyboardmaker.InlineCommandKeyboard
-	adminkeyboard.MakeGrid(3, 2)
+	adminkeyboard.MakeGrid(3, 3)
 	adminkeyboard.AddButton("Показать все вопросы", "/showq", 0, 0)
 	adminkeyboard.AddButton("Show all news", "/shown", 0, 1)
-	adminkeyboard.AddButton("Добавить мануал", "/addmanual", 1, 0)
-	adminkeyboard.AddButton("Показать мануалы", "/allfirmslist 0", 2, 0)
+	adminkeyboard.AddButton("Добавить мануал", "/addmanual", 0, 2)
+	adminkeyboard.AddButton("Показать мануалы", "/allfirmslist 0", 1, 0)
+	adminkeyboard.AddButton("Unapproved manuals", "/allunapprovedfirmslist 0", 1, 1)
 	return adminkeyboard
 }
