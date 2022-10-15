@@ -35,7 +35,7 @@ func (a *AllFirmsList) Handl(data interface{}) ([]byte, error) {
 	if err != nil {
 		return util.CommandErrorHandler(&answer, err)
 	}
-	Lists, err := a.Firms.GetApprovedFirmsWithOffsetAndLimit(offset, 10)
+	Lists, err := a.Firms.GetAllFirmsWithOffsetAndLimit(offset, 10)
 	if err != nil {
 		return util.CommandErrorHandler(&answer, err)
 	}
