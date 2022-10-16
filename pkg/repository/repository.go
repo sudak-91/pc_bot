@@ -65,7 +65,7 @@ type Firms interface {
 type Manuals interface {
 	CreateManual(NewManual Manual) error
 	UpdateManual(NewManual Manual) error
-	GetManuals(Filter interface{}) ([]Manual, error)
+	GetManuals() ([]Manual, error)
 	UpdateEmbeddedFirm(NewFirm Firm) error
 	DeleteManuals(ID string) error
 	GetManualByID(ID string) (Manual, error)

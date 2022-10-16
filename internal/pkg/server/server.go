@@ -54,8 +54,11 @@ func NewServer(Port string, key string, Upd update.Updater) *Server {
 type Utl struct {
 	StageMutex      *sync.RWMutex
 	Stage           map[int64]FMSStage
+	AnswerCtxMutex  *sync.RWMutex
 	AnswerCtx       map[int64]SendAnswer
+	ManualMutex     *sync.RWMutex
 	Manual          map[int64]pubrep.Manual
+	EditFirmMutex   *sync.RWMutex
 	EditFirm        map[int64]pubrep.Firm
 	EditManualMutex *sync.RWMutex
 	EditManual      map[int64]pubrep.Manual
@@ -68,8 +71,11 @@ func (s *Server) Run(AdminID int64) {
 			StageMutex:      &sync.RWMutex{},
 			Stage:           make(map[int64]FMSStage),
 			AdminID:         AdminID,
+			AnswerCtxMutex:  &sync.RWMutex{},
 			AnswerCtx:       make(map[int64]SendAnswer),
+			ManualMutex:     &sync.RWMutex{},
 			Manual:          make(map[int64]pubrep.Manual),
+			EditFirmMutex:   &sync.RWMutex{},
 			EditFirm:        make(map[int64]pubrep.Firm),
 			EditManualMutex: &sync.RWMutex{},
 			EditManual:      make(map[int64]pubrep.Manual)}

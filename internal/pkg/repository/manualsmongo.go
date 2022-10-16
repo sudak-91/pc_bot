@@ -70,8 +70,8 @@ func (m *ManualMongo) UpdateEmbeddedFirm(NewFirm pubrep.Firm) error {
 }
 
 //db.Manuals.aggregate({$lookup: {from: "Firms", localField: "firmid", foreignField: "_id", as: "firmname" }  } )
-func (m *ManualMongo) GetManuals(Filter interface{}) ([]pubrep.Manual, error) {
-	cursor, err := m.col.Find(context.TODO(), Filter)
+func (m *ManualMongo) GetManuals() ([]pubrep.Manual, error) {
+	cursor, err := m.col.Find(context.TODO(), bson.D{})
 	if err != nil {
 		return nil, fmt.Errorf("GetModel has error: %s", err.Error())
 	}
