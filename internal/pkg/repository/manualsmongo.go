@@ -99,6 +99,20 @@ func (m *ManualMongo) GetManualByID(ID string) (pubrep.Manual, error) {
 	}
 	return Manual, nil
 }
+func (m *ManualMongo) GetApprovedManuals(approved bool) ([]pubrep.Manual, error) {
+	filter := bson.D{{"approved", approved}}
+	cursor, err := m.col.Find(context.TODO(), filter)
+	if err != nil {
+		return nil, err
+	}
+	var Manuals []pubrep.Manual
+	err = cursor.All(context.TODO(), &Manuals)
+	if err != nil {
+		return nil, err
+	}
+	return Manuals, nil
+
+}
 
 func (m *ManualMongo) DeleteManuals(ID string) error {
 	//TODO: Add Delete Model Logic

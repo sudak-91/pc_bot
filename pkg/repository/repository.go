@@ -69,4 +69,5 @@ type Manuals interface {
 	UpdateEmbeddedFirm(NewFirm Firm) error
 	DeleteManuals(ID string) error
 	GetManualByID(ID string) (Manual, error)
+	GetApprovedManuals(approved bool) ([]Manual, error)
 }
