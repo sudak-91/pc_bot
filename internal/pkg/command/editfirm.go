@@ -35,8 +35,8 @@ func (e *EditFirmCommand) Handl(data interface{}) ([]byte, error) {
 	if err != nil {
 		return util.CommandErrorHandler(&Answer, err)
 	}
-	server.Util.EditFirm[query.From.ID] = FirmData[0]
-	Answer.Text = fmt.Sprintf("Cтарое название: %s\n Введите исправленное название", FirmData[0].Firm)
+	server.Util.EditFirm[query.From.ID] = FirmData
+	Answer.Text = fmt.Sprintf("Cтарое название: %s\n Введите исправленное название", FirmData.Firm)
 	server.Util.Stage[query.From.ID] = server.EditFirm
 	return json.Marshal(Answer)
 
