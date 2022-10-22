@@ -91,7 +91,7 @@ func addBotCommand(telegramupdate *intserv.TelegramUpdater, repo *intrep.MongoRe
 	telegramupdate.AddNewCommand("/addmanualdocument", &intcom.AddManualDocument{Manual: repo.Manual, ManualNotificator: ManualChan})
 	telegramupdate.AddNewCommand("/editfirm", &intcom.EditFirmCommand{Firms: repo.Firm})
 	telegramupdate.AddNewCommand("/confirmeditfirm", &intcom.ConfirmEditFirm{Firms: repo.Firm, Manuals: repo.Manual})
-	telegramupdate.AddNewCommand("/approvedfirm", &intcom.ApprovedFirm{Firms: repo.Firm})
+	telegramupdate.AddNewCommand("/approvedfirm", &intcom.ApprovedFirm{Firms: repo.Firm, Manuals: repo.Manual})
 	telegramupdate.AddNewCommand("/editmanual", &intcom.EditManual{Manuals: repo.Manual})
 	telegramupdate.AddNewCommand("/confirmeditmanual", &intcom.ConfirmEditManual{Manual: repo.Manual})
 	telegramupdate.AddNewCommand("/approvedmanual", &intcom.ApprovedManual{Manual: repo.Manual})
