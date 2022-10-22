@@ -131,6 +131,27 @@ func (m *ManualMongo) GetApprovedManualsWithOffsetAndLimit(offset int64, limit i
 }
 
 func (m *ManualMongo) DeleteManuals(ID string) error {
-	//TODO: Add Delete Model Logic
+	id, err := primitive.ObjectIDFromHex(ID)
+	if err != nil {
+		return err
+	}
+	filter := bson.D{{"_id", id}}
+	_, err = m.col.DeleteOne(context.TODO(), filter)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (m *ManualMongo) DeleteManualsByFirm(ID string) error {
+	id, err := primitive.ObjectIDFromHex(ID)
+	if err != nil {
+		return err
+	}
+	filter := bson.D{{"firm._id", id}}
+	_, err = m.col.DeleteMany(context.TODO(), filter)
+	if err != nil {
+		return err
+	}
 	return nil
 }
