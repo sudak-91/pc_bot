@@ -97,8 +97,10 @@ func addBotCommand(telegramupdate *intserv.TelegramUpdater, repo *intrep.MongoRe
 	telegramupdate.AddNewCommand("/approvedmanual", &intcom.ApprovedManual{Manual: repo.Manual})
 	telegramupdate.AddNewCommand("/manualarchive", &intcom.ManualArchive{})
 	telegramupdate.AddNewCommand("/allfirmslist", &intcom.AllFirmsList{Firms: repo.Firm})
-	telegramupdate.AddNewCommand("/allunapprovedfirmslist", &intcom.AllUnapprovedFirmsList{Firms: repo.Firm})
+	telegramupdate.AddNewCommand("/allfirmslistwithapproved", &intcom.AllFirmsListWithApproved{Firms: repo.Firm})
 	telegramupdate.AddNewCommand("/deletefirm", &intcom.DeleteFirm{Firms: repo.Firm, Manual: repo.Manual, Client: client})
+	telegramupdate.AddNewCommand("/allmanualslistwithapproved", &intcom.AllManualsListWithApproved{Manuals: repo.Manual})
+	telegramupdate.AddNewCommand("/showmanual", &intcom.ShowManual{Manuals: repo.Manual})
 }
 
 func createMongoClientAndPing() (*mongo.Client, *mongo.Database) {
@@ -143,6 +145,6 @@ func createAdminInlineKeyboard() keyboardmaker.InlineCommandKeyboard {
 	adminkeyboard.AddButton("Show all news", "/shown", 0, 1)
 	adminkeyboard.AddButton("Добавить мануал", "/addmanual", 0, 2)
 	adminkeyboard.AddButton("Показать мануалы", "/allfirmslist 0", 1, 0)
-	adminkeyboard.AddButton("Unapproved manuals", "/allunapprovedfirmslist 0", 1, 1)
+	adminkeyboard.AddButton("Unapproved manuals", "/allfirmslistwithapproved 0 0 9", 1, 1)
 	return adminkeyboard
 }

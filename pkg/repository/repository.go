@@ -71,5 +71,5 @@ type Manuals interface {
 	DeleteManualsByFirm(ID string) error
 	GetManualByID(ID string) (Manual, error)
 	GetApprovedManuals(approved bool) ([]Manual, error)
-	GetApprovedManualsWithOffsetAndLimit(offset int64, limit int, approved bool) ([]Firm, error)
+	GetApprovedManualsWithOffsetAndLimit(offset int64, limit int, approved bool) ([]Manual, error)
 }

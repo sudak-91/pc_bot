@@ -66,7 +66,7 @@ func (a *AllFirmsList) createKeyboard(lists *[]pubrep.Firm, offset int64) *tgtyp
 		Command := fmt.Sprintf("/showmanual %s", FirmID)
 		keyboard.AddButton(FirmName, Command, k, 0)
 		DeleteCommand := fmt.Sprintf("/deletefirm %s", FirmID)
-		keyboard.AddButton(FirmName, DeleteCommand, k, 1)
+		keyboard.AddButton(fmt.Sprintf("Удалить: %s", FirmName), DeleteCommand, k, 1)
 	}
 	if offset != 0 {
 		BackCommand := fmt.Sprintf("/allfirmslist %d", offset-10)
