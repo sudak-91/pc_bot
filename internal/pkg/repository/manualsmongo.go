@@ -40,7 +40,7 @@ func (m *ManualMongo) CreateManual(NewManual pubrep.Manual) error {
 }
 
 func (m *ManualMongo) UpdateManual(NewManual pubrep.Manual) error {
-	filter := bson.D{{"_id", NewManual.FileUniqID}}
+	filter := bson.D{{"_id", NewManual.ManualID}}
 	updData, err := bson.Marshal(NewManual)
 	if err != nil {
 		return fmt.Errorf("UpdateManual has error: %s", err.Error())
