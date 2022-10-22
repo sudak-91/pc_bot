@@ -146,7 +146,15 @@ func (f *FirmsMongo) GetAllFirmsWithOffsetAndLimit(offset int64, limit int) ([]p
 	return Result, nil
 }
 
-func (f *FirmsMongo) DeleteFirm(Name string) error {
-	//TODO: Add delete firm logic
+func (f *FirmsMongo) DeleteFirm(ID string) error {
+	id,err:=primitive.ObjectIDFromHex(ID)
+	if err != nil {
+		return err
+	}
+	filter:= bson.D{{"_id", id}}
+	_,err=f.col.DeleteOne(context.TODO(),filter)
+	if err!=nil{
+		return err
+	}
 	return nil
 }

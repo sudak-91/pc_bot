@@ -68,6 +68,7 @@ type Manuals interface {
 	GetManuals() ([]Manual, error)
 	UpdateEmbeddedFirm(NewFirm Firm) error
 	DeleteManuals(ID string) error
+	DeleteManualsByFirm(ID string) error
 	GetManualByID(ID string) (Manual, error)
 	GetApprovedManuals(approved bool) ([]Manual, error)
 	GetApprovedManualsWithOffsetAndLimit(offset int64, limit int, approved bool) ([]Firm, error)

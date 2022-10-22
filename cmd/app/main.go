@@ -38,7 +38,7 @@ func main() {
 		}
 	}
 
-	db := createMongoClientAndPing()
+	mongoclient, db := createMongoClientAndPing()
 	repo := intrep.NewMongoRepository(db)
 	//Создание стандартного обработчика обновления
 	//telegramupdater экеземпляр, который содержит реализацию обработок всех основных обновлдений
@@ -54,7 +54,7 @@ func main() {
 	NotificationService := notificator.NewNotification(ManualChan, FirmChan)
 	go NotificationService.Run()
 
-	addBotCommand(telegramupdate, repo, akeyboard, FirmChan, ManualChan)
+	addBotCommand(telegramupdate, repo, akeyboard, FirmChan, ManualChan, mongoclient)
 
 	BotServer := server.NewServer(viper.GetString("server.port"), os.Getenv("BOT_KEY"), updater)
 	AdminUsr, err := repo.Users.GetAdmin()
@@ -71,7 +71,7 @@ func main() {
 
 //addBotCommand -  adding command handler
 func addBotCommand(telegramupdate *intserv.TelegramUpdater, repo *intrep.MongoRepository, akeyboard keyboardmaker.InlineCommandKeyboard,
-	FirmChan chan pubrep.Firm, ManualChan chan pubrep.Manual) {
+	FirmChan chan pubrep.Firm, ManualChan chan pubrep.Manual, client *mongo.Client) {
 	telegramupdate.AddNewCommand("/default", &intcom.Default{})
 	telegramupdate.AddNewCommand("/start", &intcom.StartCommand{User: repo.Users})
 	telegramupdate.AddNewCommand("/login", &intcom.Login{Users: repo.Users, Keyboard: akeyboard.GetKeyboard()})
@@ -98,9 +98,10 @@ func addBotCommand(telegramupdate *intserv.TelegramUpdater, repo *intrep.MongoRe
 	telegramupdate.AddNewCommand("/manualarchive", &intcom.ManualArchive{})
 	telegramupdate.AddNewCommand("/allfirmslist", &intcom.AllFirmsList{Firms: repo.Firm})
 	telegramupdate.AddNewCommand("/allunapprovedfirmslist", &intcom.AllUnapprovedFirmsList{Firms: repo.Firm})
+	telegramupdate.AddNewCommand("/deletefirm", &intcom.DeleteFirm{Firms: repo.Firm, Manual: repo.Manual, Client: client})
 }
 
-func createMongoClientAndPing() *mongo.Database {
+func createMongoClientAndPing() (*mongo.Client, *mongo.Database) {
 	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
 	//defer cancel()
 	connectString := fmt.Sprintf("mongodb://%s:%s@mongodb:27017", os.Getenv("DB_USERNAME"), os.Getenv("DB_PASSWORD"))
@@ -121,7 +122,7 @@ func createMongoClientAndPing() *mongo.Database {
 		panic(err.Error())
 	}
 	db := client.Database("Test")
-	return db
+	return client, db
 }
 
 func initConf() error {
