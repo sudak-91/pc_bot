@@ -41,13 +41,9 @@ func (m *ManualMongo) CreateManual(NewManual pubrep.Manual) error {
 
 func (m *ManualMongo) UpdateManual(NewManual pubrep.Manual) error {
 	filter := bson.D{{"_id", NewManual.ManualID}}
-	updData, err := bson.Marshal(NewManual)
-	if err != nil {
-		return fmt.Errorf("UpdateManual has error: %s", err.Error())
-	}
 
-	upd := bson.D{{"$set", updData}}
-	_, err = m.col.UpdateOne(context.TODO(), filter, upd)
+	upd := bson.D{{"$set", bson.D{{"approved", NewManual.Approved}}}}
+	_, err := m.col.UpdateOne(context.TODO(), filter, upd)
 	if err != nil {
 		return fmt.Errorf("UpdateModel has error: %s", err.Error())
 	}
