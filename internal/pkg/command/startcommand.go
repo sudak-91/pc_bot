@@ -38,11 +38,12 @@ func (s *StartCommand) Handl(data interface{}) ([]byte, error) {
 
 func (s *StartCommand) createKeyboard() *types.TelegramInlineKeyboardMarkup {
 	var mainkeyboard keyboardmaker.InlineCommandKeyboard
-	mainkeyboard.MakeGrid(1, 3)
+	mainkeyboard.MakeGrid(2, 2)
 	mainkeyboard.AddButton("Задать вопрос", "/question", 0, 0)
 	mainkeyboard.AddButton("Предложить новость", "/news", 0, 1)
 	//FIXME:
-	//mainkeyboard.AddButton("Архив мануалов", "/manualarchive", 0, 2)
+	mainkeyboard.AddButton("Список руководств", "/allfirmslistwithapproved 0 1 0", 1, 0)
+	mainkeyboard.AddButton("Загрузить руководство", "/addmanual", 1, 1)
 	rslt := mainkeyboard.GetKeyboard()
 	return &rslt
 }
