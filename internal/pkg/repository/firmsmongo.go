@@ -85,11 +85,11 @@ func (f *FirmsMongo) GetFirms() ([]pubrep.Firm, error) {
 	return Result, nil
 }
 
-func (f *FirmsMongo) GetFirmById(ID string) ([]pubrep.Firm, error) {
+func (f *FirmsMongo) GetFirmById(ID string) (pubrep.Firm, error) {
 	log.Printf("Input ID is: %s", ID)
 	ObjID, err := primitive.ObjectIDFromHex(ID)
 	if err != nil {
-		return nil, fmt.Errorf("GetFitmById has error:%s\n", err.Error())
+		return pubrep.Firm{}, fmt.Errorf("GetFitmById has error:%s\n", err.Error())
 	}
 	filter := bson.D{{"_id", ObjID}}
 
@@ -97,12 +97,11 @@ func (f *FirmsMongo) GetFirmById(ID string) ([]pubrep.Firm, error) {
 	var FirmFromID pubrep.Firm
 	err = rslt.Decode(&FirmFromID)
 	if err != nil {
-		return nil, fmt.Errorf("GetModel has error: %s", err.Error())
+		return pubrep.Firm{}, fmt.Errorf("GetModel has error: %s", err.Error())
 
 	}
-	var Result []pubrep.Firm
-	Result = append(Result, FirmFromID)
-	return Result, nil
+
+	return FirmFromID, nil
 }
 func (f *FirmsMongo) GetApprovedFirms() ([]pubrep.Firm, error) {
 	filter := bson.D{{"approved", true}}
@@ -147,13 +146,13 @@ func (f *FirmsMongo) GetAllFirmsWithOffsetAndLimit(offset int64, limit int) ([]p
 }
 
 func (f *FirmsMongo) DeleteFirm(ID string) error {
-	id,err:=primitive.ObjectIDFromHex(ID)
+	id, err := primitive.ObjectIDFromHex(ID)
 	if err != nil {
 		return err
 	}
-	filter:= bson.D{{"_id", id}}
-	_,err=f.col.DeleteOne(context.TODO(),filter)
-	if err!=nil{
+	filter := bson.D{{"_id", id}}
+	_, err = f.col.DeleteOne(context.TODO(), filter)
+	if err != nil {
 		return err
 	}
 	return nil

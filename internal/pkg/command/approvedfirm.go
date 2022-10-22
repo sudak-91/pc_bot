@@ -31,12 +31,12 @@ func (a *ApprovedFirm) Handl(data interface{}) ([]byte, error) {
 	if err != nil {
 		return util.CommandErrorHandler(&Answer, err)
 	}
-	manuals[0].Approved = true
-	err = a.Firms.UpdateFirm(manuals[0])
+	manuals.Approved = true
+	err = a.Firms.UpdateFirm(manuals)
 	if err != nil {
 		return util.CommandErrorHandler(&Answer, err)
 	}
-	err = a.Manuals.UpdateEmbeddedFirm(manuals[0])
+	err = a.Manuals.UpdateEmbeddedFirm(manuals)
 	if err != nil {
 		return util.CommandErrorHandler(&Answer, err)
 	}

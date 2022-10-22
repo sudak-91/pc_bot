@@ -54,7 +54,7 @@ type Firms interface {
 	CreateFirm(FirmName string) (primitive.ObjectID, error)
 	UpdateFirm(NewFirm Firm) error
 	GetFirm(Name string) ([]Firm, error)
-	GetFirmById(ID string) ([]Firm, error)
+	GetFirmById(ID string) (Firm, error)
 	GetFirms() ([]Firm, error)
 	GetApprovedFirms() ([]Firm, error)
 	GetApprovedFirmsWithOffsetAndLimit(offset int64, limit int, approved bool) ([]Firm, error)
