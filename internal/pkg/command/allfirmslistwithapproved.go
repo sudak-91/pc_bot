@@ -56,6 +56,7 @@ func (a *AllFirmsListWithApproved) Handl(data interface{}) ([]byte, error) {
 	if err != nil {
 		return util.CommandErrorHandler(&answer, err)
 	}
+	log.Printf("Список фирм %+v", UnFirms)
 	if admin == 9 {
 		grid := a.createAdminKeyboard(&UnFirms, offset, approved)
 		answer.ReplyMarkup = &grid
@@ -95,7 +96,6 @@ func (a *AllFirmsListWithApproved) createUserKeyboard(FirmsList *[]pubrep.Firm, 
 	keyboard.MakeGrid(11, 2)
 	for k, v := range *FirmsList {
 		keyboard.AddButton(fmt.Sprintf("Показать список руководст %s", v.Firm), fmt.Sprintf("/allmanualslistwithapproved %s", v.ID.Hex()), k, 0)
-
 	}
 	if offset != 0 {
 		Backcommand := fmt.Sprintf("/allfirmslistwithapproved %d %t %d", offset-10, approved, 0)
