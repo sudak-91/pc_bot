@@ -57,6 +57,7 @@ func (a *AllFirmsListWithApproved) Handl(data interface{}) ([]byte, error) {
 		return util.CommandErrorHandler(&answer, err)
 	}
 	log.Printf("Список фирм %+v", UnFirms)
+	answer.Text = "Выберите фирму"
 	if admin == 9 {
 		grid := a.createAdminKeyboard(&UnFirms, offset, approved)
 		answer.ReplyMarkup = &grid
