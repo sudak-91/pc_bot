@@ -119,8 +119,9 @@ func (f *FirmsMongo) GetApprovedFirms() ([]pubrep.Firm, error) {
 
 func (f *FirmsMongo) GetApprovedFirmsWithOffsetAndLimit(offset int64, limit int, approved bool) ([]pubrep.Firm, error) {
 	option := options.Find().SetSort(bson.D{{"firm", 1}}).SetSkip(offset).SetLimit(int64(limit))
-	log.Printf("Approved flag: %t", approved)
-	rslt, err := f.col.Find(context.TODO(), bson.D{{"approved", fmt.Sprintf("%t", approved)}}, option)
+	log.Printf("Approved flag: %v", approved)
+	filter := bson.D{{"approved", approved}}
+	rslt, err := f.col.Find(context.TODO(), filter, option)
 	if err != nil {
 		return nil, fmt.Errorf("GetApprovedFirmsWithOffset has error: %w", err)
 	}
