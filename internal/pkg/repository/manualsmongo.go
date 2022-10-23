@@ -111,8 +111,12 @@ func (m *ManualMongo) GetApprovedManuals(approved bool) ([]pubrep.Manual, error)
 
 }
 
-func (m *ManualMongo) GetApprovedManualsWithOffsetAndLimit(offset int64, limit int, approved bool) ([]pubrep.Manual, error) {
-	filter := bson.D{{"approved", approved}}
+func (m *ManualMongo) GetApprovedManualsWithOffsetAndLimit(FirmID string, offset int64, limit int, approved bool) ([]pubrep.Manual, error) {
+	id, err := primitive.ObjectIDFromHex(FirmID)
+	if err != nil {
+		return nil, err
+	}
+	filter := bson.D{{"approved", approved}, {"firm._id", id}}
 	option := options.Find().SetSort(bson.D{{"device", 1}}).SetSkip(offset).SetLimit(int64(limit))
 	cursor, err := m.col.Find(context.TODO(), filter, option)
 	if err != nil {

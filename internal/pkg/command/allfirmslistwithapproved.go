@@ -96,7 +96,7 @@ func (a *AllFirmsListWithApproved) createUserKeyboard(FirmsList *[]pubrep.Firm, 
 	var keyboard keyboardmaker.InlineCommandKeyboard
 	keyboard.MakeGrid(11, 2)
 	for k, v := range *FirmsList {
-		keyboard.AddButton(fmt.Sprintf("Показать список руководст %s", v.Firm), fmt.Sprintf("/allmanualslistwithapproved %s", v.ID.Hex()), k, 0)
+		keyboard.AddButton(fmt.Sprintf("Показать список руководст %s", v.Firm), fmt.Sprintf("/allmanualslistwithapproved %d %t %d %s", 0, true, 0, v.ID.Hex()), k, 0)
 	}
 	if offset != 0 {
 		Backcommand := fmt.Sprintf("/allfirmslistwithapproved %d %t %d", offset-10, approved, 0)

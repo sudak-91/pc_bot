@@ -26,7 +26,7 @@ func (a *AllManualsListWithApproved) Handl(data interface{}) ([]byte, error) {
 	}
 	answer := util.CreateAnswer(query.From.ID)
 	param := strings.Split(query.Data, " ")
-	if len(param) != 4 {
+	if len(param) != 5 {
 		lenerr := errors.New("Invalid input length parametr")
 		return util.CommandErrorHandler(&answer, lenerr)
 	}
@@ -49,7 +49,7 @@ func (a *AllManualsListWithApproved) Handl(data interface{}) ([]byte, error) {
 
 	}
 
-	UnFirms, err := a.Manuals.GetApprovedManualsWithOffsetAndLimit(offset, 10, approved)
+	UnFirms, err := a.Manuals.GetApprovedManualsWithOffsetAndLimit(param[4], offset, 10, approved)
 	if err != nil {
 		return util.CommandErrorHandler(&answer, err)
 	}
@@ -57,7 +57,7 @@ func (a *AllManualsListWithApproved) Handl(data interface{}) ([]byte, error) {
 		grid := a.createAdminKeyboard(&UnFirms, offset, approved)
 		answer.ReplyMarkup = &grid
 	} else {
-		grid := a.createUserKeyboard(&UnFirms, offset, approved)
+		grid := a.createUserKeyboard(&UnFirms, offset, approved, param[4])
 		answer.ReplyMarkup = &grid
 	}
 
@@ -70,10 +70,10 @@ func (a *AllManualsListWithApproved) createAdminKeyboard(ManualList *[]pubrep.Ma
 	keyboard.MakeGrid(11, 3)
 	for k, v := range *ManualList {
 		if !approved {
-			keyboard.AddButton(fmt.Sprintf("%s: Утвердить", v.Firm), fmt.Sprintf("/approvedmanual %s", v.ManualID.Hex()), k, 0)
+			keyboard.AddButton(fmt.Sprintf("%s: Утвердить", v.DeviceModel), fmt.Sprintf("/approvedmanual %s", v.ManualID.Hex()), k, 0)
 		}
-		keyboard.AddButton(fmt.Sprintf("%s: Редактировать", v.Firm), fmt.Sprintf("/editmanual %s", v.ManualID.Hex()), k, 1)
-		keyboard.AddButton(fmt.Sprintf("%s: Удалить", v.Firm), fmt.Sprintf("/deletemanual %s", v.ManualID.Hex()), k, 2)
+		keyboard.AddButton(fmt.Sprintf("%s: Редактировать", v.DeviceModel), fmt.Sprintf("/editmanual %s", v.ManualID.Hex()), k, 1)
+		keyboard.AddButton(fmt.Sprintf("%s: Удалить", v.DeviceModel), fmt.Sprintf("/deletemanual %s", v.ManualID.Hex()), k, 2)
 	}
 	if offset != 0 {
 		Backcommand := fmt.Sprintf("/allmanualslistwithapproved %d %t %d", offset-10, approved, 9)
@@ -87,7 +87,7 @@ func (a *AllManualsListWithApproved) createAdminKeyboard(ManualList *[]pubrep.Ma
 	return grid
 }
 
-func (a *AllManualsListWithApproved) createUserKeyboard(ManualList *[]pubrep.Manual, offset int64, approved bool) tgtypes.TelegramInlineKeyboardMarkup {
+func (a *AllManualsListWithApproved) createUserKeyboard(ManualList *[]pubrep.Manual, offset int64, approved bool, firmid string) tgtypes.TelegramInlineKeyboardMarkup {
 	var keyboard keyboardmaker.InlineCommandKeyboard
 	keyboard.MakeGrid(11, 2)
 	for k, v := range *ManualList {
@@ -95,11 +95,11 @@ func (a *AllManualsListWithApproved) createUserKeyboard(ManualList *[]pubrep.Man
 
 	}
 	if offset != 0 {
-		Backcommand := fmt.Sprintf("/allmanualslistwithapproved %d %t %d", offset-10, approved, 0)
+		Backcommand := fmt.Sprintf("/allmanualslistwithapproved %d %t %d %s", offset-10, approved, 0, firmid)
 		keyboard.AddButton("Назад", Backcommand, 10, 0)
 	}
 	if len(*ManualList) == 10 {
-		ForwardCommand := fmt.Sprintf("/allmanualslistwithapproved %d %t %d", offset+10, approved, 0)
+		ForwardCommand := fmt.Sprintf("/allmanualslistwithapproved %d %t %d %s", offset+10, approved, 0, firmid)
 		keyboard.AddButton("Вперед", ForwardCommand, 10, 1)
 	}
 	grid := keyboard.GetKeyboard()
