@@ -48,7 +48,7 @@ func (a *AllManualsListWithApproved) Handl(data interface{}) ([]byte, error) {
 		return util.CommandErrorHandler(&answer, adminerr)
 
 	}
-
+	answer.Text = "Выберите мануал"
 	UnFirms, err := a.Manuals.GetApprovedManualsWithOffsetAndLimit(param[4], offset, 10, approved)
 	if err != nil {
 		return util.CommandErrorHandler(&answer, err)
