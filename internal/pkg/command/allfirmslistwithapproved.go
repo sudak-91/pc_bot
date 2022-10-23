@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"log"
 	"strconv"
 	"strings"
 
@@ -24,12 +25,14 @@ func (a *AllFirmsListWithApproved) Handl(data interface{}) ([]byte, error) {
 		e := errors.New("Invalid input parametr")
 		return nil, e
 	}
+	log.Printf("%v\n", query)
 	answer := util.CreateAnswer(query.From.ID)
 	param := strings.Split(query.Data, " ")
 	if len(param) != 4 {
 		lenerr := errors.New("Invalid input length parametr")
 		return util.CommandErrorHandler(&answer, lenerr)
 	}
+	log.Printf("%v\n", param)
 	offset, err := strconv.ParseInt(param[1], 10, 64)
 	if err != nil {
 		offseterr := errors.New(fmt.Sprintf("Offset parametr can't converted: %w", err))
