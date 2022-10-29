@@ -21,3 +21,5 @@ func CreateAnswer(ID int64) types.TelegramSendMessage {
 	Answer.Method = "sendMessage"
 	return Answer
 }
+
+

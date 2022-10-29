@@ -42,7 +42,7 @@ func (m *ManualMongo) CreateManual(NewManual pubrep.Manual) error {
 func (m *ManualMongo) UpdateManual(NewManual pubrep.Manual) error {
 	filter := bson.D{{"_id", NewManual.ManualID}}
 
-	upd := bson.D{{"$set", bson.D{{"approved", NewManual.Approved}}}}
+	upd := bson.D{{"$set", bson.D{{"approved", NewManual.Approved}, {"device", NewManual.DeviceModel}}}}
 	_, err := m.col.UpdateOne(context.TODO(), filter, upd)
 	if err != nil {
 		return fmt.Errorf("UpdateModel has error: %s", err.Error())
@@ -154,4 +154,21 @@ func (m *ManualMongo) DeleteManualsByFirm(ID string) error {
 		return err
 	}
 	return nil
+}
+func (m *ManualMongo) GetManualsByFirmID(FirmID string) ([]pubrep.Manual, error) {
+	id, err := primitive.ObjectIDFromHex(FirmID)
+	if err != nil {
+		return nil, err
+	}
+	filter := bson.D{{"firm._id", id}}
+	cur, err := m.col.Find(context.TODO(), filter)
+	if err != nil {
+		return nil, err
+	}
+	var Result []pubrep.Manual
+	err = cur.All(context.TODO(), &Result)
+	if err != nil {
+		return nil, err
+	}
+	return Result, nil
 }
