@@ -187,6 +187,10 @@ github.com/sudak-91/telegrambotgo v0.0.6-0.20221022104856-cc32e1a01033 h1:8Ahn15
 github.com/sudak-91/telegrambotgo v0.0.6-0.20221022104856-cc32e1a01033/go.mod h1:PxvWyzPBtzWJL1sbSVxN2gy81obcva+d8XT2Tf7mRg4=
 github.com/sudak-91/telegrambotgo v0.0.6-0.20221022114211-216a318ea15d h1:OV/gDQM0mu5ZA4fIVsEYr4+aFcKFLsf4V8BWP9Ab8e4=
 github.com/sudak-91/telegrambotgo v0.0.6-0.20221022114211-216a318ea15d/go.mod h1:PxvWyzPBtzWJL1sbSVxN2gy81obcva+d8XT2Tf7mRg4=
+github.com/sudak-91/telegrambotgo v0.0.6-0.20221217124630-f3902d0aa021 h1:x5Nh5dLXzEkslhjKiMdwQWT0+wHvvHpNC2TmNy7y1JU=
+github.com/sudak-91/telegrambotgo v0.0.6-0.20221217124630-f3902d0aa021/go.mod h1:PxvWyzPBtzWJL1sbSVxN2gy81obcva+d8XT2Tf7mRg4=
+github.com/sudak-91/telegrambotgo v0.0.6-0.20221217145943-c706e13579e2 h1:9EORtyC09LCK9XEIjJabVqA4N/i8TE65L2c0aaXqFp4=
+github.com/sudak-91/telegrambotgo v0.0.6-0.20221217145943-c706e13579e2/go.mod h1:PxvWyzPBtzWJL1sbSVxN2gy81obcva+d8XT2Tf7mRg4=
 github.com/tidwall/pretty v1.0.0 h1:HsD+QiTn7sK6flMKIvNmpqz1qrpP3Ps6jOKIKMooyg4=
 github.com/tidwall/pretty v1.0.0/go.mod h1:XNkn88O1ChpSDQmQeStsy+sBenx6DDtFZJxhVysOjyk=
 github.com/xdg-go/pbkdf2 v1.0.0 h1:Su7DPu48wXMwC3bs7MCNG+z4FhcyEuz5dlvchbq0B0c=

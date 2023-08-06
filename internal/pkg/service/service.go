@@ -5,8 +5,8 @@ import (
 	"os"
 
 	command "github.com/sudak-91/telegrambotgo/Command"
-	methods "github.com/sudak-91/telegrambotgo/TelegramAPI/Methods"
-	types "github.com/sudak-91/telegrambotgo/TelegramAPI/Types"
+	methods "github.com/sudak-91/telegrambotgo/telegram_api/methods"
+	types "github.com/sudak-91/telegrambotgo/telegram_api/types"
 )
 
 type TelegramUpdater struct {
@@ -20,7 +20,7 @@ func NewTelegramUpdater() *TelegramUpdater {
 
 }
 
-func (t *TelegramUpdater) CallbackQueryService(Query types.TelegramCallbackQuery) ([]byte, error) {
+func (t *TelegramUpdater) CallbackQueryService(Query types.CallbackQuery) ([]byte, error) {
 	var answerCallback methods.AnswerCallBackQuery
 	answerCallback.CallbackQueryId = Query.ID
 	data, err := t.Execute(Query.Data, Query)
@@ -41,24 +41,24 @@ func (t *TelegramUpdater) CallbackQueryService(Query types.TelegramCallbackQuery
 	return data, nil
 }
 
-func (t *TelegramUpdater) ChannelPostService(Post types.TelegramMessage) ([]byte, error) {
+func (t *TelegramUpdater) ChannelPostService(Post types.Message) ([]byte, error) {
 	return nil, nil
 }
 
-func (t *TelegramUpdater) ChatJoinRequsetService(JoinRequest types.TelegramChatJoinRequest) ([]byte, error) {
+func (t *TelegramUpdater) ChatJoinRequsetService(JoinRequest types.ChatJoinRequest) ([]byte, error) {
 	return nil, nil
 }
-func (t *TelegramUpdater) ChatMemberService(MemberService types.TelegramChatMemberUpdated) ([]byte, error) {
+func (t *TelegramUpdater) ChatMemberService(MemberService types.ChatMemberUpdated) ([]byte, error) {
 	return nil, nil
 
 }
 func (t *TelegramUpdater) ChosenInlineResultService(TelegramChosenInlien types.TelegramChosenInlineResult) ([]byte, error) {
 	return nil, nil
 }
-func (t *TelegramUpdater) EditedChannelPostService(Message types.TelegramMessage) ([]byte, error) {
+func (t *TelegramUpdater) EditedChannelPostService(Message types.Message) ([]byte, error) {
 	return nil, nil
 }
-func (t *TelegramUpdater) EditedMessageService(Message types.TelegramMessage) ([]byte, error) {
+func (t *TelegramUpdater) EditedMessageService(Message types.Message) ([]byte, error) {
 	log.Println("Edited log service")
 	log.Println(Message)
 	return t.Execute("/default", Message)
@@ -66,7 +66,7 @@ func (t *TelegramUpdater) EditedMessageService(Message types.TelegramMessage) ([
 func (t *TelegramUpdater) InlineQueryService(InlineQuery types.TelegramInlineQuery) ([]byte, error) {
 	return nil, nil
 }
-func (t *TelegramUpdater) MessageService(Message types.TelegramMessage) ([]byte, error) {
+func (t *TelegramUpdater) MessageService(Message types.Message) ([]byte, error) {
 	return t.messageService(Message)
 
 }
@@ -76,7 +76,7 @@ func (t *TelegramUpdater) MyChatMemberService(MyChatMember types.TelegramChatMem
 func (t *TelegramUpdater) PollService(Poll types.TelegramPoll) ([]byte, error) {
 	return nil, nil
 }
-func (t *TelegramUpdater) PollAnswerService(PollAnswer types.TelegramPollAnwer) ([]byte, error) {
+func (t *TelegramUpdater) PollAnswerService(PollAnswer types.PollAnwer) ([]byte, error) {
 	return nil, nil
 }
 func (t *TelegramUpdater) PreCheckoutPollService(CheckoutPoll types.TelegramPreCheckoutQuery) ([]byte, error) {
@@ -85,9 +85,9 @@ func (t *TelegramUpdater) PreCheckoutPollService(CheckoutPoll types.TelegramPreC
 func (t *TelegramUpdater) ShippingService(Shipping types.TelegramShippingQuery) ([]byte, error) {
 	return nil, nil
 }
-func (t *TelegramUpdater) ChatUserUpdateService(UserUpdate types.TelegramUpdate) ([]byte, error) {
+func (t *TelegramUpdater) ChatUserUpdateService(UserUpdate types.Update) ([]byte, error) {
 	return nil, nil
 }
-func (t *TelegramUpdater) Default(Update types.TelegramUpdate) ([]byte, error) {
+func (t *TelegramUpdater) Default(Update types.Update) ([]byte, error) {
 	return t.Default(Update)
 }
