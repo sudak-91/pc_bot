@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	pubrep "github.com/sudak-91/pc_bot/pkg/repository"
-	types "github.com/sudak-91/telegrambotgo/TelegramAPI/Types"
+	types "github.com/sudak-91/telegrambotgo/telegram_api/types"
 )
 
 type MarkAsRead struct {
@@ -15,11 +15,11 @@ type MarkAsRead struct {
 }
 
 func (m *MarkAsRead) Handl(data interface{}) ([]byte, error) {
-	msg, ok := data.(types.TelegramCallbackQuery)
+	msg, ok := data.(types.CallbackQuery)
 	if !ok {
 		return nil, fmt.Errorf("The MarkAsRead handle dont have Callback Query data type on the input parameter")
 	}
-	var Answer types.TelegramSendMessage
+	var Answer types.SendMessage
 	log.Printf("Message text is: %s\n", msg.Message.Text)
 	Answer.Method = "sendMessage"
 	Answer.ChatID = msg.From.ID

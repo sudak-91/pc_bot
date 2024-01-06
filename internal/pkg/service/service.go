@@ -52,7 +52,7 @@ func (t *TelegramUpdater) ChatMemberService(MemberService types.ChatMemberUpdate
 	return nil, nil
 
 }
-func (t *TelegramUpdater) ChosenInlineResultService(TelegramChosenInlien types.TelegramChosenInlineResult) ([]byte, error) {
+func (t *TelegramUpdater) ChosenInlineResultService(TelegramChosenInlien types.ChosenInlineResult) ([]byte, error) {
 	return nil, nil
 }
 func (t *TelegramUpdater) EditedChannelPostService(Message types.Message) ([]byte, error) {
@@ -63,26 +63,26 @@ func (t *TelegramUpdater) EditedMessageService(Message types.Message) ([]byte, e
 	log.Println(Message)
 	return t.Execute("/default", Message)
 }
-func (t *TelegramUpdater) InlineQueryService(InlineQuery types.TelegramInlineQuery) ([]byte, error) {
+func (t *TelegramUpdater) InlineQueryService(InlineQuery types.InlineQuery) ([]byte, error) {
 	return nil, nil
 }
 func (t *TelegramUpdater) MessageService(Message types.Message) ([]byte, error) {
 	return t.messageService(Message)
 
 }
-func (t *TelegramUpdater) MyChatMemberService(MyChatMember types.TelegramChatMemberUpdated) ([]byte, error) {
+func (t *TelegramUpdater) MyChatMemberService(MyChatMember types.ChatMemberUpdated) ([]byte, error) {
 	return nil, nil
 }
-func (t *TelegramUpdater) PollService(Poll types.TelegramPoll) ([]byte, error) {
+func (t *TelegramUpdater) PollService(Poll types.Poll) ([]byte, error) {
 	return nil, nil
 }
 func (t *TelegramUpdater) PollAnswerService(PollAnswer types.PollAnwer) ([]byte, error) {
 	return nil, nil
 }
-func (t *TelegramUpdater) PreCheckoutPollService(CheckoutPoll types.TelegramPreCheckoutQuery) ([]byte, error) {
+func (t *TelegramUpdater) PreCheckoutPollService(CheckoutPoll types.PreCheckoutQuery) ([]byte, error) {
 	return nil, nil
 }
-func (t *TelegramUpdater) ShippingService(Shipping types.TelegramShippingQuery) ([]byte, error) {
+func (t *TelegramUpdater) ShippingService(Shipping types.ShippingQuery) ([]byte, error) {
 	return nil, nil
 }
 func (t *TelegramUpdater) ChatUserUpdateService(UserUpdate types.Update) ([]byte, error) {

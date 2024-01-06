@@ -9,7 +9,7 @@ import (
 	"github.com/sudak-91/pc_bot/internal/pkg/server"
 	"github.com/sudak-91/pc_bot/internal/pkg/util"
 	pubrep "github.com/sudak-91/pc_bot/pkg/repository"
-	types "github.com/sudak-91/telegrambotgo/TelegramAPI/Types"
+	types "github.com/sudak-91/telegrambotgo/telegram_api/types"
 )
 
 type EditFirmCommand struct {
@@ -17,12 +17,12 @@ type EditFirmCommand struct {
 }
 
 func (e *EditFirmCommand) Handl(data interface{}) ([]byte, error) {
-	query, ok := data.(types.TelegramCallbackQuery)
+	query, ok := data.(types.CallbackQuery)
 	if !ok {
 		return nil, fmt.Errorf("Input parametr is not TelegramCallnackquery type")
 	}
 	log.Printf("%s\n", query.Data)
-	var Answer types.TelegramSendMessage
+	var Answer types.SendMessage
 	Answer.Method = "sendMessage"
 	Answer.ChatID = query.From.ID
 

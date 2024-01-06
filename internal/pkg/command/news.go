@@ -5,19 +5,19 @@ import (
 	"fmt"
 
 	"github.com/sudak-91/pc_bot/internal/pkg/server"
-	types "github.com/sudak-91/telegrambotgo/TelegramAPI/Types"
+	types "github.com/sudak-91/telegrambotgo/telegram_api/types"
 )
 
-//Добавление новой стадии для пользователя в кэщ
+// Добавление новой стадии для пользователя в кэщ
 type News struct {
 }
 
 func (n *News) Handl(data interface{}) ([]byte, error) {
-	msg, ok := data.(types.TelegramCallbackQuery)
+	msg, ok := data.(types.CallbackQuery)
 	if !ok {
 		return nil, fmt.Errorf("News command dont have TelegramCallbackQuery on input parametr")
 	}
-	var Answer types.TelegramSendMessage
+	var Answer types.SendMessage
 	Answer.Method = "sendMessage"
 	Answer.ChatID = msg.From.ID
 	server.Util.Stage[msg.From.ID] = 10

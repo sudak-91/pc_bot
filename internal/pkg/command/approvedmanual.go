@@ -7,7 +7,7 @@ import (
 
 	"github.com/sudak-91/pc_bot/internal/pkg/util"
 	pubrep "github.com/sudak-91/pc_bot/pkg/repository"
-	types "github.com/sudak-91/telegrambotgo/TelegramAPI/Types"
+	types "github.com/sudak-91/telegrambotgo/telegram_api/types"
 )
 
 type ApprovedManual struct {
@@ -15,7 +15,7 @@ type ApprovedManual struct {
 }
 
 func (a *ApprovedManual) Handl(data interface{}) ([]byte, error) {
-	query, ok := data.(types.TelegramCallbackQuery)
+	query, ok := data.(types.CallbackQuery)
 	if !ok {
 		return nil, fmt.Errorf("ApprovedManual has invalid input data")
 	}

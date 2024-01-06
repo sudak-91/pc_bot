@@ -3,10 +3,10 @@ package repository
 import (
 	"context"
 
+	"github.com/google/uuid"
 	pubrep "github.com/sudak-91/pc_bot/pkg/repository"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/x/mongo/driver/uuid"
 )
 
 type Questionmongo struct {
@@ -22,7 +22,7 @@ func NewQuestionmongo(db *mongo.Database) *Questionmongo {
 func (q *Questionmongo) CreateQuestion(Text string, ContributerID int64, MessageID int64) error {
 	var ques pubrep.Question
 	var err error
-	ques.QuestionID, err = uuid.New()
+	ques.QuestionID = uuid.New()
 	if err != nil {
 		return err
 	}

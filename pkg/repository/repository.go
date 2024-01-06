@@ -3,8 +3,8 @@ package repository
 import (
 	"time"
 
+	"github.com/google/uuid"
 	"go.mongodb.org/mongo-driver/bson/primitive"
-	"go.mongodb.org/mongo-driver/x/mongo/driver/uuid"
 )
 
 type Repository interface {
@@ -14,7 +14,7 @@ type Repository interface {
 	Firms
 }
 
-//User from telegram
+// User from telegram
 type Users interface {
 	CreateUser(TelegramID int64, username string) error
 	UpdateUser(NewData User) error
@@ -25,7 +25,7 @@ type Users interface {
 	DeleteAll() error
 }
 
-//News from users
+// News from users
 type Newser interface {
 	CreateNews(Text string, ContributerID int64) error
 	GetAllNews() ([]News, error)
@@ -38,7 +38,7 @@ type Newser interface {
 	DeleteNews(NewsID uuid.UUID) error
 }
 
-//Question from Telgram bot
+// Question from Telgram bot
 type Questions interface {
 	CreateQuestion(Text string, ContributerID int64, MesasgeID int64) error
 	GetAllQuestions() ([]Question, error)

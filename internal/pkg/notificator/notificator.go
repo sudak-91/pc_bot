@@ -9,8 +9,8 @@ import (
 	"github.com/sudak-91/pc_bot/internal/pkg/server"
 	pubrep "github.com/sudak-91/pc_bot/pkg/repository"
 	keyboardmaker "github.com/sudak-91/telegrambotgo/Keyboardmaker"
-	methods "github.com/sudak-91/telegrambotgo/TelegramAPI/Methods"
-	tgtype "github.com/sudak-91/telegrambotgo/TelegramAPI/Types"
+	methods "github.com/sudak-91/telegrambotgo/telegram_api/methods"
+	tgtype "github.com/sudak-91/telegrambotgo/telegram_api/types"
 )
 
 type Notification struct {
@@ -71,7 +71,7 @@ func sendAddFirmNotification(firm pubrep.Firm) {
 	}
 }
 
-func editFirmNotioficationKeyboard(firm pubrep.Firm) tgtype.TelegramInlineKeyboardMarkup {
+func editFirmNotioficationKeyboard(firm pubrep.Firm) tgtype.InlineKeyboardMarkup {
 	keyboard := &keyboardmaker.InlineCommandKeyboard{}
 	keyboard.MakeGrid(2, 1)
 	editCommandCallbackString := fmt.Sprintf("/editfirm %s", firm.ID.Hex())
@@ -81,7 +81,7 @@ func editFirmNotioficationKeyboard(firm pubrep.Firm) tgtype.TelegramInlineKeyboa
 	return keyboard.GetKeyboard()
 }
 
-func editManualNotificationKeyboard(manual pubrep.Manual) tgtype.TelegramInlineKeyboardMarkup {
+func editManualNotificationKeyboard(manual pubrep.Manual) tgtype.InlineKeyboardMarkup {
 	keyboard := &keyboardmaker.InlineCommandKeyboard{}
 	keyboard.MakeGrid(2, 1)
 	editCommandCallbackString := fmt.Sprintf("/editmanual %s", manual.ManualID.Hex())

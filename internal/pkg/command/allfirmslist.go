@@ -11,7 +11,7 @@ import (
 	"github.com/sudak-91/pc_bot/internal/pkg/util"
 	pubrep "github.com/sudak-91/pc_bot/pkg/repository"
 	keyboardmaker "github.com/sudak-91/telegrambotgo/Keyboardmaker"
-	tgtypes "github.com/sudak-91/telegrambotgo/TelegramAPI/Types"
+	tgtypes "github.com/sudak-91/telegrambotgo/telegram_api/types"
 )
 
 type AllFirmsList struct {
@@ -19,7 +19,7 @@ type AllFirmsList struct {
 }
 
 func (a *AllFirmsList) Handl(data interface{}) ([]byte, error) {
-	query, ok := data.(tgtypes.TelegramCallbackQuery)
+	query, ok := data.(tgtypes.CallbackQuery)
 	log.Printf("%+v", query)
 	if !ok {
 		return nil, errors.New("Invalid input parametr")
@@ -57,7 +57,7 @@ func (a *AllFirmsList) Handl(data interface{}) ([]byte, error) {
 	return json.Marshal(answer)
 
 }
-func (a *AllFirmsList) createKeyboard(lists *[]pubrep.Firm, offset int64) *tgtypes.TelegramInlineKeyboardMarkup {
+func (a *AllFirmsList) createKeyboard(lists *[]pubrep.Firm, offset int64) *tgtypes.InlineKeyboardMarkup {
 	var keyboard keyboardmaker.InlineCommandKeyboard
 	keyboard.MakeGrid(11, 2)
 	for k, v := range *lists {

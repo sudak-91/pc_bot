@@ -8,8 +8,8 @@ import (
 
 	"github.com/sudak-91/pc_bot/internal/pkg/util"
 	pubrep "github.com/sudak-91/pc_bot/pkg/repository"
-	types "github.com/sudak-91/telegrambotgo/TelegramAPI/Types"
 	tgerros "github.com/sudak-91/telegrambotgo/pkg/telegramerrors"
+	types "github.com/sudak-91/telegrambotgo/telegram_api/types"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
@@ -20,7 +20,7 @@ type DeleteFirm struct {
 }
 
 func (d *DeleteFirm) Handl(data interface{}) ([]byte, error) {
-	query, ok := data.(types.TelegramCallbackQuery)
+	query, ok := data.(types.CallbackQuery)
 	if !ok {
 		return nil, &tgerros.InvalidInputParametrType{}
 	}

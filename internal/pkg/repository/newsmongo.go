@@ -8,9 +8,10 @@ import (
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/x/mongo/driver/uuid"
 
+	"go.mongodb.org/mongo-driver/mongo"
+
+	"github.com/google/uuid"
 	pubrep "github.com/sudak-91/pc_bot/pkg/repository"
 )
 
@@ -30,11 +31,7 @@ func (n *NewsMongo) CreateNews(Text string, ConsumerID int64) error {
 	NewNews.ConsumerID = ConsumerID
 	NewNews.Text = Text
 	NewNews.Time = time.Now()
-	id, err := uuid.New()
-	if err != nil {
-		return fmt.Errorf("Create News has error: %s", err.Error())
-	}
-	NewNews.NewsID = id
+	NewNews.NewsID = uuid.New()
 	data, err := bson.Marshal(NewNews)
 	if err != nil {
 		return fmt.Errorf("CreateNews has marshal error: %s", err.Error())

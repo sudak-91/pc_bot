@@ -6,14 +6,14 @@ import (
 
 	"github.com/sudak-91/pc_bot/internal/pkg/util"
 	keyboardmaker "github.com/sudak-91/telegrambotgo/Keyboardmaker"
-	types "github.com/sudak-91/telegrambotgo/TelegramAPI/Types"
+	types "github.com/sudak-91/telegrambotgo/telegram_api/types"
 )
 
 type ManualArchive struct {
 }
 
 func (m *ManualArchive) Handl(data interface{}) ([]byte, error) {
-	query, ok := data.(types.TelegramCallbackQuery)
+	query, ok := data.(types.CallbackQuery)
 	if !ok {
 		return nil, errors.New("Invalid input parametr")
 	}
@@ -23,7 +23,7 @@ func (m *ManualArchive) Handl(data interface{}) ([]byte, error) {
 
 }
 
-func (m *ManualArchive) createKeyboard() *types.TelegramInlineKeyboardMarkup {
+func (m *ManualArchive) createKeyboard() *types.InlineKeyboardMarkup {
 	var keyboard keyboardmaker.InlineCommandKeyboard
 	keyboard.MakeGrid(3, 1)
 	keyboard.AddButton("Показать список всех фирм", "/allfirmslist 0", 0, 0) //TODO:Реализовать метод

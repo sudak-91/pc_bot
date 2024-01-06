@@ -9,7 +9,7 @@ import (
 	"github.com/sudak-91/pc_bot/internal/pkg/server"
 	"github.com/sudak-91/pc_bot/internal/pkg/util"
 	pubrep "github.com/sudak-91/pc_bot/pkg/repository"
-	types "github.com/sudak-91/telegrambotgo/TelegramAPI/Types"
+	types "github.com/sudak-91/telegrambotgo/telegram_api/types"
 )
 
 type ConfirmEditManual struct {
@@ -18,7 +18,7 @@ type ConfirmEditManual struct {
 }
 
 func (c *ConfirmEditManual) Handl(data interface{}) ([]byte, error) {
-	Message, ok := data.(types.TelegramMessage)
+	Message, ok := data.(types.Message)
 	if !ok {
 		return nil, fmt.Errorf("ConfirmEditManual Handl has invalid input parametr")
 	}

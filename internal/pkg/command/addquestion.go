@@ -8,8 +8,8 @@ import (
 
 	"github.com/sudak-91/pc_bot/internal/pkg/server"
 	pubrep "github.com/sudak-91/pc_bot/pkg/repository"
-	methods "github.com/sudak-91/telegrambotgo/TelegramAPI/Methods"
-	types "github.com/sudak-91/telegrambotgo/TelegramAPI/Types"
+	methods "github.com/sudak-91/telegrambotgo/telegram_api/methods"
+	types "github.com/sudak-91/telegrambotgo/telegram_api/types"
 )
 
 type AddQuestion struct {
@@ -17,11 +17,11 @@ type AddQuestion struct {
 }
 
 func (q *AddQuestion) Handl(data interface{}) ([]byte, error) {
-	msg, ok := data.(types.TelegramMessage)
+	msg, ok := data.(types.Message)
 	if !ok {
 		return nil, fmt.Errorf("AddQuestion handl dont have Telegram message type on the input parametr")
 	}
-	var Answer types.TelegramSendMessage
+	var Answer types.SendMessage
 	Answer.Method = "sendMessage"
 	Answer.ChatID = msg.Chat.ID
 	Answer.Text = "Ваш вопрос добавлен"

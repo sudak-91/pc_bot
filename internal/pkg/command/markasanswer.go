@@ -7,10 +7,10 @@ import (
 	"log"
 	"strings"
 
+	"github.com/google/uuid"
 	"github.com/sudak-91/pc_bot/internal/pkg/server"
 	"github.com/sudak-91/pc_bot/pkg/repository"
-	types "github.com/sudak-91/telegrambotgo/TelegramAPI/Types"
-	"go.mongodb.org/mongo-driver/x/mongo/driver/uuid"
+	"github.com/sudak-91/telegrambotgo/telegram_api/types"
 )
 
 type MarkAsAnswer struct {
@@ -18,11 +18,11 @@ type MarkAsAnswer struct {
 }
 
 func (m *MarkAsAnswer) Handl(data interface{}) ([]byte, error) {
-	msg, ok := data.(types.TelegramCallbackQuery)
+	msg, ok := data.(types.CallbackQuery)
 	if !ok {
 		return nil, fmt.Errorf("Mark as answer method don't have Callbackquery data type on a input parametr")
 	}
-	var Answer types.TelegramSendMessage
+	var Answer types.SendMessage
 	Answer.ChatID = msg.From.ID
 	Answer.Method = "sendMessage"
 	if msg.From.ID != server.Util.AdminID {

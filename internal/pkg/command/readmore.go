@@ -8,7 +8,7 @@ import (
 
 	pubrep "github.com/sudak-91/pc_bot/pkg/repository"
 	keyboardmaker "github.com/sudak-91/telegrambotgo/Keyboardmaker"
-	types "github.com/sudak-91/telegrambotgo/TelegramAPI/Types"
+	types "github.com/sudak-91/telegrambotgo/telegram_api/types"
 )
 
 type ReadMore struct {
@@ -16,13 +16,13 @@ type ReadMore struct {
 }
 
 func (r *ReadMore) Handl(data interface{}) ([]byte, error) {
-	msg, ok := data.(types.TelegramCallbackQuery)
+	msg, ok := data.(types.CallbackQuery)
 	if !ok {
 		return nil, fmt.Errorf("The Readmore handl dont have Callbackquery type on a input parametr\n")
 
 	}
 	Args := strings.Split(msg.Data, " ")
-	var Answer types.TelegramSendMessage
+	var Answer types.SendMessage
 	Answer.Method = "sendMessage"
 	Answer.ChatID = msg.From.ID
 	if len(Args) != 2 {

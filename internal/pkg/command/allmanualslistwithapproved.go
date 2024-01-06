@@ -10,8 +10,7 @@ import (
 	"github.com/sudak-91/pc_bot/internal/pkg/util"
 	pubrep "github.com/sudak-91/pc_bot/pkg/repository"
 	keyboardmaker "github.com/sudak-91/telegrambotgo/Keyboardmaker"
-	tgtypes "github.com/sudak-91/telegrambotgo/TelegramAPI/Types"
-	types "github.com/sudak-91/telegrambotgo/TelegramAPI/Types"
+	types "github.com/sudak-91/telegrambotgo/telegram_api/types"
 )
 
 type AllManualsListWithApproved struct {
@@ -19,7 +18,7 @@ type AllManualsListWithApproved struct {
 }
 
 func (a *AllManualsListWithApproved) Handl(data interface{}) ([]byte, error) {
-	query, ok := data.(types.TelegramCallbackQuery)
+	query, ok := data.(types.CallbackQuery)
 	if !ok {
 		e := errors.New("Invalid input parametr")
 		return nil, e
@@ -65,7 +64,7 @@ func (a *AllManualsListWithApproved) Handl(data interface{}) ([]byte, error) {
 
 }
 
-func (a *AllManualsListWithApproved) createAdminKeyboard(ManualList *[]pubrep.Manual, offset int64, approved bool) tgtypes.TelegramInlineKeyboardMarkup {
+func (a *AllManualsListWithApproved) createAdminKeyboard(ManualList *[]pubrep.Manual, offset int64, approved bool) types.InlineKeyboardMarkup {
 	var keyboard keyboardmaker.InlineCommandKeyboard
 	keyboard.MakeGrid(11, 3)
 	for k, v := range *ManualList {
@@ -87,7 +86,7 @@ func (a *AllManualsListWithApproved) createAdminKeyboard(ManualList *[]pubrep.Ma
 	return grid
 }
 
-func (a *AllManualsListWithApproved) createUserKeyboard(ManualList *[]pubrep.Manual, offset int64, approved bool, firmid string) tgtypes.TelegramInlineKeyboardMarkup {
+func (a *AllManualsListWithApproved) createUserKeyboard(ManualList *[]pubrep.Manual, offset int64, approved bool, firmid string) types.InlineKeyboardMarkup {
 	var keyboard keyboardmaker.InlineCommandKeyboard
 	keyboard.MakeGrid(11, 2)
 	for k, v := range *ManualList {

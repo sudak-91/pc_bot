@@ -7,9 +7,9 @@ import (
 	"net/http"
 	"sync"
 
+	"github.com/google/uuid"
 	pubrep "github.com/sudak-91/pc_bot/pkg/repository"
 	update "github.com/sudak-91/telegrambotgo/Service"
-	"go.mongodb.org/mongo-driver/x/mongo/driver/uuid"
 )
 
 var Util *Utl

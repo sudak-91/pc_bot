@@ -8,8 +8,8 @@ import (
 	"github.com/sudak-91/pc_bot/internal/pkg/util"
 	pubrep "github.com/sudak-91/pc_bot/pkg/repository"
 	keyboardmaker "github.com/sudak-91/telegrambotgo/Keyboardmaker"
-	types "github.com/sudak-91/telegrambotgo/TelegramAPI/Types"
 	"github.com/sudak-91/telegrambotgo/pkg/telegramerrors"
+	types "github.com/sudak-91/telegrambotgo/telegram_api/types"
 )
 
 type AllManualsList struct {
@@ -17,7 +17,7 @@ type AllManualsList struct {
 }
 
 func (a *AllManualsList) Handl(data interface{}) ([]byte, error) {
-	query, ok := data.(types.TelegramCallbackQuery)
+	query, ok := data.(types.CallbackQuery)
 	if !ok {
 		return nil, &telegramerrors.InvalidInputParametrType{}
 	}
@@ -38,7 +38,7 @@ func (a *AllManualsList) Handl(data interface{}) ([]byte, error) {
 
 }
 
-func (a *AllManualsList) createKeyboard(Manuals *[]pubrep.Manual) *types.TelegramInlineKeyboardMarkup {
+func (a *AllManualsList) createKeyboard(Manuals *[]pubrep.Manual) *types.InlineKeyboardMarkup {
 	keyboard := keyboardmaker.InlineCommandKeyboard{}
 	keyboard.MakeGrid(len(*Manuals), 3)
 	for k, v := range *Manuals {

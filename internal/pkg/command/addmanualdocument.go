@@ -8,7 +8,7 @@ import (
 	"github.com/sudak-91/pc_bot/internal/pkg/server"
 	"github.com/sudak-91/pc_bot/internal/pkg/util"
 	pubrep "github.com/sudak-91/pc_bot/pkg/repository"
-	types "github.com/sudak-91/telegrambotgo/TelegramAPI/Types"
+	types "github.com/sudak-91/telegrambotgo/telegram_api/types"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
@@ -18,11 +18,11 @@ type AddManualDocument struct {
 }
 
 func (m *AddManualDocument) Handl(data interface{}) ([]byte, error) {
-	msg, ok := data.(types.TelegramMessage)
+	msg, ok := data.(types.Message)
 	if !ok {
 		return nil, fmt.Errorf("Handl AddManula has error")
 	}
-	var Answer types.TelegramSendMessage
+	var Answer types.SendMessage
 	Answer.Method = "sendMessage"
 	Answer.ChatID = msg.From.ID
 	if msg.Document == nil {

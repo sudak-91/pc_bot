@@ -8,18 +8,18 @@ import (
 
 	"github.com/sudak-91/pc_bot/internal/pkg/server"
 	pubrep "github.com/sudak-91/pc_bot/pkg/repository"
-	types "github.com/sudak-91/telegrambotgo/TelegramAPI/Types"
+	types "github.com/sudak-91/telegrambotgo/telegram_api/types"
 )
 
 type Login struct {
 	Users    pubrep.Users
-	Keyboard types.TelegramInlineKeyboardMarkup
+	Keyboard types.InlineKeyboardMarkup
 }
 
 func (l *Login) Handl(data interface{}) ([]byte, error) {
-	var Answer types.TelegramSendMessage
+	var Answer types.SendMessage
 	Answer.Method = "sendMessage"
-	msg, ok := data.(types.TelegramMessage)
+	msg, ok := data.(types.Message)
 	if !ok {
 		return nil, fmt.Errorf("Login command don have message type on enter parametr")
 	}

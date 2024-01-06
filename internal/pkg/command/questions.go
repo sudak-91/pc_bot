@@ -5,15 +5,15 @@ import (
 	"fmt"
 
 	"github.com/sudak-91/pc_bot/internal/pkg/server"
-	types "github.com/sudak-91/telegrambotgo/TelegramAPI/Types"
+	types "github.com/sudak-91/telegrambotgo/telegram_api/types"
 )
 
 type Questions struct {
 }
 
 func (q *Questions) Handl(data interface{}) ([]byte, error) {
-	msg, ok := data.(types.TelegramCallbackQuery)
-	var Answer types.TelegramSendMessage
+	msg, ok := data.(types.CallbackQuery)
+	var Answer types.SendMessage
 	if !ok {
 		return nil, fmt.Errorf("Questions handl dont have Callbackquery type on the input parametr")
 	}

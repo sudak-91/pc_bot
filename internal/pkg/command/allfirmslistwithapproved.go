@@ -11,16 +11,16 @@ import (
 	"github.com/sudak-91/pc_bot/internal/pkg/util"
 	pubrep "github.com/sudak-91/pc_bot/pkg/repository"
 	keyboardmaker "github.com/sudak-91/telegrambotgo/Keyboardmaker"
-	tgtypes "github.com/sudak-91/telegrambotgo/TelegramAPI/Types"
+	tgtypes "github.com/sudak-91/telegrambotgo/telegram_api/types"
 )
 
-//Get firms list with approved flag and has limit and offset
+// Get firms list with approved flag and has limit and offset
 type AllFirmsListWithApproved struct {
 	Firms pubrep.Firms
 }
 
 func (a *AllFirmsListWithApproved) Handl(data interface{}) ([]byte, error) {
-	query, ok := data.(tgtypes.TelegramCallbackQuery)
+	query, ok := data.(tgtypes.CallbackQuery)
 	if !ok {
 		e := errors.New("Invalid input parametr")
 		return nil, e
@@ -70,7 +70,7 @@ func (a *AllFirmsListWithApproved) Handl(data interface{}) ([]byte, error) {
 
 }
 
-func (a *AllFirmsListWithApproved) createAdminKeyboard(FirmsList *[]pubrep.Firm, offset int64, approved bool) tgtypes.TelegramInlineKeyboardMarkup {
+func (a *AllFirmsListWithApproved) createAdminKeyboard(FirmsList *[]pubrep.Firm, offset int64, approved bool) tgtypes.InlineKeyboardMarkup {
 	var keyboard keyboardmaker.InlineCommandKeyboard
 	keyboard.MakeGrid(11, 3)
 	for k, v := range *FirmsList {
@@ -92,7 +92,7 @@ func (a *AllFirmsListWithApproved) createAdminKeyboard(FirmsList *[]pubrep.Firm,
 	return grid
 }
 
-func (a *AllFirmsListWithApproved) createUserKeyboard(FirmsList *[]pubrep.Firm, offset int64, approved bool) tgtypes.TelegramInlineKeyboardMarkup {
+func (a *AllFirmsListWithApproved) createUserKeyboard(FirmsList *[]pubrep.Firm, offset int64, approved bool) tgtypes.InlineKeyboardMarkup {
 	var keyboard keyboardmaker.InlineCommandKeyboard
 	keyboard.MakeGrid(11, 2)
 	for k, v := range *FirmsList {

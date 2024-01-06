@@ -6,7 +6,7 @@ import (
 
 	pubrep "github.com/sudak-91/pc_bot/pkg/repository"
 	keyboardmaker "github.com/sudak-91/telegrambotgo/Keyboardmaker"
-	types "github.com/sudak-91/telegrambotgo/TelegramAPI/Types"
+	types "github.com/sudak-91/telegrambotgo/telegram_api/types"
 )
 
 type StartCommand struct {
@@ -14,7 +14,7 @@ type StartCommand struct {
 }
 
 func (s *StartCommand) Handl(data interface{}) ([]byte, error) {
-	msg, ok := data.(types.TelegramMessage)
+	msg, ok := data.(types.Message)
 	if !ok {
 		return nil, fmt.Errorf("It is not a message")
 	}
@@ -22,10 +22,10 @@ func (s *StartCommand) Handl(data interface{}) ([]byte, error) {
 	if err != nil {
 		return nil, fmt.Errorf("StartCommand handler has error: %s", err.Error())
 	}
-	var Answer types.TelegramSendMessage
+	var Answer types.SendMessage
 	Answer.ChatID = msg.Chat.ID
 	Answer.Method = "sendMessage"
-	var Linktochannel types.TelegramMessageEntity
+	var Linktochannel types.MessageEntity
 	Linktochannel.Length = 24
 	Linktochannel.Type = "text_link"
 	Linktochannel.Url = "https://t.me/wtfcontrolsengineer"
@@ -36,7 +36,7 @@ func (s *StartCommand) Handl(data interface{}) ([]byte, error) {
 	return json.Marshal(Answer)
 }
 
-func (s *StartCommand) createKeyboard() *types.TelegramInlineKeyboardMarkup {
+func (s *StartCommand) createKeyboard() *types.InlineKeyboardMarkup {
 	var mainkeyboard keyboardmaker.InlineCommandKeyboard
 	mainkeyboard.MakeGrid(2, 2)
 	mainkeyboard.AddButton("Задать вопрос", "/question", 0, 0)

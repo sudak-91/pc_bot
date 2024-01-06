@@ -9,8 +9,8 @@ import (
 
 	"github.com/sudak-91/pc_bot/internal/pkg/server"
 	"github.com/sudak-91/pc_bot/pkg/repository"
-	methods "github.com/sudak-91/telegrambotgo/TelegramAPI/Methods"
-	types "github.com/sudak-91/telegrambotgo/TelegramAPI/Types"
+	methods "github.com/sudak-91/telegrambotgo/telegram_api/methods"
+	types "github.com/sudak-91/telegrambotgo/telegram_api/types"
 )
 
 type SendAnswerTo struct {
@@ -18,11 +18,11 @@ type SendAnswerTo struct {
 }
 
 func (s *SendAnswerTo) Handl(data interface{}) ([]byte, error) {
-	msg, ok := data.(types.TelegramMessage)
+	msg, ok := data.(types.Message)
 	if !ok {
 		return nil, fmt.Errorf("SendAnswerTo dont has Telegram message on the input parametr")
 	}
-	var Answer types.TelegramSendMessage
+	var Answer types.SendMessage
 	Answer.ChatID = msg.From.ID
 	Answer.Method = "sendMessage"
 

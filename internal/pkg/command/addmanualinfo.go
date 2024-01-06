@@ -9,7 +9,7 @@ import (
 	"github.com/sudak-91/pc_bot/internal/pkg/server"
 	"github.com/sudak-91/pc_bot/internal/pkg/util"
 	pubrep "github.com/sudak-91/pc_bot/pkg/repository"
-	types "github.com/sudak-91/telegrambotgo/TelegramAPI/Types"
+	types "github.com/sudak-91/telegrambotgo/telegram_api/types"
 )
 
 type AddManualInfo struct {
@@ -18,12 +18,12 @@ type AddManualInfo struct {
 }
 
 func (this *AddManualInfo) Handl(data interface{}) ([]byte, error) {
-	msg, ok := data.(types.TelegramMessage)
+	msg, ok := data.(types.Message)
 	if !ok {
 		log.Println("AddManualInfo handl dont have TelegramMEssage in input parametr")
 		return nil, fmt.Errorf("Не содержит сообщения. Попробуйте отправить заного.")
 	}
-	var Answer types.TelegramSendMessage
+	var Answer types.SendMessage
 	Answer.Method = "sendMessage"
 	Answer.ChatID = msg.From.ID
 	ManualData := strings.Split(msg.Text, " ")

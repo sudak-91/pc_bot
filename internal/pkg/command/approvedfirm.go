@@ -7,7 +7,7 @@ import (
 
 	"github.com/sudak-91/pc_bot/internal/pkg/util"
 	pubrep "github.com/sudak-91/pc_bot/pkg/repository"
-	types "github.com/sudak-91/telegrambotgo/TelegramAPI/Types"
+	types "github.com/sudak-91/telegrambotgo/telegram_api/types"
 )
 
 type ApprovedFirm struct {
@@ -16,11 +16,11 @@ type ApprovedFirm struct {
 }
 
 func (a *ApprovedFirm) Handl(data interface{}) ([]byte, error) {
-	query, ok := data.(types.TelegramCallbackQuery)
+	query, ok := data.(types.CallbackQuery)
 	if !ok {
 		return nil, fmt.Errorf("Internal error")
 	}
-	var Answer types.TelegramSendMessage
+	var Answer types.SendMessage
 	Answer.Method = "sendMessage"
 	Answer.ChatID = query.From.ID
 	param := strings.Split(query.Data, " ")

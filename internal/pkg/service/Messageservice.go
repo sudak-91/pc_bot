@@ -4,11 +4,11 @@ import (
 	"log"
 
 	"github.com/sudak-91/pc_bot/internal/pkg/server"
-	types "github.com/sudak-91/telegrambotgo/TelegramAPI/Types"
+	types "github.com/sudak-91/telegrambotgo/telegram_api/types"
 )
 
-//TODO: Обработка ошибок
-func (t *TelegramUpdater) messageService(Message types.TelegramMessage) ([]byte, error) {
+// TODO: Обработка ошибок
+func (t *TelegramUpdater) messageService(Message types.Message) ([]byte, error) {
 	_, ok := server.Util.Stage[Message.From.ID]
 	if !ok {
 		return t.Routing(Message)
@@ -37,7 +37,7 @@ func (t *TelegramUpdater) messageService(Message types.TelegramMessage) ([]byte,
 	}
 }
 
-func (t *TelegramUpdater) Routing(Message types.TelegramMessage) ([]byte, error) {
+func (t *TelegramUpdater) Routing(Message types.Message) ([]byte, error) {
 	//Определяем есть ли в сообщении сущность команды
 	for _, ent := range Message.Entities {
 		switch ent.Type {

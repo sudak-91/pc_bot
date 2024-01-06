@@ -6,9 +6,9 @@ import (
 
 	"github.com/sudak-91/pc_bot/internal/pkg/util"
 	pubrep "github.com/sudak-91/pc_bot/pkg/repository"
-	methods "github.com/sudak-91/telegrambotgo/TelegramAPI/Methods"
-	types "github.com/sudak-91/telegrambotgo/TelegramAPI/Types"
 	"github.com/sudak-91/telegrambotgo/pkg/telegramerrors"
+	methods "github.com/sudak-91/telegrambotgo/telegram_api/methods"
+	types "github.com/sudak-91/telegrambotgo/telegram_api/types"
 )
 
 type ShowManual struct {
@@ -16,7 +16,7 @@ type ShowManual struct {
 }
 
 func (s *ShowManual) Handl(data interface{}) ([]byte, error) {
-	qry, ok := data.(types.TelegramCallbackQuery)
+	qry, ok := data.(types.CallbackQuery)
 	if !ok {
 		return nil, &telegramerrors.InvalidInputParametrType{}
 	}

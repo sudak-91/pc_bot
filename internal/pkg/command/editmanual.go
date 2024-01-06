@@ -9,7 +9,7 @@ import (
 	"github.com/sudak-91/pc_bot/internal/pkg/server"
 	"github.com/sudak-91/pc_bot/internal/pkg/util"
 	pubrep "github.com/sudak-91/pc_bot/pkg/repository"
-	types "github.com/sudak-91/telegrambotgo/TelegramAPI/Types"
+	types "github.com/sudak-91/telegrambotgo/telegram_api/types"
 )
 
 type EditManual struct {
@@ -18,11 +18,11 @@ type EditManual struct {
 }
 
 func (e *EditManual) Handl(Data interface{}) ([]byte, error) {
-	query, ok := Data.(types.TelegramCallbackQuery)
+	query, ok := Data.(types.CallbackQuery)
 	if !ok {
 		return nil, fmt.Errorf("EditManual Handl doesn't have TelegramCallbackQuery type in input parametr")
 	}
-	var Answer types.TelegramSendMessage
+	var Answer types.SendMessage
 	Answer.ChatID = query.From.ID
 	Answer.Method = "sendMessage"
 	param := strings.Split(query.Data, " ")
