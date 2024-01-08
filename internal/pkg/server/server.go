@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
+	"strconv"
 	"sync"
 
 	"github.com/google/uuid"
@@ -83,8 +85,17 @@ func (s *Server) Run(AdminID int64) {
 	})
 	mux := http.NewServeMux()
 	mux.HandleFunc("/"+s.key, s.Handl)
-	log.Println("Server start")
-	log.Fatal(http.ListenAndServe(":"+s.port, mux))
+	debug, err := strconv.ParseBool(os.Getenv("DEBUG"))
+	if err != nil {
+		panic(err)
+	}
+	if debug {
+		log.Println("Debug server starting...")
+		log.Fatal(http.ListenAndServeTLS(":"+s.port, "devpub.pem", "devprivate.key", mux))
+	} else {
+		log.Println("Release server starting...")
+		log.Fatal(http.ListenAndServe(":"+s.port, mux))
+	}
 }
 
 func (s *Server) Handl(w http.ResponseWriter, r *http.Request) {

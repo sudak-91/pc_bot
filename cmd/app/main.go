@@ -69,7 +69,7 @@ func main() {
 	BotServer.Run(AdminID)
 }
 
-//addBotCommand -  adding command handler
+// addBotCommand -  adding command handler
 func addBotCommand(telegramupdate *intserv.TelegramUpdater, repo *intrep.MongoRepository, akeyboard keyboardmaker.InlineCommandKeyboard,
 	FirmChan chan pubrep.Firm, ManualChan chan pubrep.Manual, client *mongo.Client) {
 	telegramupdate.AddNewCommand("/default", &intcom.Default{})
@@ -107,7 +107,7 @@ func addBotCommand(telegramupdate *intserv.TelegramUpdater, repo *intrep.MongoRe
 func createMongoClientAndPing() (*mongo.Client, *mongo.Database) {
 	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
 	//defer cancel()
-	connectString := fmt.Sprintf("mongodb://%s:%s@mongodb:27017", os.Getenv("DB_USERNAME"), os.Getenv("DB_PASSWORD"))
+	connectString := fmt.Sprintf("mongodb://%s:%s@%s:27017", os.Getenv("DB_USERNAME"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_ADDRESS"))
 	client, err := mongo.Connect(ctx, options.Client().ApplyURI(connectString))
 	// defer func() {
 	// 	if err := client.Disconnect(ctx); err != nil {

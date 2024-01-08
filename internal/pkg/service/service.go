@@ -64,7 +64,7 @@ func (t *TelegramUpdater) EditedMessageService(Message types.Message) ([]byte, e
 	return t.Execute("/default", Message)
 }
 func (t *TelegramUpdater) InlineQueryService(InlineQuery types.InlineQuery) ([]byte, error) {
-	return nil, nil
+	return t.inlineQueryService(InlineQuery)
 }
 func (t *TelegramUpdater) MessageService(Message types.Message) ([]byte, error) {
 	return t.messageService(Message)

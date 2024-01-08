@@ -6,4 +6,7 @@ docker-compose.yml
 Makefile
 main
 README.md
-
+*.key
+*.pem
+.data
+cert/

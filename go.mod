@@ -6,7 +6,7 @@ require (
 	github.com/google/uuid v1.1.2
 	github.com/joho/godotenv v1.4.0
 	github.com/spf13/viper v1.13.0
-	github.com/sudak-91/telegrambotgo v0.0.6
+	github.com/sudak-91/telegrambotgo v0.0.7-0.20240108152818-6290e98eca83
 	go.mongodb.org/mongo-driver v1.9.1
 )
 
