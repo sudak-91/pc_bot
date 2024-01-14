@@ -28,10 +28,6 @@ func (t *TelegramUpdater) inlineQueryService(inlineQuery types.InlineQuery) ([]b
 
 	article.InputMessageContent = messageConm
 
-	// artData, err := json.Marshal(article)
-	// if err != nil {
-	// 	panic(err)
-	// }
 	answer.Results = append(answer.Results, article)
 	data, err := json.Marshal(answer)
 	if err != nil {
