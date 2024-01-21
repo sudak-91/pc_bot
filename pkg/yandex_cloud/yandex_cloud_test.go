@@ -15,4 +15,17 @@ func TestGetIAMToken(t *testing.T) {
 	}
 	result := GetIAMToken(os.Getenv("OAUTH_TOKEN"))
 	fmt.Println(result.IAMToken)
+
+	cloudsList, err := GetCloudsList(result.IAMToken)
+	if err != nil {
+		t.Fatal(err.Error())
+	}
+	fmt.Printf("%+v", cloudsList.Clouds[0].ID)
+
+	foldersList, err := GetFoldersList(cloudsList.Clouds[0].ID, result.IAMToken)
+	if err != nil {
+		t.Fatal(err.Error())
+	}
+	fmt.Printf("%v", foldersList.List[0])
+
 }
